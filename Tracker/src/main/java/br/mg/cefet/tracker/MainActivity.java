@@ -24,15 +24,38 @@ package br.mg.cefet.tracker;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements Tracker.TrackerDone {
+
+    private TextView tv;
+    private Tracker pack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Tracker pack = new Tracker("eg134376059kr");
+        tv = (TextView) findViewById(R.id.text);
+
+        pack = new Tracker("eg134376059kr");
+        pack.setListener(this);
+        pack.sync();
     }
 
+    @Override
+    public void trackerFinishedSyncing(boolean success) {
+        if (tv != null && pack != null) {
+            String txt = "";
+
+            for (Tracker.Step step : pack.getSteps()) {
+                txt += "Time: " + step.date + "\n";
+                txt += "City: " + step.city + "\n";
+                txt += "Title: " + step.title + "\n";
+                txt += "Desc: " + step.description + "\n\n";
+            }
+
+            tv.setText(txt);
+        }
+    }
 }
