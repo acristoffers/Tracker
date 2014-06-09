@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="widget_height">48dp</dimen>
+    <dimen name="widget_padding">8dp</dimen>
+    <dimen name="margins">16dp</dimen>
+</resources>

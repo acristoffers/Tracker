@@ -23,7 +23,7 @@
 
     <!-- Icon will be inserted here. -->
 
-    <!-- The title and summary have some gap between them, and this 'group' should be centered vertically. -->
+    <!-- The name and summary have some gap between them, and this 'group' should be centered vertically. -->
     <RelativeLayout
             android:layout_width="0dip"
             android:layout_weight="1"
@@ -33,7 +33,7 @@
             android:duplicateParentState="true">
 
         <TextView
-                android:id="@+id/title"
+                android:id="@+id/name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -48,7 +48,7 @@
                 android:id="@+id/shortcut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/title"
+                android:layout_below="@id/name"
                 android:layout_alignParentLeft="true"
                 android:textAppearance="?attr/textAppearanceSmallPopupMenu"
                 android:singleLine="true"

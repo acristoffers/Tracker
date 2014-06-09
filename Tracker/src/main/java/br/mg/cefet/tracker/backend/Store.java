@@ -1,0 +1,196 @@
+/*
+ * Copyright (c) 2014 Álan Crístoffer
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
+package br.mg.cefet.tracker.backend;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class Store extends SQLiteOpenHelper {
+
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "packageTracker";
+
+    private static final String TABLE_PACKAGES = "packages";
+    private static final String TABLE_STEPS = "steps";
+
+    private static final String KEY_ID = "id";
+
+    private static final String KEY_NAME = "name";
+    private static final String KEY_COD = "cod";
+
+    private static final String KEY_DATE = "date";
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_DESCRIPTION = "description";
+    private static final String KEY_LOCAL = "local";
+    private static final String KEY_PACKAGE = "package";
+
+    public Store(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public static List<String> getCodes(Context context) {
+        Store store = new Store(context);
+        return store.getCodes();
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        final String CREATE_PACKAGES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_PACKAGES + "("
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_NAME + " TEXT,"
+                + KEY_COD + " TEXT)";
+        db.execSQL(CREATE_PACKAGES_TABLE);
+
+        final String CREATE_STEPS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_STEPS + "("
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_DATE + " INTEGER,"
+                + KEY_TITLE + " TEXT,"
+                + KEY_DESCRIPTION + " TEXT,"
+                + KEY_LOCAL + " TEXT,"
+                + KEY_PACKAGE + " TEXT)";
+        db.execSQL(CREATE_STEPS_TABLE);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int i, int i2) {
+    }
+
+    public List<String> getCodes() {
+        List<String> codes = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        if (db != null) {
+            Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_COD}, null, null, null, null, null, null);
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    codes.add(cursor.getString(cursor.getColumnIndex(KEY_COD)));
+                }
+            }
+
+            db.close();
+        }
+
+        return codes;
+    }
+
+    public String getName(String cod) {
+        String name = "";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null) {
+            Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_NAME}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                name = cursor.getString(cursor.getColumnIndex(KEY_NAME));
+            }
+        }
+
+        return name;
+    }
+
+    public List<Correios.Step> getSteps(String cod) {
+        List<Correios.Step> steps = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        if (db != null) {
+            Cursor cursor = db.query(TABLE_STEPS, new String[]{KEY_DATE, KEY_TITLE, KEY_DESCRIPTION, KEY_LOCAL}, KEY_PACKAGE + "=?", new String[]{cod}, null, null, null, null);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    Correios.Step step = new Correios.Step();
+
+                    step.title = cursor.getString(cursor.getColumnIndex(KEY_TITLE));
+                    step.description = cursor.getString(cursor.getColumnIndex(KEY_DESCRIPTION));
+                    step.local = cursor.getString(cursor.getColumnIndex(KEY_LOCAL));
+                    step.date = new Date(cursor.getLong(cursor.getColumnIndex(KEY_DATE)));
+
+                    steps.add(step);
+                } while (cursor.moveToNext());
+            }
+
+            db.close();
+        }
+
+        return steps;
+    }
+
+    public void insertPackage(Package pkg) {
+        List<Correios.Step> steps = pkg.getSteps();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        if (db != null) {
+            ContentValues values = new ContentValues();
+
+            values.put(KEY_NAME, pkg.getName());
+            values.put(KEY_COD, pkg.getCod());
+
+            db.insert(TABLE_PACKAGES, null, values);
+
+            for (Correios.Step step : steps) {
+                values = new ContentValues();
+
+                values.put(KEY_TITLE, step.title);
+                values.put(KEY_DESCRIPTION, step.description);
+                values.put(KEY_LOCAL, step.local);
+                values.put(KEY_DATE, step.date.getTime());
+                values.put(KEY_PACKAGE, pkg.getCod());
+
+                db.insert(TABLE_STEPS, null, values);
+            }
+
+            db.close();
+        }
+    }
+
+    public void removePackage(Package pkg) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        if (db != null) {
+            String cod = pkg.getCod();
+
+            db.delete(TABLE_STEPS, KEY_PACKAGE + "=?", new String[]{cod});
+            db.delete(TABLE_PACKAGES, KEY_COD + "=?", new String[]{cod});
+
+            db.close();
+        }
+    }
+
+    public void updatePackage(Package pkg) {
+        int countPkg = pkg.getSteps().size();
+        int countDB = getSteps(pkg.getCod()).size();
+
+        if (countDB == countPkg) {
+            return;
+        }
+
+        removePackage(pkg);
+        insertPackage(pkg);
+    }
+
+}

@@ -23,39 +23,66 @@
 package br.mg.cefet.tracker;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends Activity implements Tracker.TrackerDone {
+import br.mg.cefet.tracker.backend.Package;
 
-    private TextView tv;
-    private Tracker pack;
+public class MainActivity extends Activity implements Package.StatusReady {
+
+    private EditText searchPackage = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tv = (TextView) findViewById(R.id.text);
+        searchPackage = (EditText) findViewById(R.id.search_package);
+        if (searchPackage != null) {
+            searchPackage.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                        searchForPackage();
+                        return true;
+                    }
 
-        pack = new Tracker("eg134376059kr");
-        pack.setListener(this);
-        pack.sync();
+                    return false;
+                }
+            });
+        }
     }
 
     @Override
-    public void trackerFinishedSyncing(boolean success) {
-        if (tv != null && pack != null) {
-            String txt = "";
-
-            for (Tracker.Step step : pack.getSteps()) {
-                txt += "Time: " + step.date + "\n";
-                txt += "City: " + step.city + "\n";
-                txt += "Title: " + step.title + "\n";
-                txt += "Desc: " + step.description + "\n\n";
-            }
-
-            tv.setText(txt);
-        }
+    public void statusUpdated(Package pkg) {
     }
+
+    private String getSearchPackageText() {
+        String text = "";
+
+        if (searchPackage == null) {
+            searchPackage = (EditText) findViewById(R.id.search_package);
+        }
+
+        if (searchPackage != null) {
+            Editable editable = searchPackage.getText();
+            if (editable != null) {
+                text = editable.toString();
+            }
+        }
+
+        return text;
+    }
+
+    private void searchForPackage() {
+    }
+
 }

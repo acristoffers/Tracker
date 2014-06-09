@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker;
+package br.mg.cefet.tracker.backend;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -45,14 +45,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Tracker {
+public class Correios {
 
     private List<Step> steps = new ArrayList<>();
     private String pack;
-    private TrackerDone listener = null;
+    private SyncDone listener = null;
 
-    public Tracker(String cod) {
-        pack = cod.toUpperCase();
+    public Correios(String cod, SyncDone listener) {
+        this.pack = cod.toUpperCase();
+        this.listener = listener;
     }
 
     public void sync() {
@@ -75,8 +76,10 @@ public class Tracker {
             if (html != null) {
                 parseTable(html);
 
-                notifyOnMainThread(true);
-                return;
+                if (!steps.isEmpty()) {
+                    notifyOnMainThread(true);
+                    return;
+                }
             }
         }
 
@@ -123,7 +126,7 @@ public class Tracker {
         Runnable myRunnable = new Runnable() {
             @Override
             public void run() {
-                listener.trackerFinishedSyncing(b);
+                listener.finishedSyncing(b);
             }
         };
 
@@ -171,7 +174,7 @@ public class Tracker {
                 }
 
                 if (split[2] != null) {
-                    step.city = split[2].trim();
+                    step.local = split[2].trim();
                 }
 
                 DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -203,7 +206,7 @@ public class Tracker {
 
         step.title = step.title.replaceAll("[ ]*/$", "");
         step.description = step.description.replaceAll("[ ]*/$", "");
-        step.city = step.city.replaceAll("[ ]*/$", "");
+        step.local = step.local.replaceAll("[ ]*/$", "");
 
         steps.add(step);
     }
@@ -216,19 +219,15 @@ public class Tracker {
         return steps;
     }
 
-    public void setListener(TrackerDone listener) {
-        this.listener = listener;
+    public interface SyncDone {
+        public void finishedSyncing(boolean success);
     }
 
-    public interface TrackerDone {
-        public void trackerFinishedSyncing(boolean success);
-    }
-
-    public class Step {
+    public static class Step {
         public Date date = new Date();
         public String title = "";
         public String description = "";
-        public String city = "";
+        public String local = "";
     }
 
 }

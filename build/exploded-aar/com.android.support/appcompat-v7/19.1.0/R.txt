@@ -105,7 +105,7 @@ int attr textAppearanceSearchResultSubtitle 0x7f01003a
 int attr textAppearanceSearchResultTitle 0x7f01003b
 int attr textAppearanceSmallPopupMenu 0x7f01003c
 int attr textColorSearchUrl 0x7f01003d
-int attr title 0x7f01003e
+int attr name 0x7f01003e
 int attr titleTextStyle 0x7f010042
 int attr windowActionBar 0x7f010050
 int attr windowActionBarOverlay 0x7f010051
@@ -287,7 +287,7 @@ int id showTitle 0x7f070006
 int id split_action_bar 0x7f07001e
 int id submit_area 0x7f070039
 int id tabMode 0x7f070002
-int id title 0x7f07002b
+int id name 0x7f07002b
 int id top_action_bar 0x7f070020
 int id up 0x7f070021
 int id useLogo 0x7f070003

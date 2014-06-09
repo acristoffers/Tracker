@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Tracker</string>
-    <string name="hello_world">Hello world!</string>
+
+    <string name="search_for_package">Search for package</string>
 
 </resources>
