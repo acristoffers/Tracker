@@ -23,13 +23,19 @@
 package br.mg.cefet.tracker;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,12 +43,18 @@ import br.mg.cefet.tracker.backend.Package;
 
 public class MainActivity extends Activity implements Package.StatusReady {
 
+    private static final int REQUEST_SAVE_PACKAGE = 0;
     private EditText searchPackage = null;
+    private Package searchingForPackage = null;
+    private AlertDialog dialog = null;
+    private PackageListAdapter packageListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        packageListAdapter = new PackageListAdapter(this);
 
         searchPackage = (EditText) findViewById(R.id.search_package);
         if (searchPackage != null) {
@@ -59,10 +71,36 @@ public class MainActivity extends Activity implements Package.StatusReady {
                 }
             });
         }
+
+        ListView listView = (ListView) findViewById(R.id.packages);
+        if (listView != null) {
+            listView.setAdapter(packageListAdapter);
+        }
     }
 
-    @Override
-    public void statusUpdated(Package pkg) {
+    private void searchForPackage() {
+        if (searchingForPackage == null) {
+            String cod = getSearchPackageText();
+
+            if (cod.length() != 13) {
+                Toast toast = Toast.makeText(this, R.string.invalid_tracking_number, Toast.LENGTH_LONG);
+                toast.show();
+                return;
+            }
+
+            searchingForPackage = new Package(cod, this);
+            searchingForPackage.setListener(this);
+            searchingForPackage.checkForStatusUpdates();
+
+            LayoutInflater inflater = getLayoutInflater();
+            View view = inflater.inflate(R.layout.dialog_searching, null);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setView(view);
+
+            dialog = builder.create();
+            dialog.show();
+        }
     }
 
     private String getSearchPackageText() {
@@ -82,7 +120,49 @@ public class MainActivity extends Activity implements Package.StatusReady {
         return text;
     }
 
-    private void searchForPackage() {
+    @Override
+    protected void onRestart() {
+        packageListAdapter.updatePackageList();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        packageListAdapter.updatePackageList();
+        super.onResume();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_CANCELED) {
+            searchingForPackage.remove();
+        }
+
+        searchingForPackage = null;
+
+        packageListAdapter.updatePackageList();
+    }
+
+    @Override
+    public void statusUpdated(Package pkg) {
+        dialog.dismiss();
+
+        dialog = null;
+
+        if (pkg.getSteps().isEmpty()) {
+            searchingForPackage = null;
+
+            Toast toast = Toast.makeText(this, R.string.package_not_found, Toast.LENGTH_LONG);
+            toast.show();
+        } else {
+            searchPackage.setText("");
+
+            pkg.save();
+
+            Intent intent = new Intent(this, PackageAddActivity.class);
+            intent.putExtra(PackageAddActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
+            startActivityForResult(intent, REQUEST_SAVE_PACKAGE);
+        }
     }
 
 }

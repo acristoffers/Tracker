@@ -2,18 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
     android:padding="@dimen/margins"
     tools:context="${relativePackage}.${activityClass}">
 
-    <EditText
+    <br.mg.cefet.tracker.PackageSearchEditText
         android:id="@+id/search_package"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/widget_height"
-        android:layout_weight="1"
+        android:layout_marginBottom="@dimen/widget_padding"
         android:gravity="center|center_horizontal"
         android:hint="@string/search_for_package"
-        android:inputType="textCapCharacters"
         android:imeOptions="actionSearch"
+        android:inputType="textNoSuggestions"
         android:typeface="monospace" />
+
+    <ListView
+        android:id="@+id/packages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/holo_blue_dark"
+        android:dividerHeight="1dp" />
 
 </LinearLayout>

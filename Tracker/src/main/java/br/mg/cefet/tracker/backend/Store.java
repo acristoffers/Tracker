@@ -44,6 +44,7 @@ public class Store extends SQLiteOpenHelper {
 
     private static final String KEY_NAME = "name";
     private static final String KEY_COD = "cod";
+    private static final String KEY_ACTIVE = "active";
 
     private static final String KEY_DATE = "date";
     private static final String KEY_TITLE = "title";
@@ -58,28 +59,6 @@ public class Store extends SQLiteOpenHelper {
     public static List<String> getCodes(Context context) {
         Store store = new Store(context);
         return store.getCodes();
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        final String CREATE_PACKAGES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_PACKAGES + "("
-                + KEY_ID + " INTEGER PRIMARY KEY,"
-                + KEY_NAME + " TEXT,"
-                + KEY_COD + " TEXT)";
-        db.execSQL(CREATE_PACKAGES_TABLE);
-
-        final String CREATE_STEPS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_STEPS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY,"
-                + KEY_DATE + " INTEGER,"
-                + KEY_TITLE + " TEXT,"
-                + KEY_DESCRIPTION + " TEXT,"
-                + KEY_LOCAL + " TEXT,"
-                + KEY_PACKAGE + " TEXT)";
-        db.execSQL(CREATE_STEPS_TABLE);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i2) {
     }
 
     public List<String> getCodes() {
@@ -100,6 +79,45 @@ public class Store extends SQLiteOpenHelper {
         return codes;
     }
 
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        final String CREATE_PACKAGES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_PACKAGES + "("
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_NAME + " TEXT,"
+                + KEY_COD + " TEXT,"
+                + KEY_ACTIVE + " INT)";
+        db.execSQL(CREATE_PACKAGES_TABLE);
+
+        final String CREATE_STEPS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_STEPS + "("
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_DATE + " INTEGER,"
+                + KEY_TITLE + " TEXT,"
+                + KEY_DESCRIPTION + " TEXT,"
+                + KEY_LOCAL + " TEXT,"
+                + KEY_PACKAGE + " TEXT)";
+        db.execSQL(CREATE_STEPS_TABLE);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    }
+
+    public boolean getActive(String cod) {
+        boolean active = false;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null) {
+            Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_ACTIVE}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                active = cursor.getInt(cursor.getColumnIndex(KEY_ACTIVE)) == 1;
+            }
+
+            db.close();
+        }
+
+        return active;
+    }
+
     public String getName(String cod) {
         String name = "";
 
@@ -109,9 +127,16 @@ public class Store extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 name = cursor.getString(cursor.getColumnIndex(KEY_NAME));
             }
+
+            db.close();
         }
 
         return name;
+    }
+
+    public void updatePackage(Package pkg) {
+        removePackage(pkg);
+        insertPackage(pkg);
     }
 
     public List<Correios.Step> getSteps(String cod) {
@@ -140,6 +165,19 @@ public class Store extends SQLiteOpenHelper {
         return steps;
     }
 
+    public void removePackage(Package pkg) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        if (db != null) {
+            String cod = pkg.getCod();
+
+            db.delete(TABLE_STEPS, KEY_PACKAGE + "=?", new String[]{cod});
+            db.delete(TABLE_PACKAGES, KEY_COD + "=?", new String[]{cod});
+
+            db.close();
+        }
+    }
+
     public void insertPackage(Package pkg) {
         List<Correios.Step> steps = pkg.getSteps();
         SQLiteDatabase db = this.getWritableDatabase();
@@ -149,6 +187,7 @@ public class Store extends SQLiteOpenHelper {
 
             values.put(KEY_NAME, pkg.getName());
             values.put(KEY_COD, pkg.getCod());
+            values.put(KEY_ACTIVE, 1);
 
             db.insert(TABLE_PACKAGES, null, values);
 
@@ -166,31 +205,6 @@ public class Store extends SQLiteOpenHelper {
 
             db.close();
         }
-    }
-
-    public void removePackage(Package pkg) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        if (db != null) {
-            String cod = pkg.getCod();
-
-            db.delete(TABLE_STEPS, KEY_PACKAGE + "=?", new String[]{cod});
-            db.delete(TABLE_PACKAGES, KEY_COD + "=?", new String[]{cod});
-
-            db.close();
-        }
-    }
-
-    public void updatePackage(Package pkg) {
-        int countPkg = pkg.getSteps().size();
-        int countDB = getSteps(pkg.getCod()).size();
-
-        if (countDB == countPkg) {
-            return;
-        }
-
-        removePackage(pkg);
-        insertPackage(pkg);
     }
 
 }

@@ -34,12 +34,14 @@ public class Package implements Correios.SyncDone {
     private StatusReady listener = null;
 
     private String name = "";
+    private boolean active;
     private List<Correios.Step> steps = new ArrayList<>();
 
     public Package(String cod, Context context) {
         store = new Store(context);
         steps = store.getSteps(cod);
         name = store.getName(cod);
+        active = store.getActive(cod);
         correios = new Correios(cod, this);
     }
 
@@ -69,6 +71,14 @@ public class Package implements Correios.SyncDone {
 
     public void save() {
         store.updatePackage(this);
+    }
+
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getCod() {

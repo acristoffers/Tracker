@@ -5,4 +5,18 @@
 
     <string name="search_for_package">Search for package</string>
 
+    <string name="invalid_tracking_number">Invalid tracking number. Must have 13 characters</string>
+    <string name="searching_for_package">Searching for package…</string>
+    <string name="package_not_found">Package not found!</string>
+
+    <string name="edit_package">Edit package</string>
+    <string name="view_package">View package</string>
+
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="remove">Remove</string>
+    <string name="Hide">Hide</string>
+
+    <string name="please_type_name">Please type a name to identify this package</string>
+
 </resources>

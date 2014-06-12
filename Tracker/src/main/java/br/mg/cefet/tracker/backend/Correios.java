@@ -120,6 +120,20 @@ public class Correios {
         return m.find() ? m.group(1) : null;
     }
 
+    private void parseTable(String html) {
+        html = html.replaceAll("[\\s]+", " ");
+        String regex = "<tr>(.*?)</tr>";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(html);
+
+        steps = new ArrayList<>();
+
+        while (m.find()) {
+            String tr = m.group(1);
+            parseRow(tr);
+        }
+    }
+
     private void notifyOnMainThread(final boolean b) {
         Handler mainHandler = new Handler(Looper.getMainLooper());
 
@@ -133,18 +147,8 @@ public class Correios {
         mainHandler.post(myRunnable);
     }
 
-    private void parseTable(String html) {
-        html = html.replaceAll("[\\s]+", " ");
-        String regex = "<tr>(.*?)</tr>";
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(html);
-
-        steps = new ArrayList<>();
-
-        while (m.find()) {
-            String tr = m.group(1);
-            parseRow(tr);
-        }
+    public String getCod() {
+        return pack;
     }
 
     private void parseRow(String html) {
@@ -209,10 +213,6 @@ public class Correios {
         step.local = step.local.replaceAll("[ ]*/$", "");
 
         steps.add(step);
-    }
-
-    public String getCod() {
-        return pack;
     }
 
     public List<Step> getSteps() {
