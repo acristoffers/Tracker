@@ -1,0 +1,29 @@
+<resources>
+
+    <string name="active">Aktiv</string>
+    <string name="active_hint">Scheint nicht in Home, wenn nicht aktiv</string>
+    <string name="app_name">Tracker</string>
+    <string name="are_you_sure">Sind Sie sicher</string>
+    <string name="check_for_updates">Nach Aktualisierungen suchen</string>
+    <string name="checking_for_updates">sucht nach Aktualisierungen</string>
+    <string name="confirm_delete">Sind Sie sicher, dass Sie das Paket %s löschen wollen?</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="edit_package">Paket bearbeiten</string>
+    <string name="finished_checking_for_updates">Such nach Aktualisierung festgelegt</string>
+    <string name="hide_inactive">Inaktiv verstecken</string>
+    <string name="invalid_tracking_number">Ungültige Tracking-Nummer. Soll 13 Zeichen haben</string>
+    <string name="no">Nein</string>
+    <string name="notification_package_updated_body">Es gibt Neues vom Paket %s</string>
+    <string name="notification_package_updated_title">%s aktualisiert!</string>
+    <string name="package_not_found">Paket nicht gefunden!</string>
+    <string name="please_type_name">Bitte tippen Sie einen Name für dieses Paket</string>
+    <string name="remove">Löschen</string>
+    <string name="save">Sichern</string>
+    <string name="search_for_package">Nach Paket suchen</string>
+    <string name="searching_for_package">Wird nach Paket gesucht…</string>
+    <string name="show_inactive">Inaktiv anzeigen</string>
+    <string name="type_code_above">Tippen Sie eine Tracking-Nummer in dem obene Feld um zu suchen und hinzufügen</string>
+    <string name="view_package">Paket anzeigen</string>
+    <string name="yes">Ja</string>
+
+</resources>

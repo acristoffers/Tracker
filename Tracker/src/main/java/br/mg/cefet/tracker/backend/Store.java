@@ -22,6 +22,7 @@
 
 package br.mg.cefet.tracker.backend;
 
+import android.app.backup.BackupManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -34,9 +35,9 @@ import java.util.List;
 
 public class Store extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "packageTracker";
+    public static final String DATABASE_NAME = "packageTracker";
 
+    private static final int DATABASE_VERSION = 1;
     private static final String TABLE_PACKAGES = "packages";
     private static final String TABLE_STEPS = "steps";
 
@@ -52,8 +53,11 @@ public class Store extends SQLiteOpenHelper {
     private static final String KEY_LOCAL = "local";
     private static final String KEY_PACKAGE = "package";
 
+    private Context context;
+
     public Store(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     public static List<String> getCodes(Context context) {
@@ -194,6 +198,11 @@ public class Store extends SQLiteOpenHelper {
             }
 
             db.close();
+        }
+
+        if (!pkg.getName().isEmpty()) {
+            BackupManager bm = new BackupManager(context);
+            bm.dataChanged();
         }
     }
 
