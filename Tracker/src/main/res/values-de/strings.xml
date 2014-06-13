@@ -2,7 +2,7 @@
 
     <string name="active">Aktiv</string>
     <string name="active_hint">Scheint nicht in Home, wenn nicht aktiv</string>
-    <string name="app_name">Tracker</string>
+    <string name="app_name">Correios Tracker</string>
     <string name="are_you_sure">Sind Sie sicher</string>
     <string name="check_for_updates">Nach Aktualisierungen suchen</string>
     <string name="checking_for_updates">sucht nach Aktualisierungen</string>
@@ -20,7 +20,7 @@
     <string name="remove">Löschen</string>
     <string name="save">Sichern</string>
     <string name="search_for_package">Nach Paket suchen</string>
-    <string name="searching_for_package">Wird nach Paket gesucht…</string>
+    <string name="searching_for_package">Sucht nach Paket…</string>
     <string name="show_inactive">Inaktiv anzeigen</string>
     <string name="type_code_above">Tippen Sie eine Tracking-Nummer in dem obene Feld um zu suchen und hinzufügen</string>
     <string name="view_package">Paket anzeigen</string>

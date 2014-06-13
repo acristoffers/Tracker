@@ -2,7 +2,7 @@
 
     <string name="active">Ativo</string>
     <string name="active_hint">Não aparecerá na home se não estiver ativo</string>
-    <string name="app_name">Tracker</string>
+    <string name="app_name">Correios Tracker</string>
     <string name="are_you_sure">Tem certeza?</string>
     <string name="check_for_updates">Procurar por atualizações</string>
     <string name="checking_for_updates">Procurando por atualizações</string>

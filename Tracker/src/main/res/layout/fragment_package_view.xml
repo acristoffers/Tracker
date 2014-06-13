@@ -37,7 +37,7 @@
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/widget_height"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/button_bar"
         android:layout_marginBottom="@dimen/widget_padding"
@@ -45,6 +45,7 @@
         android:layout_marginTop="@dimen/margins"
         android:layout_toLeftOf="@+id/code"
         android:gravity="left|center_vertical"
+        android:minHeight="@dimen/widget_height"
         android:padding="@dimen/widget_padding"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/holo_green_dark"/>
@@ -73,7 +74,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/code"
+        android:layout_below="@id/name"
         android:divider="@color/holo_blue_light"
         android:dividerHeight="1dp"/>
 
