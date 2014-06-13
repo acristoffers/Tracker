@@ -20,23 +20,21 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker;
+package br.mg.cefet.tracker.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.mg.cefet.tracker.R;
 import br.mg.cefet.tracker.backend.Correios;
 import br.mg.cefet.tracker.backend.Package;
 
@@ -47,8 +45,9 @@ public class PackageListAdapter extends BaseAdapter implements Package.StatusRea
     private List<Package> packageList;
     private LayoutInflater layoutInflater;
 
-    public PackageListAdapter(Context context) {
+    public PackageListAdapter(Context context, boolean showInactive) {
         this.context = context;
+        this.showInactive = showInactive;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         updatePackageList();
     }
@@ -68,13 +67,6 @@ public class PackageListAdapter extends BaseAdapter implements Package.StatusRea
         }
 
         notifyDataSetChanged();
-    }
-
-    public PackageListAdapter(Context context, boolean showInactive) {
-        this.context = context;
-        this.showInactive = showInactive;
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        updatePackageList();
     }
 
     @Override
@@ -114,65 +106,24 @@ public class PackageListAdapter extends BaseAdapter implements Package.StatusRea
             date = sdf.format(step.date);
         }
 
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, PackageViewActivity.class);
-                intent.putExtra(PackageAddActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
-                context.startActivity(intent);
-            }
-        };
-
         TextView textView = (TextView) view.findViewById(R.id.name);
         if (textView != null) {
             textView.setText(name);
-            textView.setOnClickListener(onClickListener);
         }
 
         textView = (TextView) view.findViewById(R.id.code);
         if (textView != null) {
             textView.setText(code);
-            textView.setOnClickListener(onClickListener);
         }
 
         textView = (TextView) view.findViewById(R.id.title);
         if (textView != null) {
             textView.setText(title);
-            textView.setOnClickListener(onClickListener);
         }
 
         textView = (TextView) view.findViewById(R.id.date);
         if (textView != null) {
             textView.setText(date);
-            textView.setOnClickListener(onClickListener);
-        }
-
-        LinearLayout layout = (LinearLayout) view.findViewById(R.id.green_bar);
-        if (layout != null) {
-            layout.setOnClickListener(onClickListener);
-        }
-
-        Button remove = (Button) view.findViewById(R.id.remove);
-        if (remove != null) {
-            remove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    pkg.remove();
-                    updatePackageList();
-                }
-            });
-        }
-
-        Button edit = (Button) view.findViewById(R.id.edit);
-        if (edit != null) {
-            edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, PackageAddActivity.class);
-                    intent.putExtra(PackageAddActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
-                    context.startActivity(intent);
-                }
-            });
         }
 
         return view;

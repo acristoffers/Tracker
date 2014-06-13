@@ -28,4 +28,12 @@
     <string name="show_inactive">Show inactive</string>
     <string name="hide_inactive">Hide Inactive</string>
 
+    <string name="type_code_above">Type a tracking number in the field above to search and add</string>
+
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="confirm_delete">Are you sure you want to delete package %s?</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
 </resources>

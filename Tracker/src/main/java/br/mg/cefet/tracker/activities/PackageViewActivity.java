@@ -20,47 +20,47 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker;
+package br.mg.cefet.tracker.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import br.mg.cefet.tracker.R;
+import br.mg.cefet.tracker.adapters.StepsListAdapter;
 import br.mg.cefet.tracker.backend.Package;
 
-public class PackageAddActivity extends ActionBarActivity {
-
-    public static final String EXTRA_PACKAGE_CODE = "package_code";
+public class PackageViewActivity extends ActionBarActivity {
 
     private Package pkg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_package_add);
+        setContentView(R.layout.activity_package_view);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        String code = getIntent().getStringExtra(EXTRA_PACKAGE_CODE);
-        pkg = new Package(code, this);
+        String code = getIntent().getStringExtra(PackageEditActivity.EXTRA_PACKAGE_CODE);
+        pkg = new br.mg.cefet.tracker.backend.Package(code, this);
 
         if (!pkg.getName().isEmpty()) {
             setTitle(pkg.getName());
         }
 
-        EditText name = (EditText) findViewById(R.id.name);
+        TextView name = (TextView) findViewById(R.id.name);
         if (name != null) {
             name.setText(pkg.getName());
         }
@@ -70,11 +70,6 @@ public class PackageAddActivity extends ActionBarActivity {
             cod.setText(code);
         }
 
-        CheckBox active = (CheckBox) findViewById(R.id.active);
-        if (active != null) {
-            active.setChecked(pkg.getActive());
-        }
-
         ListView listView = (ListView) findViewById(R.id.steps);
         if (listView != null) {
             listView.setAdapter(new StepsListAdapter(this, pkg));
@@ -82,59 +77,63 @@ public class PackageAddActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        setResult(RESULT_CANCELED);
-        finish();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_package_add, menu);
+        inflater.inflate(R.menu.menu_package_view, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.save: {
-                EditText name = (EditText) findViewById(R.id.name);
-                if (name != null) {
-                    Editable editable = name.getText();
-                    if (editable != null) {
-                        String s = editable.toString();
-                        if (s.isEmpty()) {
-                            Toast toast = Toast.makeText(PackageAddActivity.this, R.string.please_type_name, Toast.LENGTH_LONG);
-                            toast.show();
-                            return true;
-                        } else {
-                            pkg.setName(s);
-                        }
+            case R.id.edit: {
+                Intent intent = new Intent(this, PackageEditActivity.class);
+                intent.putExtra(PackageEditActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.abc_fade_out);
+                return true;
+            }
+
+            case R.id.remove: {
+                String body = getString(R.string.confirm_delete);
+                body = String.format(body, pkg.getName());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.are_you_sure);
+                builder.setMessage(body);
+
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        pkg.remove();
+                        finish();
+                        overridePendingTransition(R.anim.abc_fade_in, R.anim.slide_out_right);
                     }
-                }
+                });
 
-                CheckBox active = (CheckBox) findViewById(R.id.active);
-                if (active != null) {
-                    pkg.setActive(active.isChecked());
-                }
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
 
-                pkg.save();
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
-                setResult(RESULT_OK);
-                finish();
+                return true;
+            }
 
+            case android.R.id.home: {
+                Intent intent = new Intent(this, PackageListActivity.class);
+                NavUtils.navigateUpTo(this, intent);
+                overridePendingTransition(R.anim.abc_fade_in, R.anim.slide_out_right);
                 return true;
             }
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onNavigateUp() {
-        setResult(RESULT_CANCELED);
-        finish();
-        return true;
     }
 
 }

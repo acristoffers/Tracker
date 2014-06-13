@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/widget_padding">
+    android:background="@android:color/white">
 
     <EditText
         android:id="@+id/name"
@@ -14,6 +14,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="@dimen/widget_padding"
+        android:layout_marginLeft="@dimen/margins"
+        android:layout_marginTop="@dimen/margins"
         android:layout_toLeftOf="@+id/code"
         android:gravity="left|center_vertical"
         android:inputType="textNoSuggestions"
@@ -28,6 +30,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="@dimen/widget_padding"
+        android:layout_marginRight="@dimen/margins"
+        android:layout_marginTop="@dimen/margins"
         android:gravity="left|center_vertical"
         android:padding="@dimen/widget_padding"
         android:text="AB123456789CD"
@@ -41,6 +45,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/widget_height"
         android:layout_below="@id/code"
+        android:layout_marginBottom="@dimen/widget_padding"
+        android:layout_marginLeft="@dimen/margins"
+        android:layout_marginRight="@dimen/margins"
+        android:layout_marginTop="@dimen/widget_padding"
         android:hint="@string/active_hint"
         android:text="@string/active"
         />
@@ -52,6 +60,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/active"/>
+        android:layout_below="@id/active"
+        android:divider="@color/holo_blue_dark"
+        android:dividerHeight="1dp"/>
 
 </RelativeLayout>

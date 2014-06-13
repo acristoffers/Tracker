@@ -20,43 +20,49 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker;
+package br.mg.cefet.tracker.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import br.mg.cefet.tracker.R;
+import br.mg.cefet.tracker.adapters.StepsListAdapter;
 import br.mg.cefet.tracker.backend.Package;
 
-public class PackageViewActivity extends ActionBarActivity {
+public class PackageEditActivity extends ActionBarActivity {
+
+    public static final String EXTRA_PACKAGE_CODE = "package_code";
 
     private Package pkg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_package_view);
+        setContentView(R.layout.activity_package_edit);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        String code = getIntent().getStringExtra(PackageAddActivity.EXTRA_PACKAGE_CODE);
-        pkg = new br.mg.cefet.tracker.backend.Package(code, this);
+        String code = getIntent().getStringExtra(EXTRA_PACKAGE_CODE);
+        pkg = new Package(code, this);
 
         if (!pkg.getName().isEmpty()) {
             setTitle(pkg.getName());
         }
 
-        TextView name = (TextView) findViewById(R.id.name);
+        EditText name = (EditText) findViewById(R.id.name);
         if (name != null) {
             name.setText(pkg.getName());
         }
@@ -66,6 +72,11 @@ public class PackageViewActivity extends ActionBarActivity {
             cod.setText(code);
         }
 
+        CheckBox active = (CheckBox) findViewById(R.id.active);
+        if (active != null) {
+            active.setChecked(pkg.getActive());
+        }
+
         ListView listView = (ListView) findViewById(R.id.steps);
         if (listView != null) {
             listView.setAdapter(new StepsListAdapter(this, pkg));
@@ -73,36 +84,62 @@ public class PackageViewActivity extends ActionBarActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        finish();
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.slide_out_right);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_package_view, menu);
+        inflater.inflate(R.menu.menu_package_add, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.edit: {
-                Intent intent = new Intent(this, PackageAddActivity.class);
-                intent.putExtra(PackageAddActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
-                startActivity(intent);
-                return true;
-            }
+            case R.id.save: {
+                EditText name = (EditText) findViewById(R.id.name);
+                if (name != null) {
+                    Editable editable = name.getText();
+                    if (editable != null) {
+                        String s = editable.toString();
+                        if (s.isEmpty()) {
+                            Toast toast = Toast.makeText(PackageEditActivity.this, R.string.please_type_name, Toast.LENGTH_LONG);
+                            toast.show();
+                            return true;
+                        } else {
+                            pkg.setName(s);
+                        }
+                    }
+                }
 
-            case R.id.remove: {
-                pkg.remove();
+                CheckBox active = (CheckBox) findViewById(R.id.active);
+                if (active != null) {
+                    pkg.setActive(active.isChecked());
+                }
+
+                pkg.save();
+
+                setResult(RESULT_OK);
                 finish();
-                return true;
-            }
+                overridePendingTransition(R.anim.abc_fade_in, R.anim.slide_out_right);
 
-            case android.R.id.home: {
-                Intent intent = new Intent(this, MainActivity.class);
-                NavUtils.navigateUpTo(this, intent);
                 return true;
             }
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigateUp() {
+        setResult(RESULT_CANCELED);
+        finish();
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.slide_out_right);
+        return true;
     }
 
 }

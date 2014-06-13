@@ -37,6 +37,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.mg.cefet.tracker.activities.PackageEditActivity;
+import br.mg.cefet.tracker.activities.PackageViewActivity;
 import br.mg.cefet.tracker.backend.Package;
 
 public class AlarmReceiver extends BroadcastReceiver implements Package.StatusReady {
@@ -92,7 +94,7 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
                 message = String.format(message, pkg.getName());
 
                 Intent intent = new Intent(context, PackageViewActivity.class);
-                intent.putExtra(PackageAddActivity.EXTRA_PACKAGE_CODE, code);
+                intent.putExtra(PackageEditActivity.EXTRA_PACKAGE_CODE, code);
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 Bitmap icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);

@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker;
+package br.mg.cefet.tracker.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -33,6 +33,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import br.mg.cefet.tracker.R;
 import br.mg.cefet.tracker.backend.Correios;
 import br.mg.cefet.tracker.backend.Package;
 

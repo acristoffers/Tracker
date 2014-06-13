@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker;
+package br.mg.cefet.tracker.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -37,26 +37,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import br.mg.cefet.tracker.AlarmReceiver;
+import br.mg.cefet.tracker.R;
+import br.mg.cefet.tracker.adapters.PackageListAdapter;
 import br.mg.cefet.tracker.backend.Package;
 
-public class MainActivity extends Activity implements Package.StatusReady {
+public class PackageListActivity extends Activity implements Package.StatusReady {
 
     private static final int REQUEST_SAVE_PACKAGE = 0;
+    private static boolean showingInactive = false;
     private EditText searchPackage = null;
     private Package searchingForPackage = null;
     private AlertDialog dialog = null;
     private PackageListAdapter packageListAdapter;
-    private static boolean showingInactive = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_package_list);
 
         packageListAdapter = new PackageListAdapter(this, showingInactive);
 
@@ -78,7 +82,22 @@ public class MainActivity extends Activity implements Package.StatusReady {
 
         ListView listView = (ListView) findViewById(R.id.packages);
         if (listView != null) {
+            View view = findViewById(R.id.emptyView);
+
+            listView.setEmptyView(view);
             listView.setAdapter(packageListAdapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Package pkg = (Package) packageListAdapter.getItem(i);
+
+                    Intent intent = new Intent(PackageListActivity.this, PackageViewActivity.class);
+                    intent.putExtra(PackageEditActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
+
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.abc_fade_out);
+                }
+            });
         }
 
         AlarmReceiver.setAlarm(this);
@@ -129,14 +148,26 @@ public class MainActivity extends Activity implements Package.StatusReady {
 
     @Override
     protected void onRestart() {
-        packageListAdapter.updatePackageList();
         super.onRestart();
+        packageListAdapter.updatePackageList();
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.slide_out_right);
+
+        View view = findViewById(R.id.container);
+        if (view != null) {
+            view.requestFocus();
+        }
     }
 
     @Override
     protected void onResume() {
-        packageListAdapter.updatePackageList();
         super.onResume();
+        packageListAdapter.updatePackageList();
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.slide_out_right);
+
+        View view = findViewById(R.id.container);
+        if (view != null) {
+            view.requestFocus();
+        }
     }
 
     @Override
@@ -145,7 +176,7 @@ public class MainActivity extends Activity implements Package.StatusReady {
         inflater.inflate(R.menu.menu_main, menu);
 
         MenuItem item = menu.findItem(R.id.toggle_inactive);
-        if(showingInactive) {
+        if (showingInactive) {
             item.setTitle(R.string.hide_inactive);
         } else {
             item.setTitle(R.string.show_inactive);
@@ -183,7 +214,7 @@ public class MainActivity extends Activity implements Package.StatusReady {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_CANCELED) {
+        if (resultCode == RESULT_CANCELED && searchingForPackage.getName().isEmpty()) {
             searchingForPackage.remove();
         }
 
@@ -208,9 +239,10 @@ public class MainActivity extends Activity implements Package.StatusReady {
 
             pkg.save();
 
-            Intent intent = new Intent(this, PackageAddActivity.class);
-            intent.putExtra(PackageAddActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
+            Intent intent = new Intent(this, PackageEditActivity.class);
+            intent.putExtra(PackageEditActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
             startActivityForResult(intent, REQUEST_SAVE_PACKAGE);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.abc_fade_out);
         }
     }
 

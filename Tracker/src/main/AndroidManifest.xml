@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.PackageListActivity"
             android:label="@string/app_name">
 
             <intent-filter>
@@ -25,9 +25,9 @@
         </activity>
 
         <activity
-            android:name=".PackageAddActivity"
+            android:name=".activities.PackageEditActivity"
             android:label="@string/edit_package"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activities.PackageListActivity"
             tools:ignore="UnusedAttribute">
 
             <meta-data
@@ -37,9 +37,9 @@
         </activity>
 
         <activity
-            android:name=".PackageViewActivity"
+            android:name=".activities.PackageViewActivity"
             android:label="@string/view_package"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activities.PackageListActivity"
             tools:ignore="UnusedAttribute">
 
             <meta-data

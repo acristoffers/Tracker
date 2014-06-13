@@ -4,8 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/name"
@@ -69,33 +68,6 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/white"
             tools:ignore="HardcodedText"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        style="?android:attr/buttonBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/green_bar"
-        android:gravity="right">
-
-        <Button
-            android:id="@+id/edit"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/widget_height"
-            android:layout_margin="@dimen/widget_padding"
-            android:drawableLeft="@android:drawable/ic_menu_edit"
-            android:text="@string/edit"/>
-
-        <Button
-            android:id="@+id/remove"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/widget_height"
-            android:layout_margin="@dimen/widget_padding"
-            android:drawableLeft="@android:drawable/ic_menu_delete"
-            android:text="@string/remove"/>
 
     </LinearLayout>
 

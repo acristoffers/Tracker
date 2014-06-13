@@ -3,9 +3,10 @@
     android:id="@+id/container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/widget_padding">
+    >
 
     <TextView
         android:id="@+id/name"
@@ -14,6 +15,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="@dimen/widget_padding"
+        android:layout_marginLeft="@dimen/margins"
+        android:layout_marginTop="@dimen/margins"
         android:layout_toLeftOf="@+id/code"
         android:gravity="left|center_vertical"
         android:padding="@dimen/widget_padding"
@@ -27,6 +30,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="@dimen/widget_padding"
+        android:layout_marginRight="@dimen/margins"
+        android:layout_marginTop="@dimen/margins"
         android:gravity="left|center_vertical"
         android:padding="@dimen/widget_padding"
         android:text="AB123456789CD"
@@ -42,6 +47,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/code"/>
+        android:layout_below="@id/code"
+        android:divider="@color/holo_blue_dark"
+        android:dividerHeight="1dp"/>
 
 </RelativeLayout>

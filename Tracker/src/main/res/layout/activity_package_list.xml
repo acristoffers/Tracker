@@ -1,0 +1,48 @@
+<RelativeLayout
+    android:id="@+id/container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}">
+
+    <br.mg.cefet.tracker.PackageSearchEditText
+        android:id="@+id/search_package"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_height"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/widget_padding"
+        android:layout_marginLeft="@dimen/margins"
+        android:layout_marginRight="@dimen/margins"
+        android:layout_marginTop="@dimen/margins"
+        android:gravity="center|center_horizontal"
+        android:hint="@string/search_for_package"
+        android:imeOptions="actionSearch"
+        android:inputType="textNoSuggestions"
+        android:typeface="monospace"/>
+
+    <TextView
+        android:id="@+id/emptyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/margins"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/type_code_above"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/holo_blue_dark"/>
+
+    <ListView
+        android:id="@+id/packages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_package"
+        android:divider="@color/holo_blue_dark"
+        android:dividerHeight="1dp"/>
+
+</RelativeLayout>
