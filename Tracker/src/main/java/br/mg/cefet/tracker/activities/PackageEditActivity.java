@@ -29,6 +29,8 @@ import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -47,6 +49,10 @@ public class PackageEditActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (PackageListActivity.isTablet) {
+            setTheme(android.R.style.Theme_Dialog);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_package_edit);
 
@@ -80,6 +86,56 @@ public class PackageEditActivity extends ActionBarActivity {
         ListView listView = (ListView) findViewById(R.id.steps);
         if (listView != null) {
             listView.setAdapter(new StepsListAdapter(this, pkg));
+        }
+
+        if (!PackageListActivity.isTablet) {
+            View view = findViewById(R.id.button_bar);
+            if (view != null) {
+                view.setVisibility(View.GONE);
+            }
+        } else {
+            Button cancel = (Button) findViewById(R.id.cancel);
+            if (cancel != null) {
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
+            }
+
+            Button save = (Button) findViewById(R.id.save);
+            if (save != null) {
+                save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        EditText name = (EditText) findViewById(R.id.name);
+                        if (name != null) {
+                            Editable editable = name.getText();
+                            if (editable != null) {
+                                String s = editable.toString();
+                                if (s.isEmpty()) {
+                                    Toast toast = Toast.makeText(PackageEditActivity.this, R.string.please_type_name, Toast.LENGTH_LONG);
+                                    toast.show();
+                                    return;
+                                } else {
+                                    pkg.setName(s);
+                                }
+                            }
+                        }
+
+                        CheckBox active = (CheckBox) findViewById(R.id.active);
+                        if (active != null) {
+                            pkg.setActive(active.isChecked());
+                        }
+
+                        pkg.save();
+
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                });
+            }
         }
     }
 

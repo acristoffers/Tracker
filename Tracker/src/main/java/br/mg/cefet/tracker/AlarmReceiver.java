@@ -74,7 +74,7 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,
-                0,
+                AlarmManager.INTERVAL_FIFTEEN_MINUTES,
                 AlarmManager.INTERVAL_FIFTEEN_MINUTES,
                 pendingIntent);
     }
@@ -85,6 +85,7 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
         int count = pkg.getSteps().size();
 
         if (countSteps.get(code) < count) {
+            pkg.save();
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             if (notificationManager != null) {
                 String title = context.getString(R.string.notification_package_updated_title);

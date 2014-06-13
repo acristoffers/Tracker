@@ -15,6 +15,10 @@
     <string name="save">Save</string>
     <string name="edit">Edit</string>
     <string name="remove">Remove</string>
+    <string name="check_for_updates">Check for updates</string>
+
+    <string name="checking_for_updates">Checking for updates</string>
+    <string name="finished_checking_for_updates">Finished checking for updates</string>
 
     <string name="active">Active</string>
     <string name="active_hint">Will not appear in home if not active</string>

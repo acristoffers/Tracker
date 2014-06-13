@@ -32,21 +32,20 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import br.mg.cefet.tracker.R;
-import br.mg.cefet.tracker.adapters.StepsListAdapter;
 import br.mg.cefet.tracker.backend.Package;
+import br.mg.cefet.tracker.fragments.PackageViewFragment;
 
 public class PackageViewActivity extends ActionBarActivity {
 
+    private PackageViewFragment fragment;
     private Package pkg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_package_view);
+        setContentView(R.layout.full_fragment);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -54,26 +53,19 @@ public class PackageViewActivity extends ActionBarActivity {
         }
 
         String code = getIntent().getStringExtra(PackageEditActivity.EXTRA_PACKAGE_CODE);
-        pkg = new br.mg.cefet.tracker.backend.Package(code, this);
+        pkg = new Package(code, this);
 
         if (!pkg.getName().isEmpty()) {
             setTitle(pkg.getName());
         }
 
-        TextView name = (TextView) findViewById(R.id.name);
-        if (name != null) {
-            name.setText(pkg.getName());
-        }
+        fragment = new PackageViewFragment();
+        fragment.setPackage(pkg);
 
-        TextView cod = (TextView) findViewById(R.id.code);
-        if (cod != null) {
-            cod.setText(code);
-        }
-
-        ListView listView = (ListView) findViewById(R.id.steps);
-        if (listView != null) {
-            listView.setAdapter(new StepsListAdapter(this, pkg));
-        }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, fragment, "viewFragment")
+                .commit();
     }
 
     @Override

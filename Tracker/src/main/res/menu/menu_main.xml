@@ -7,4 +7,10 @@
         android:title="@string/show_inactive"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/check_for_updates"
+        android:title="@string/check_for_updates"
+        android:icon="@android:drawable/ic_menu_rotate"
+        app:showAsAction="ifRoom"/>
+
 </menu>
