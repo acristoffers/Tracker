@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    android:id="@+id/container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/widget_padding">
@@ -15,7 +18,7 @@
         android:gravity="left|center_vertical"
         android:padding="@dimen/widget_padding"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/holo_green_dark" />
+        android:textColor="@color/holo_green_dark"/>
 
     <TextView
         android:id="@+id/code"
@@ -29,7 +32,8 @@
         android:text="AB123456789CD"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/holo_blue_dark"
-        android:typeface="monospace" />
+        android:typeface="monospace"
+        tools:ignore="HardcodedText"/>
 
     <ListView
         android:id="@+id/steps"
@@ -38,6 +42,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/code" />
+        android:layout_below="@id/code"/>
 
 </RelativeLayout>

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    android:id="@+id/container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white">
@@ -15,7 +18,8 @@
         android:padding="@dimen/widget_padding"
         android:text="Quite Cool Stuff"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/holo_green_dark" />
+        android:textColor="@color/holo_green_dark"
+        tools:ignore="HardcodedText"/>
 
     <TextView
         android:id="@+id/code"
@@ -29,7 +33,8 @@
         android:text="AB123456789CD"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/holo_blue_dark"
-        android:typeface="monospace" />
+        android:typeface="monospace"
+        tools:ignore="HardcodedText"/>
 
     <LinearLayout
         android:id="@+id/green_bar"
@@ -50,7 +55,8 @@
             android:gravity="left|center_vertical"
             android:text="Last Title"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            tools:ignore="HardcodedText"/>
 
         <TextView
             android:id="@+id/date"
@@ -61,7 +67,8 @@
             android:gravity="left|center_vertical"
             android:text="Date"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            tools:ignore="HardcodedText"/>
 
     </LinearLayout>
 
@@ -79,7 +86,7 @@
             android:layout_height="@dimen/widget_height"
             android:layout_margin="@dimen/widget_padding"
             android:drawableLeft="@android:drawable/ic_menu_edit"
-            android:text="@string/edit" />
+            android:text="@string/edit"/>
 
         <Button
             android:id="@+id/remove"
@@ -88,7 +95,7 @@
             android:layout_height="@dimen/widget_height"
             android:layout_margin="@dimen/widget_padding"
             android:drawableLeft="@android:drawable/ic_menu_delete"
-            android:text="@string/remove" />
+            android:text="@string/remove"/>
 
     </LinearLayout>
 

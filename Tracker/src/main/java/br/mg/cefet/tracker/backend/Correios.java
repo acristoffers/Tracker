@@ -165,28 +165,26 @@ public class Correios {
             td = Html.fromHtml(td).toString();
             final String[] split = td.split("\\|");
 
-            if (split != null) {
-                String date = "";
-                String time = "";
+            String date = "";
+            String time = "";
 
-                if (split[0] != null) {
-                    date = split[0].trim();
-                }
+            if (split[0] != null) {
+                date = split[0].trim();
+            }
 
-                if (split[1] != null) {
-                    time = split[1].trim();
-                }
+            if (split[1] != null) {
+                time = split[1].trim();
+            }
 
-                if (split[2] != null) {
-                    step.local = split[2].trim();
-                }
+            if (split[2] != null) {
+                step.local = split[2].trim();
+            }
 
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                try {
-                    step.date = df.parse(date + " " + time);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            try {
+                step.date = df.parse(date + " " + time);
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
 
@@ -197,14 +195,13 @@ public class Correios {
             td = Html.fromHtml(td).toString();
 
             final String[] split = td.split("\\|");
-            if (split != null) {
-                if (split[0] != null) {
-                    step.title = split[0].trim();
-                }
 
-                if (split[1] != null) {
-                    step.description = split[1].trim();
-                }
+            if (split[0] != null) {
+                step.title = split[0].trim();
+            }
+
+            if (split[1] != null) {
+                step.description = split[1].trim();
             }
         }
 

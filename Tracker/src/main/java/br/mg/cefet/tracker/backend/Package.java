@@ -24,7 +24,6 @@ package br.mg.cefet.tracker.backend;
 
 import android.content.Context;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Package implements Correios.SyncDone {
@@ -33,15 +32,17 @@ public class Package implements Correios.SyncDone {
     private Store store = null;
     private StatusReady listener = null;
 
-    private String name = "";
+    private int id = -1;
+    private String name;
     private boolean active;
-    private List<Correios.Step> steps = new ArrayList<>();
+    private List<Correios.Step> steps;
 
     public Package(String cod, Context context) {
         store = new Store(context);
         steps = store.getSteps(cod);
         name = store.getName(cod);
         active = store.getActive(cod);
+        id = store.getId(cod);
         correios = new Correios(cod, this);
     }
 
@@ -83,6 +84,10 @@ public class Package implements Correios.SyncDone {
 
     public String getCod() {
         return correios.getCod();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public List<Correios.Step> getSteps() {

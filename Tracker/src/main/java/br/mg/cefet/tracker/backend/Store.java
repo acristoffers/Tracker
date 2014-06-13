@@ -103,7 +103,7 @@ public class Store extends SQLiteOpenHelper {
     }
 
     public boolean getActive(String cod) {
-        boolean active = false;
+        boolean active = true;
 
         SQLiteDatabase db = this.getReadableDatabase();
         if (db != null) {
@@ -116,6 +116,22 @@ public class Store extends SQLiteOpenHelper {
         }
 
         return active;
+    }
+
+    public int getId(String cod) {
+        int id = -1;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null) {
+            Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_ID}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
+            }
+
+            db.close();
+        }
+
+        return id;
     }
 
     public String getName(String cod) {
@@ -137,6 +153,48 @@ public class Store extends SQLiteOpenHelper {
     public void updatePackage(Package pkg) {
         removePackage(pkg);
         insertPackage(pkg);
+    }
+
+    public void removePackage(Package pkg) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        if (db != null) {
+            String cod = pkg.getCod();
+
+            db.delete(TABLE_STEPS, KEY_PACKAGE + "=?", new String[]{cod});
+            db.delete(TABLE_PACKAGES, KEY_COD + "=?", new String[]{cod});
+
+            db.close();
+        }
+    }
+
+    public void insertPackage(Package pkg) {
+        List<Correios.Step> steps = pkg.getSteps();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        if (db != null) {
+            ContentValues values = new ContentValues();
+
+            values.put(KEY_NAME, pkg.getName());
+            values.put(KEY_COD, pkg.getCod());
+            values.put(KEY_ACTIVE, pkg.getActive());
+
+            db.insert(TABLE_PACKAGES, null, values);
+
+            for (Correios.Step step : steps) {
+                values = new ContentValues();
+
+                values.put(KEY_TITLE, step.title);
+                values.put(KEY_DESCRIPTION, step.description);
+                values.put(KEY_LOCAL, step.local);
+                values.put(KEY_DATE, step.date.getTime());
+                values.put(KEY_PACKAGE, pkg.getCod());
+
+                db.insert(TABLE_STEPS, null, values);
+            }
+
+            db.close();
+        }
     }
 
     public List<Correios.Step> getSteps(String cod) {
@@ -163,48 +221,6 @@ public class Store extends SQLiteOpenHelper {
         }
 
         return steps;
-    }
-
-    public void removePackage(Package pkg) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        if (db != null) {
-            String cod = pkg.getCod();
-
-            db.delete(TABLE_STEPS, KEY_PACKAGE + "=?", new String[]{cod});
-            db.delete(TABLE_PACKAGES, KEY_COD + "=?", new String[]{cod});
-
-            db.close();
-        }
-    }
-
-    public void insertPackage(Package pkg) {
-        List<Correios.Step> steps = pkg.getSteps();
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        if (db != null) {
-            ContentValues values = new ContentValues();
-
-            values.put(KEY_NAME, pkg.getName());
-            values.put(KEY_COD, pkg.getCod());
-            values.put(KEY_ACTIVE, 1);
-
-            db.insert(TABLE_PACKAGES, null, values);
-
-            for (Correios.Step step : steps) {
-                values = new ContentValues();
-
-                values.put(KEY_TITLE, step.title);
-                values.put(KEY_DESCRIPTION, step.description);
-                values.put(KEY_LOCAL, step.local);
-                values.put(KEY_DATE, step.date.getTime());
-                values.put(KEY_PACKAGE, pkg.getCod());
-
-                db.insert(TABLE_STEPS, null, values);
-            }
-
-            db.close();
-        }
     }
 
 }

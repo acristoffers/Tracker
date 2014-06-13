@@ -17,6 +17,15 @@
     <string name="remove">Remove</string>
     <string name="Hide">Hide</string>
 
+    <string name="active">Active</string>
+    <string name="active_hint">Will not appear in home if not active</string>
+
     <string name="please_type_name">Please type a name to identify this package</string>
+
+    <string name="notification_package_updated_title">%s updated!</string>
+    <string name="notification_package_updated_body">There are updates on package %s</string>
+
+    <string name="show_inactive">Show inactive</string>
+    <string name="hide_inactive">Hide Inactive</string>
 
 </resources>

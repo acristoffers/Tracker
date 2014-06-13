@@ -22,6 +22,7 @@
 
 package br.mg.cefet.tracker;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -42,6 +43,7 @@ import br.mg.cefet.tracker.backend.Package;
 public class PackageListAdapter extends BaseAdapter implements Package.StatusReady {
 
     private final Context context;
+    private boolean showInactive = false;
     private List<Package> packageList;
     private LayoutInflater layoutInflater;
 
@@ -57,11 +59,22 @@ public class PackageListAdapter extends BaseAdapter implements Package.StatusRea
         List<String> codes = Package.getCodes(context);
         for (String code : codes) {
             Package pkg = new Package(code, context);
+            if (!pkg.getActive() && !showInactive) {
+                continue;
+            }
+
             pkg.setListener(this);
             packageList.add(pkg);
         }
 
         notifyDataSetChanged();
+    }
+
+    public PackageListAdapter(Context context, boolean showInactive) {
+        this.context = context;
+        this.showInactive = showInactive;
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        updatePackageList();
     }
 
     @Override
@@ -79,6 +92,7 @@ public class PackageListAdapter extends BaseAdapter implements Package.StatusRea
         return i;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null) {

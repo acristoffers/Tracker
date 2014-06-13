@@ -24,6 +24,7 @@ package br.mg.cefet.tracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -91,6 +92,12 @@ public class PackageViewActivity extends ActionBarActivity {
             case R.id.remove: {
                 pkg.remove();
                 finish();
+                return true;
+            }
+
+            case android.R.id.home: {
+                Intent intent = new Intent(this, MainActivity.class);
+                NavUtils.navigateUpTo(this, intent);
                 return true;
             }
         }

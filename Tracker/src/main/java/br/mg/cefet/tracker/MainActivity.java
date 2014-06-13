@@ -22,6 +22,7 @@
 
 package br.mg.cefet.tracker;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -30,10 +31,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,13 +51,14 @@ public class MainActivity extends Activity implements Package.StatusReady {
     private Package searchingForPackage = null;
     private AlertDialog dialog = null;
     private PackageListAdapter packageListAdapter;
+    private static boolean showingInactive = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        packageListAdapter = new PackageListAdapter(this);
+        packageListAdapter = new PackageListAdapter(this, showingInactive);
 
         searchPackage = (EditText) findViewById(R.id.search_package);
         if (searchPackage != null) {
@@ -76,8 +80,11 @@ public class MainActivity extends Activity implements Package.StatusReady {
         if (listView != null) {
             listView.setAdapter(packageListAdapter);
         }
+
+        AlarmReceiver.setAlarm(this);
     }
 
+    @SuppressLint("InflateParams")
     private void searchForPackage() {
         if (searchingForPackage == null) {
             String cod = getSearchPackageText();
@@ -88,10 +95,6 @@ public class MainActivity extends Activity implements Package.StatusReady {
                 return;
             }
 
-            searchingForPackage = new Package(cod, this);
-            searchingForPackage.setListener(this);
-            searchingForPackage.checkForStatusUpdates();
-
             LayoutInflater inflater = getLayoutInflater();
             View view = inflater.inflate(R.layout.dialog_searching, null);
 
@@ -100,6 +103,10 @@ public class MainActivity extends Activity implements Package.StatusReady {
 
             dialog = builder.create();
             dialog.show();
+
+            searchingForPackage = new Package(cod, this);
+            searchingForPackage.setListener(this);
+            searchingForPackage.checkForStatusUpdates();
         }
     }
 
@@ -130,6 +137,48 @@ public class MainActivity extends Activity implements Package.StatusReady {
     protected void onResume() {
         packageListAdapter.updatePackageList();
         super.onResume();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+
+        MenuItem item = menu.findItem(R.id.toggle_inactive);
+        if(showingInactive) {
+            item.setTitle(R.string.hide_inactive);
+        } else {
+            item.setTitle(R.string.show_inactive);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.toggle_inactive: {
+                showingInactive = !showingInactive;
+
+                ListView listView = (ListView) findViewById(R.id.packages);
+                if (listView != null) {
+                    if (showingInactive) {
+                        packageListAdapter = new PackageListAdapter(this, true);
+                        item.setTitle(R.string.hide_inactive);
+                    } else {
+                        packageListAdapter = new PackageListAdapter(this, false);
+                        item.setTitle(R.string.show_inactive);
+                    }
+
+                    listView.setAdapter(packageListAdapter);
+                    packageListAdapter.updatePackageList();
+
+                    return true;
+                }
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

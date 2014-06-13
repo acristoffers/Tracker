@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
+    android:id="@+id/container"
     android:orientation="vertical"
     android:padding="@dimen/margins"
     tools:context="${relativePackage}.${activityClass}">

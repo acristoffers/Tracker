@@ -29,6 +29,7 @@ import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -69,6 +70,11 @@ public class PackageAddActivity extends ActionBarActivity {
             cod.setText(code);
         }
 
+        CheckBox active = (CheckBox) findViewById(R.id.active);
+        if (active != null) {
+            active.setChecked(pkg.getActive());
+        }
+
         ListView listView = (ListView) findViewById(R.id.steps);
         if (listView != null) {
             listView.setAdapter(new StepsListAdapter(this, pkg));
@@ -105,6 +111,11 @@ public class PackageAddActivity extends ActionBarActivity {
                             pkg.setName(s);
                         }
                     }
+                }
+
+                CheckBox active = (CheckBox) findViewById(R.id.active);
+                if (active != null) {
+                    pkg.setActive(active.isChecked());
                 }
 
                 pkg.save();

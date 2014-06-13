@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.mg.cefet.tracker">
+<manifest
+    package="br.mg.cefet.tracker"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -15,8 +18,8 @@
             android:label="@string/app_name">
 
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
         </activity>
@@ -24,24 +27,36 @@
         <activity
             android:name=".PackageAddActivity"
             android:label="@string/edit_package"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            tools:ignore="UnusedAttribute">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.mg.cefet.tracker.MainActivity" />
+                android:value="br.mg.cefet.tracker.MainActivity"/>
 
         </activity>
 
         <activity
             android:name=".PackageViewActivity"
             android:label="@string/view_package"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            tools:ignore="UnusedAttribute">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.mg.cefet.tracker.MainActivity" />
+                android:value="br.mg.cefet.tracker.MainActivity"/>
 
         </activity>
+
+        <receiver
+            android:name=".AlarmReceiver"
+            android:enabled="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+
+        </receiver>
 
     </application>
 

@@ -55,18 +55,11 @@ import android.text.style.TextAppearanceSpan;
 import android.text.style.TypefaceSpan;
 import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
-import android.widget.EditText;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TrackCodeFormattingTextWatcher implements TextWatcher {
-
-    private final EditText editText;
-
-    public TrackCodeFormattingTextWatcher(EditText editText) {
-        this.editText = editText;
-    }
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {

@@ -29,14 +29,16 @@ import android.widget.EditText;
 
 public class PackageSearchEditText extends EditText {
 
+    @SuppressWarnings("unused")
     public PackageSearchEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        addTextChangedListener(new TrackCodeFormattingTextWatcher(this));
+        addTextChangedListener(new TrackCodeFormattingTextWatcher());
     }
 
+    @SuppressWarnings("unused")
     public PackageSearchEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        addTextChangedListener(new TrackCodeFormattingTextWatcher(this));
+        addTextChangedListener(new TrackCodeFormattingTextWatcher());
     }
 
     @Override
