@@ -15,7 +15,6 @@
     <string name="save">Save</string>
     <string name="edit">Edit</string>
     <string name="remove">Remove</string>
-    <string name="Hide">Hide</string>
 
     <string name="active">Active</string>
     <string name="active_hint">Will not appear in home if not active</string>

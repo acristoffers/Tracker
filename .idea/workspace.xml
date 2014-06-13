@@ -45,27 +45,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ae8fa9c-5fd5-4407-986c-e3c6b52ae637" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_list.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_19_1_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tracker/src/main/res/anim/slide_in_left.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tracker/src/main/res/anim/slide_in_right.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tracker/src/main/res/anim/slide_out_left.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tracker/src/main/res/anim/slide_out_right.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_19_1_0.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_main.xml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/MainActivity.java" afterPath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/PackageAddActivity.java" afterPath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageEditActivity.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/PackageListAdapter.java" afterPath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/adapters/PackageListAdapter.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/PackageViewActivity.java" afterPath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageViewActivity.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/StepsListAdapter.java" afterPath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/adapters/StepsListAdapter.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_add.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_edit.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Tracker/src/main/res/anim/slide_in_left.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Tracker/src/main/res/anim/slide_out_left.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/ic_launcher-web.png" afterPath="$PROJECT_DIR$/Tracker/src/main/ic_launcher-web.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/drawable-hdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/Tracker/src/main/res/drawable-hdpi/ic_launcher.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/drawable-mdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/Tracker/src/main/res/drawable-mdpi/ic_launcher.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/drawable-xhdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/Tracker/src/main/res/drawable-xhdpi/ic_launcher.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/drawable-xxhdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/Tracker/src/main/res/drawable-xxhdpi/ic_launcher.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/AlarmReceiver.java" afterPath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/AlarmReceiver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/backend/Correios.java" afterPath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/backend/Correios.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LICENSE" afterPath="$PROJECT_DIR$/LICENSE" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/adapters/PackageListAdapter.java" afterPath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/adapters/PackageListAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/adapters/StepsListAdapter.java" afterPath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/adapters/StepsListAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/TrackCodeFormattingTextWatcher.java" afterPath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/TrackCodeFormattingTextWatcher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_edit.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_edit.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_list.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_list.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_view.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_view.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/values/color.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/values/color.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/layout/listview_item_packages.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/layout/listview_item_packages.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/layout/listview_item_steps.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/layout/listview_item_steps.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/build.gradle" afterPath="$PROJECT_DIR$/Tracker/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/menu/menu_package_add.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/menu/menu_package_add.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/menu/menu_package_view.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/menu/menu_package_view.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/values/styles.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Tracker.iws" />
@@ -120,48 +122,15 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <breakpoint_rules converted="true" />
     <ui_properties converted="true" />
+    <breakpoint_rules converted="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="Tracker" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="PackageListActivity.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43150684" vertical-offset="0" max-vertical-offset="3750">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#8691#0" expanded="true" />
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PackageViewActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageViewActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="875" max-vertical-offset="1650">
-              <caret line="126" column="0" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
-              <folding>
-                <element signature="e#3563#3597#0" expanded="true" />
-                <element signature="e#3769#3790#0" expanded="true" />
-                <element signature="e#3878#3890#0" expanded="true" />
-                <element signature="e#3892#4301#0" expanded="true" />
-                <element signature="e#4282#4283#0" expanded="true" />
-                <element signature="e#4347#4358#0" expanded="true" />
-                <element signature="e#4360#4602#0" expanded="true" />
-                <element signature="e#4583#4584#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -608,7 +577,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4206497905000" />
+        <entry key="$PROJECT_DIR$" value="4207311371000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -871,21 +840,15 @@
       <list>
         <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/Tracker.java" />
         <option value="$PROJECT_DIR$/Tracker/proguard-rules.pro" />
-        <option value="$PROJECT_DIR$/Tracker/build.gradle" />
         <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/Package.java" />
         <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/backend/Tracker.java" />
         <option value="$PROJECT_DIR$/Tracker/src/main/res/values/dims.xml" />
         <option value="$PROJECT_DIR$/Tracker/src/main/res/menu/save.xml" />
         <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/backend/PackageViewActivity.java" />
-        <option value="$PROJECT_DIR$/Tracker/src/main/res/menu/menu_package_add.xml" />
-        <option value="$PROJECT_DIR$/Tracker/src/main/res/menu/menu_package_view.xml" />
         <option value="$PROJECT_DIR$/Tracker/src/main/java/AlarmReceiver.java" />
-        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/AlarmReceiver.java" />
         <option value="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/Tracker/src/main/res/layout/dialog_searching.xml" />
-        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/TrackCodeFormattingTextWatcher.java" />
         <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/PackageSearchEditText.java" />
-        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/backend/Correios.java" />
         <option value="$PROJECT_DIR$/Tracker/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/backend/Package.java" />
         <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/StepsListAdapter.java" />
@@ -904,13 +867,24 @@
         <option value="$PROJECT_DIR$/Tracker/src/main/res/drawable/list_state.xml" />
         <option value="$PROJECT_DIR$/Tracker/src/main/res/layout/listview_item_steps.xml" />
         <option value="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_add.xml" />
-        <option value="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_view.xml" />
         <option value="$PROJECT_DIR$/Tracker/src/main/res/layout/view_list_empty.xml" />
-        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/adapters/PackageListAdapter.java" />
-        <option value="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_list.xml" />
-        <option value="$PROJECT_DIR$/Tracker/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageViewActivity.java" />
         <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/Tracker/build.gradle" />
+        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/AlarmReceiver.java" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/adapters/StepsListAdapter.java" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/adapters/PackageListAdapter.java" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/TrackCodeFormattingTextWatcher.java" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/backend/Correios.java" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/res/menu/menu_package_add.xml" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/res/menu/menu_package_view.xml" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_edit.xml" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_list.xml" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_view.xml" />
       </list>
     </option>
   </component>
@@ -1024,40 +998,6 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tracker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tracker" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tracker" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="menu" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1086,32 +1026,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tracker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tracker" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tracker" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1213,54 +1127,6 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tracker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tracker" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tracker" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tracker" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="activities" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tracker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tracker-Tracker" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.packageview.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope">
@@ -1335,6 +1201,20 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tracker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tracker-Tracker" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.packageview.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1352,10 +1232,10 @@
     <property name="FullScreen" value="false" />
     <property name="LayoutCode.rearrangeEntriesJava" value="true" />
     <property name="LayoutCode.rearrangeEntriesXML" value="true" />
-    <property name="android.project.structure.last.selected" value="Project" />
+    <property name="android.project.structure.last.selected" value="Tracker" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0425865094" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus-10-Android-3.0-API-11" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus-10-Android-4.4.2-API-19" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="last_opened_file_path" value="$USER_HOME$/Documents/Android/key-store/key-store.jks" />
@@ -1363,9 +1243,11 @@
     <property name="ExportedApkPath" value="$USER_HOME$/Desktop/Tracker.apk" />
     <property name="AndroidRunProguardForReleaseBuild" value="true" />
     <property name="AndroidProguardConfigPaths" value="$APPLICATION_HOME_DIR$/sdk/tools/proguard/proguard-android.txt" />
+    <property name="LayoutCode.rearrangeEntriesGroovy" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Tracker/src/main/res/drawable" />
       <recent name="$PROJECT_DIR$/Tracker/src/main/res" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -1402,19 +1284,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -1440,6 +1309,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1548,7 +1430,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="874" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1560,17 +1442,17 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36279684" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36279684" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28683835" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28683835" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28683835" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1597,50 +1479,13 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="210">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1005">
-          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#8691#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/backend/Correios.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2805">
-          <caret line="175" column="0" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_list.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="285">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="275" max-vertical-offset="1005">
           <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
           <folding>
-            <element signature="e#0#8691#0" expanded="true" />
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#8691#0" expanded="false" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1653,14 +1498,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_list.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="285">
           <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java">
@@ -1668,8 +1513,8 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="275" max-vertical-offset="1005">
           <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
           <folding>
-            <element signature="e#0#8691#0" expanded="true" />
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#8691#0" expanded="false" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1682,14 +1527,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_list.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="285">
           <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java">
@@ -1697,48 +1542,27 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#8691#0" expanded="true" />
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#8691#0" expanded="false" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_list.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="270">
           <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/proguard-rules.pro">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.53125" vertical-offset="0" max-vertical-offset="480">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/res/values-v14/values.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.54603857" vertical-offset="255" max-vertical-offset="3780">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.369863" vertical-offset="0" max-vertical-offset="730">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1756,39 +1580,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/TrackCodeFormattingTextWatcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48630136" vertical-offset="695" max-vertical-offset="2250">
-          <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/PackageSearchEditText.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47671232" vertical-offset="192" max-vertical-offset="975">
-          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/backend/Correios.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.1616437" vertical-offset="2" max-vertical-offset="3330">
-          <caret line="166" column="0" selection-start-line="166" selection-start-column="0" selection-end-line="166" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/values/dims.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.061643835" vertical-offset="0" max-vertical-offset="730">
           <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/menu/menu_package_view.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34931508" vertical-offset="0" max-vertical-offset="730">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1810,26 +1605,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/adapters/StepsListAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15753424" vertical-offset="260" max-vertical-offset="990">
-          <caret line="63" column="4" selection-start-line="63" selection-start-column="4" selection-end-line="63" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/backend/Store.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1981" max-vertical-offset="3150">
           <caret line="169" column="0" selection-start-line="169" selection-start-column="0" selection-end-line="169" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/menu/menu_package_add.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.04109589" vertical-offset="0" max-vertical-offset="730">
-          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="8" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1857,19 +1636,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/anim/slide_in_left.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14383562" vertical-offset="0" max-vertical-offset="730">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-19/android.jar!/android/app/Activity.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334" vertical-offset="4741" max-vertical-offset="6675">
           <caret line="333" column="16" selection-start-line="333" selection-start-column="16" selection-end-line="333" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1878,8 +1648,8 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="2265">
           <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
           <folding>
-            <element signature="e#0#4857#0" expanded="true" />
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#4857#0" expanded="false" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1892,29 +1662,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/values/color.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.061643835" vertical-offset="0" max-vertical-offset="730">
-          <caret line="3" column="51" selection-start-line="3" selection-start-column="51" selection-end-line="3" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/dialog_searching.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10668563" vertical-offset="0" max-vertical-offset="703">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/listview_item_steps.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19203414" vertical-offset="0" max-vertical-offset="1065">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
@@ -1929,62 +1677,146 @@
           </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_view.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10668563" vertical-offset="0" max-vertical-offset="900">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_edit.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14935988" vertical-offset="0" max-vertical-offset="1095">
-          <caret line="7" column="46" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="730">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/local.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1978022" vertical-offset="0" max-vertical-offset="455">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.65625" vertical-offset="0" max-vertical-offset="3825">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#8691#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageViewActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0208334" vertical-offset="875" max-vertical-offset="1650">
+          <caret line="126" column="0" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
+          <folding>
+            <element signature="e#3563#3597#0" expanded="false" />
+            <element signature="e#3769#3790#0" expanded="false" />
+            <element signature="e#3878#3890#0" expanded="false" />
+            <element signature="e#3892#4301#0" expanded="false" />
+            <element signature="e#4282#4283#0" expanded="false" />
+            <element signature="e#4347#4358#0" expanded="false" />
+            <element signature="e#4360#4602#0" expanded="false" />
+            <element signature="e#4583#4584#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.83516484" vertical-offset="175" max-vertical-offset="795">
+          <caret line="37" column="4" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.041841004" vertical-offset="4050" max-vertical-offset="30525">
+          <caret line="272" column="43" selection-start-line="272" selection-start-column="43" selection-end-line="272" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/PackageSearchEditText.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26712328" vertical-offset="0" max-vertical-offset="730">
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/AlarmReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37656903" vertical-offset="180" max-vertical-offset="1350">
-          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/listview_item_packages.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4782609" vertical-offset="60" max-vertical-offset="1200">
-          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+        <state vertical-scroll-proportion="1.3138075" vertical-offset="3" max-vertical-offset="1350">
+          <caret line="100" column="0" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/adapters/PackageListAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0549451" vertical-offset="810" max-vertical-offset="2010">
-          <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6369863" vertical-offset="0" max-vertical-offset="2025">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding>
-            <element signature="e#0#4208#0" expanded="true" />
+            <element signature="e#0#4247#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/adapters/StepsListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.479452" vertical-offset="0" max-vertical-offset="1500">
+          <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#3219#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/menu/menu_package_view.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16438356" vertical-offset="0" max-vertical-offset="730">
+          <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/menu/menu_package_add.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2260274" vertical-offset="0" max-vertical-offset="730">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/backend/Correios.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41841003" vertical-offset="525" max-vertical-offset="3345">
+          <caret line="55" column="45" selection-start-line="55" selection-start-column="45" selection-end-line="55" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#6790#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/TrackCodeFormattingTextWatcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38356164" vertical-offset="875" max-vertical-offset="2175">
+          <caret line="77" column="45" selection-start-line="77" selection-start-column="45" selection-end-line="77" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#5585#0" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
         </state>
@@ -1992,48 +1824,103 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.739726" vertical-offset="0" max-vertical-offset="730">
-          <caret line="36" column="24" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.32876712" vertical-offset="0" max-vertical-offset="730">
+          <caret line="16" column="41" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_list.xml">
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
+          <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/dialog_searching.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10869565" vertical-offset="0" max-vertical-offset="690">
+          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/listview_item_packages.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0434783" vertical-offset="0" max-vertical-offset="810">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+        <state vertical-scroll-proportion="1.5652174" vertical-offset="0" max-vertical-offset="1200">
+          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/proguard-rules.pro">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3617021" vertical-offset="0" max-vertical-offset="705">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageViewActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="875" max-vertical-offset="1650">
-          <caret line="126" column="0" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
-          <folding>
-            <element signature="e#3563#3597#0" expanded="true" />
-            <element signature="e#3769#3790#0" expanded="true" />
-            <element signature="e#3878#3890#0" expanded="true" />
-            <element signature="e#3892#4301#0" expanded="true" />
-            <element signature="e#4282#4283#0" expanded="true" />
-            <element signature="e#4347#4358#0" expanded="true" />
-            <element signature="e#4360#4602#0" expanded="true" />
-            <element signature="e#4583#4584#0" expanded="true" />
-          </folding>
-        </state>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/drawable-hdpi-v11/ic_stat_app.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java">
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/ic_launcher-web.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/drawable-hdpi/ic_launcher.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_edit.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43150684" vertical-offset="0" max-vertical-offset="3750">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#8691#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.8506401" vertical-offset="392" max-vertical-offset="1095">
+          <caret line="66" column="17" selection-start-line="66" selection-start-column="17" selection-end-line="66" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_list.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8014493" vertical-offset="107" max-vertical-offset="810">
+          <caret line="44" column="47" selection-start-line="44" selection-start-column="47" selection-end-line="44" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_view.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7866287" vertical-offset="197" max-vertical-offset="900">
+          <caret line="50" column="47" selection-start-line="50" selection-start-column="47" selection-end-line="50" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/values/color.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14383562" vertical-offset="0" max-vertical-offset="730">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

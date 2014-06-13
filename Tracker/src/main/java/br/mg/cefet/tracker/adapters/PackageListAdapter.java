@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +102,7 @@ public class PackageListAdapter extends BaseAdapter implements Package.StatusRea
         List<Correios.Step> steps = pkg.getSteps();
         if (steps.size() > 0) {
             Correios.Step step = steps.get(0);
-            SimpleDateFormat sdf = new SimpleDateFormat();
+            DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
             title = step.title;
             date = sdf.format(step.date);
         }

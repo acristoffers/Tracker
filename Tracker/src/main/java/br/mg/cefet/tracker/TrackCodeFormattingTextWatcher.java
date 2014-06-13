@@ -32,12 +32,10 @@ import android.text.style.BulletSpan;
 import android.text.style.ClickableSpan;
 import android.text.style.DrawableMarginSpan;
 import android.text.style.DynamicDrawableSpan;
-import android.text.style.EasyEditSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.IconMarginSpan;
 import android.text.style.ImageSpan;
 import android.text.style.LeadingMarginSpan;
-import android.text.style.LocaleSpan;
 import android.text.style.MaskFilterSpan;
 import android.text.style.MetricAffectingSpan;
 import android.text.style.QuoteSpan;
@@ -48,7 +46,6 @@ import android.text.style.ScaleXSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.SubscriptSpan;
-import android.text.style.SuggestionSpan;
 import android.text.style.SuperscriptSpan;
 import android.text.style.TabStopSpan;
 import android.text.style.TextAppearanceSpan;
@@ -56,6 +53,7 @@ import android.text.style.TypefaceSpan;
 import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -77,7 +75,7 @@ public class TrackCodeFormattingTextWatcher implements TextWatcher {
         resetTextSpans(editable);
 
         if (text.matches(".*[a-z].*")) {
-            text = text.toUpperCase();
+            text = text.toUpperCase(Locale.US);
             editable.replace(0, editable.length(), text);
         }
 
@@ -85,7 +83,7 @@ public class TrackCodeFormattingTextWatcher implements TextWatcher {
             return;
         }
 
-        text = text.toUpperCase();
+        text = text.toUpperCase(Locale.US);
         if (text.matches(regex)) {
             editable.replace(0, editable.length(), text);
         } else {
@@ -106,12 +104,10 @@ public class TrackCodeFormattingTextWatcher implements TextWatcher {
         removeSpan(editable, ClickableSpan.class);
         removeSpan(editable, DrawableMarginSpan.class);
         removeSpan(editable, DynamicDrawableSpan.class);
-        removeSpan(editable, EasyEditSpan.class);
         removeSpan(editable, ForegroundColorSpan.class);
         removeSpan(editable, IconMarginSpan.class);
         removeSpan(editable, ImageSpan.class);
         removeSpan(editable, LeadingMarginSpan.class);
-        removeSpan(editable, LocaleSpan.class);
         removeSpan(editable, MaskFilterSpan.class);
         removeSpan(editable, MetricAffectingSpan.class);
         removeSpan(editable, QuoteSpan.class);
@@ -122,7 +118,6 @@ public class TrackCodeFormattingTextWatcher implements TextWatcher {
         removeSpan(editable, StrikethroughSpan.class);
         removeSpan(editable, StyleSpan.class);
         removeSpan(editable, SubscriptSpan.class);
-        removeSpan(editable, SuggestionSpan.class);
         removeSpan(editable, SuperscriptSpan.class);
         removeSpan(editable, TabStopSpan.class);
         removeSpan(editable, TextAppearanceSpan.class);

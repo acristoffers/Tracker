@@ -97,7 +97,7 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
                 intent.putExtra(PackageEditActivity.EXTRA_PACKAGE_CODE, code);
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                Bitmap icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
+                Bitmap icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_stat_app);
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
                 builder.setTicker(title)
@@ -105,7 +105,7 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
                         .setContentText(message)
                         .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
                         .setContentIntent(pendingIntent)
-                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setSmallIcon(R.drawable.ic_stat_app)
                         .setLargeIcon(icon)
                         .setWhen(System.currentTimeMillis())
                         .setAutoCancel(true);

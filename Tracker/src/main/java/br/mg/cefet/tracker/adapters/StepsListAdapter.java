@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -78,7 +79,7 @@ public class StepsListAdapter extends BaseAdapter {
 
         TextView date = (TextView) view.findViewById(R.id.date);
         if (date != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat();
+            DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
             String dateS = sdf.format(step.date);
             date.setText(dateS);
         }

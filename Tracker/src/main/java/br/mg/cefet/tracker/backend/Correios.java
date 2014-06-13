@@ -42,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,7 +53,7 @@ public class Correios {
     private SyncDone listener = null;
 
     public Correios(String cod, SyncDone listener) {
-        this.pack = cod.toUpperCase();
+        this.pack = cod.toUpperCase(Locale.US);
         this.listener = listener;
     }
 
@@ -180,7 +181,7 @@ public class Correios {
                 step.local = split[2].trim();
             }
 
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
             try {
                 step.date = df.parse(date + " " + time);
             } catch (ParseException e) {
