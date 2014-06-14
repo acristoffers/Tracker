@@ -36,7 +36,14 @@
     <string name="are_you_sure">Are you sure?</string>
     <string name="confirm_delete">Are you sure you want to delete package %s?</string>
 
+    <string name="logo">Logo</string>
+    <string name="about">About</string>
+    <string name="version" formatted="false">Version %s (%d)</string>
+    <string name="copyright">\u00a9 2014 Álan Crístoffer</string>
+    <string name="github"><a href="https://github.com/acristoffers/Tracker">This project is on GitHub</a></string>
+
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="ok">OK</string>
 
 </resources>

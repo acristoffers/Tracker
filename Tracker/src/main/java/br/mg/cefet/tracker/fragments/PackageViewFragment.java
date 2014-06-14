@@ -134,8 +134,7 @@ public class PackageViewFragment extends Fragment {
                     remove.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            String body = getString(R.string.confirm_delete);
-                            body = String.format(body, pkg.getName());
+                            String body = getString(R.string.confirm_delete, pkg.getName());
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                             builder.setTitle(R.string.are_you_sure);

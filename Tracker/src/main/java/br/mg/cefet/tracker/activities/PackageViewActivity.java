@@ -100,8 +100,7 @@ public class PackageViewActivity extends ActionBarActivity {
             }
 
             case R.id.remove: {
-                String body = getString(R.string.confirm_delete);
-                body = String.format(body, pkg.getName());
+                String body = getString(R.string.confirm_delete, pkg.getName());
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(R.string.are_you_sure);

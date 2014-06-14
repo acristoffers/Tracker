@@ -25,10 +25,14 @@ package br.mg.cefet.tracker.activities;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
+import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -113,23 +117,73 @@ public class PackageListActivity extends FragmentActivity implements Package.Sta
             }
 
             case R.id.check_for_updates: {
-                List<String> codes = Package.getCodes(this);
-                updating = codes.size();
+                checkForUpdates();
+                return true;
+            }
 
-                for (String code : codes) {
-                    Package pkg = new Package(code, this);
-                    pkg.setListener(this);
-                    pkg.checkForStatusUpdates();
-                }
-
-                Toast toast = Toast.makeText(this, R.string.checking_for_updates, Toast.LENGTH_LONG);
-                toast.show();
-
+            case R.id.about: {
+                about();
                 return true;
             }
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void checkForUpdates() {
+        List<String> codes = Package.getCodes(this);
+        updating = codes.size();
+
+        for (String code : codes) {
+            Package pkg = new Package(code, this);
+            pkg.setListener(this);
+            pkg.checkForStatusUpdates();
+        }
+
+        Toast toast = Toast.makeText(this, R.string.checking_for_updates, Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    @SuppressLint("InflateParams")
+    public void about() {
+        View about = View.inflate(this, R.layout.dialog_about, null);
+
+        PackageManager manager = this.getPackageManager();
+        String packageName = getPackageName();
+        int versionCode = 0;
+        String versionName = "";
+
+        try {
+            PackageInfo info = manager.getPackageInfo(packageName, 0);
+            versionCode = info.versionCode;
+            versionName = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        TextView version = (TextView) about.findViewById(R.id.version);
+        if (version != null) {
+            String versionText = getString(R.string.version, versionName, versionCode);
+            version.setText(versionText);
+        }
+
+        TextView issues = (TextView) about.findViewById(R.id.issues);
+        if (issues != null) {
+            issues.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.app_name);
+        builder.setView(about);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog aboutDialog = builder.create();
+        aboutDialog.show();
     }
 
     @Override

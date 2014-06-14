@@ -29,4 +29,4 @@ THE SOFTWARE.
 EXCEPTION
 =========
 
-The app icon and it's derivatives can not be used without authorization.
+The app icon and its derivatives can not be used without authorization.

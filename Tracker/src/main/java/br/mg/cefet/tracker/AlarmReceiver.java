@@ -88,11 +88,8 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
             pkg.save();
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             if (notificationManager != null) {
-                String title = context.getString(R.string.notification_package_updated_title);
-                title = String.format(title, pkg.getName());
-
-                String message = context.getString(R.string.notification_package_updated_body);
-                message = String.format(message, pkg.getName());
+                String title = context.getString(R.string.notification_package_updated_title, pkg.getName());
+                String message = context.getString(R.string.notification_package_updated_body, pkg.getName());
 
                 Intent intent = new Intent(context, PackageViewActivity.class);
                 intent.putExtra(PackageEditActivity.EXTRA_PACKAGE_CODE, code);
