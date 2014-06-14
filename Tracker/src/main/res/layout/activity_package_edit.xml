@@ -45,7 +45,7 @@
         android:layout_marginTop="@dimen/margins"
         android:layout_toLeftOf="@+id/code"
         android:gravity="left|center_vertical"
-        android:inputType="textNoSuggestions"
+        android:inputType="text"
         android:padding="@dimen/widget_padding"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/holo_green_dark"/>
@@ -79,6 +79,17 @@
         android:hint="@string/active_hint"
         android:text="@string/active"
         />
+
+    <TextView
+        android:id="@+id/emptyStepView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/margins"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/empty_steps"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/holo_blue_dark"/>
 
     <ListView
         android:id="@+id/steps"

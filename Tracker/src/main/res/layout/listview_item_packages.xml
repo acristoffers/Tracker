@@ -48,9 +48,10 @@
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/widget_height"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/widget_padding"
             android:gravity="left|center_vertical"
+            android:minHeight="@dimen/widget_height"
             android:text="Last Title"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"

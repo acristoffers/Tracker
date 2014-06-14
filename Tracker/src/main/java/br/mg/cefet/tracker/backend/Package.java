@@ -24,6 +24,7 @@ package br.mg.cefet.tracker.backend;
 
 import android.content.Context;
 
+import java.util.Date;
 import java.util.List;
 
 public class Package implements Correios.SyncDone {
@@ -36,6 +37,8 @@ public class Package implements Correios.SyncDone {
     private String name;
     private boolean active;
     private List<Correios.Step> steps;
+    private Date timeCreated;
+    private Date timeUpdated;
 
     public Package(String cod, Context context) {
         store = new Store(context);
@@ -44,10 +47,20 @@ public class Package implements Correios.SyncDone {
         active = store.getActive(cod);
         id = store.getId(cod);
         correios = new Correios(cod, this);
+        timeCreated = store.getTimeCreated(cod);
+        timeUpdated = store.getTimeUpdated(cod);
     }
 
     public static List<String> getCodes(Context context) {
         return Store.getCodes(context);
+    }
+
+    public Date getTimeUpdated() {
+        return timeUpdated;
+    }
+
+    public Date getTimeCreated() {
+        return timeCreated;
     }
 
     public void checkForStatusUpdates() {
@@ -74,7 +87,7 @@ public class Package implements Correios.SyncDone {
         store.updatePackage(this);
     }
 
-    public boolean getActive() {
+    public boolean isActive() {
         return active;
     }
 

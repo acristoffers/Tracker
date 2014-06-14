@@ -37,7 +37,7 @@ public class Store extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "packageTracker";
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String TABLE_PACKAGES = "packages";
     private static final String TABLE_STEPS = "steps";
 
@@ -46,6 +46,8 @@ public class Store extends SQLiteOpenHelper {
     private static final String KEY_NAME = "name";
     private static final String KEY_COD = "cod";
     private static final String KEY_ACTIVE = "active";
+    private static final String KEY_TIME_CREATED = "creation_time";
+    private static final String KEY_TIME_UPDATED = "update_time";
 
     private static final String KEY_DATE = "date";
     private static final String KEY_TITLE = "title";
@@ -100,10 +102,58 @@ public class Store extends SQLiteOpenHelper {
                 + KEY_LOCAL + " TEXT,"
                 + KEY_PACKAGE + " TEXT)";
         db.execSQL(CREATE_STEPS_TABLE);
+
+        onUpgrade(db, 1, DATABASE_VERSION);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        String sql;
+        ContentValues values;
+
+        switch (oldVersion) {
+            case 1:
+                sql = "ALTER TABLE " + TABLE_PACKAGES + " ADD COLUMN " + KEY_TIME_CREATED + " INT";
+                db.execSQL(sql);
+                sql = "ALTER TABLE " + TABLE_PACKAGES + " ADD COLUMN " + KEY_TIME_UPDATED + " INT";
+                db.execSQL(sql);
+                values = new ContentValues();
+                values.put(KEY_TIME_CREATED, new Date().getTime());
+                values.put(KEY_TIME_UPDATED, new Date().getTime());
+                db.update(TABLE_PACKAGES, values, null, null);
+        }
+    }
+
+    public Date getTimeUpdated(String cod) {
+        Date date = new Date();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null) {
+            Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_TIME_UPDATED}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                date = new Date(cursor.getInt(cursor.getColumnIndex(KEY_TIME_UPDATED)));
+            }
+
+            db.close();
+        }
+
+        return date;
+    }
+
+    public Date getTimeCreated(String cod) {
+        Date date = new Date();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null) {
+            Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_TIME_CREATED}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                date = new Date(cursor.getInt(cursor.getColumnIndex(KEY_TIME_CREATED)));
+            }
+
+            db.close();
+        }
+
+        return date;
     }
 
     public boolean getActive(String cod) {
@@ -155,18 +205,37 @@ public class Store extends SQLiteOpenHelper {
     }
 
     public void updatePackage(Package pkg) {
-        removePackage(pkg);
-        insertPackage(pkg);
-    }
-
-    public void removePackage(Package pkg) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         if (db != null) {
-            String cod = pkg.getCod();
+            Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_ID}, KEY_COD + "=?", new String[]{pkg.getCod()}, null, null, null, null);
+            if (cursor.getCount() == 0) {
+                db.close();
+                insertPackage(pkg);
+                return;
+            }
 
+            String cod = pkg.getCod();
+            ContentValues values = new ContentValues();
+            values.put(KEY_NAME, pkg.getName());
+            values.put(KEY_ACTIVE, pkg.isActive());
+            values.put(KEY_TIME_UPDATED, new Date().getTime());
+
+            db.update(TABLE_PACKAGES, values, KEY_COD + "=?", new String[]{cod});
             db.delete(TABLE_STEPS, KEY_PACKAGE + "=?", new String[]{cod});
-            db.delete(TABLE_PACKAGES, KEY_COD + "=?", new String[]{cod});
+
+            List<Correios.Step> steps = pkg.getSteps();
+            for (Correios.Step step : steps) {
+                values = new ContentValues();
+
+                values.put(KEY_TITLE, step.title);
+                values.put(KEY_DESCRIPTION, step.description);
+                values.put(KEY_LOCAL, step.local);
+                values.put(KEY_DATE, step.date.getTime());
+                values.put(KEY_PACKAGE, pkg.getCod());
+
+                db.insert(TABLE_STEPS, null, values);
+            }
 
             db.close();
         }
@@ -181,7 +250,9 @@ public class Store extends SQLiteOpenHelper {
 
             values.put(KEY_NAME, pkg.getName());
             values.put(KEY_COD, pkg.getCod());
-            values.put(KEY_ACTIVE, pkg.getActive());
+            values.put(KEY_ACTIVE, pkg.isActive());
+            values.put(KEY_TIME_CREATED, new Date().getTime());
+            values.put(KEY_TIME_UPDATED, new Date().getTime());
 
             db.insert(TABLE_PACKAGES, null, values);
 
@@ -203,6 +274,19 @@ public class Store extends SQLiteOpenHelper {
         if (!pkg.getName().isEmpty()) {
             BackupManager bm = new BackupManager(context);
             bm.dataChanged();
+        }
+    }
+
+    public void removePackage(Package pkg) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        if (db != null) {
+            String cod = pkg.getCod();
+
+            db.delete(TABLE_STEPS, KEY_PACKAGE + "=?", new String[]{cod});
+            db.delete(TABLE_PACKAGES, KEY_COD + "=?", new String[]{cod});
+
+            db.close();
         }
     }
 

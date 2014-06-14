@@ -107,6 +107,8 @@ public class PackageViewFragment extends Fragment {
 
             ListView listView = (ListView) view.findViewById(R.id.steps);
             if (listView != null) {
+                View emptyView = view.findViewById(R.id.emptyStepView);
+                listView.setEmptyView(emptyView);
                 listView.setAdapter(new StepsListAdapter(activity, pkg));
             }
 

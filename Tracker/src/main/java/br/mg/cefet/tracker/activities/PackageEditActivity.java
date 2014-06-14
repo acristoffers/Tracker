@@ -92,11 +92,13 @@ public class PackageEditActivity extends ActionBarActivity {
 
         CheckBox active = (CheckBox) findViewById(R.id.active);
         if (active != null) {
-            active.setChecked(pkg.getActive());
+            active.setChecked(pkg.isActive());
         }
 
         ListView listView = (ListView) findViewById(R.id.steps);
         if (listView != null) {
+            View view = findViewById(R.id.emptyStepView);
+            listView.setEmptyView(view);
             listView.setAdapter(new StepsListAdapter(this, pkg));
         }
 

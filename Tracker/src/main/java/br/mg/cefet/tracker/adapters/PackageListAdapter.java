@@ -59,7 +59,13 @@ public class PackageListAdapter extends BaseAdapter implements Package.StatusRea
         List<String> codes = Package.getCodes(context);
         for (String code : codes) {
             Package pkg = new Package(code, context);
-            if (!pkg.getActive() && !showInactive) {
+
+            if (pkg.getName().isEmpty()) {
+                pkg.remove();
+                continue;
+            }
+
+            if (!pkg.isActive() && !showInactive) {
                 continue;
             }
 
@@ -105,6 +111,8 @@ public class PackageListAdapter extends BaseAdapter implements Package.StatusRea
             DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
             title = step.title;
             date = sdf.format(step.date);
+        } else {
+            title = view.getResources().getString(R.string.empty_steps);
         }
 
         TextView textView = (TextView) view.findViewById(R.id.name);

@@ -224,7 +224,7 @@ public class PackageListActivity extends FragmentActivity implements Package.Sta
 
         ListView listView = (ListView) findViewById(R.id.packages);
         if (listView != null) {
-            View view = findViewById(R.id.emptyView);
+            View view = findViewById(R.id.emptyPackageView);
 
             listView.setEmptyView(view);
             listView.setAdapter(packageListAdapter);
@@ -317,24 +317,15 @@ public class PackageListActivity extends FragmentActivity implements Package.Sta
     public void statusUpdated(Package pkg) {
         if (dialog != null) {
             dialog.dismiss();
-
             dialog = null;
 
-            if (pkg.getSteps().isEmpty()) {
-                searchingForPackage = null;
+            searchPackage.setText("");
+            pkg.save();
 
-                Toast toast = Toast.makeText(this, R.string.package_not_found, Toast.LENGTH_LONG);
-                toast.show();
-            } else {
-                searchPackage.setText("");
-
-                pkg.save();
-
-                Intent intent = new Intent(this, PackageEditActivity.class);
-                intent.putExtra(PackageEditActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
-                startActivityForResult(intent, REQUEST_SAVE_PACKAGE);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.abc_fade_out);
-            }
+            Intent intent = new Intent(this, PackageEditActivity.class);
+            intent.putExtra(PackageEditActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
+            startActivityForResult(intent, REQUEST_SAVE_PACKAGE);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.abc_fade_out);
         } else {
             pkg.save();
             updating--;

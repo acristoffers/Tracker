@@ -30,5 +30,6 @@
     <string name="version" formatted="false">Versão %s (%d)</string>
     <string name="copyright">\u00a9 2014 Álan Crístoffer</string>
     <string name="github"><a href="https://github.com/acristoffers/Tracker">Este projeto está no GitHub</a></string>
+    <string name="empty_steps">Não há atualizações para este pacote. Atualizações aparecerão aqui assim que ficarem disponíveis.</string>
 
 </resources>
