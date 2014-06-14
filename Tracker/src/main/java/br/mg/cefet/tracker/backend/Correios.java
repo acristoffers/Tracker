@@ -179,6 +179,9 @@ public class Correios {
 
             if (split[2] != null) {
                 step.local = split[2].trim();
+                step.local = step.local.replaceAll("[^a-zA-Z/ ]", " ");
+                step.local = step.local.replaceAll(" +", " ");
+                step.local = step.local.trim();
             }
 
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
