@@ -180,8 +180,11 @@ public class PackageListActivity extends FragmentActivity implements Package.Sta
                     Package pkg = (Package) packageListAdapter.getItem(i);
 
                     if (isTablet) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(PackageEditActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
+
                         PackageViewFragment viewFragment = new PackageViewFragment();
-                        viewFragment.setPackage(pkg);
+                        viewFragment.setArguments(bundle);
 
                         getSupportFragmentManager()
                                 .beginTransaction()

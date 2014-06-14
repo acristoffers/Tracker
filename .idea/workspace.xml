@@ -56,10 +56,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ae8fa9c-5fd5-4407-986c-e3c6b52ae637" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/layout/fragment_package_view.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/layout/fragment_package_view.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/values-de/strings.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/values-de/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/res/values-pt/strings.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/res/values-pt/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/Tracker/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageEditActivity.java" afterPath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageEditActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java" afterPath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageViewActivity.java" afterPath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageViewActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/fragments/PackageViewFragment.java" afterPath="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/fragments/PackageViewFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tracker/build.gradle" afterPath="$PROJECT_DIR$/Tracker/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Tracker.iws" />
@@ -114,8 +116,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <breakpoint_rules converted="true" />
     <ui_properties converted="true" />
+    <breakpoint_rules converted="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -123,32 +125,47 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="fragment_package_view.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Tracker/src/main/res/layout/fragment_package_view.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
+      <file leaf-file-name="PackageEditActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageEditActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.7283072" vertical-offset="0" max-vertical-offset="1305">
-              <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="2595">
+              <caret line="76" column="38" selection-start-line="64" selection-start-column="8" selection-end-line="76" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PackageViewActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageViewActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="1755">
+              <caret line="74" column="63" selection-start-line="74" selection-start-column="63" selection-end-line="74" selection-end-column="63" />
               <folding>
-                <element signature="e#513#536#0" expanded="true" />
-                <element signature="e#789#811#0" expanded="true" />
-                <element signature="e#851#874#0" expanded="true" />
-                <element signature="e#968#984#0" expanded="true" />
-                <element signature="e#1176#1198#0" expanded="true" />
-                <element signature="e#1237#1260#0" expanded="true" />
-                <element signature="e#1352#1366#0" expanded="true" />
-                <element signature="e#1653#1676#0" expanded="true" />
-                <element signature="e#1711#1727#0" expanded="true" />
-                <element signature="e#1761#1777#0" expanded="true" />
-                <element signature="e#1895#1917#0" expanded="true" />
-                <element signature="e#1942#1965#0" expanded="true" />
-                <element signature="e#2206#2228#0" expanded="true" />
-                <element signature="e#2358#2381#0" expanded="true" />
-                <element signature="e#2417#2433#0" expanded="true" />
-                <element signature="e#2467#2483#0" expanded="true" />
-                <element signature="e#2555#2578#0" expanded="true" />
+                <element signature="e#3705#3739#0" expanded="true" />
+                <element signature="e#3911#3932#0" expanded="true" />
+                <element signature="e#4020#4032#0" expanded="true" />
+                <element signature="e#4034#4443#0" expanded="true" />
+                <element signature="e#4424#4425#0" expanded="true" />
+                <element signature="e#4489#4500#0" expanded="true" />
+                <element signature="e#4502#4744#0" expanded="true" />
+                <element signature="e#4725#4726#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PackageViewFragment.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/fragments/PackageViewFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="3.2054794" vertical-offset="0" max-vertical-offset="2460">
+              <caret line="168" column="0" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#6399#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#4891#4925#0" expanded="true" />
+                <element signature="e#5137#5158#0" expanded="true" />
+                <element signature="e#5270#5282#0" expanded="true" />
+                <element signature="e#5869#5880#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -601,7 +618,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4207320966000" />
+        <entry key="$PROJECT_DIR$" value="4207345995000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -902,17 +919,17 @@
         <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/AlarmReceiver.java" />
         <option value="$PROJECT_DIR$/Tracker/src/main/res/menu/menu_main.xml" />
         <option value="$PROJECT_DIR$/Tracker/src/main/res/layout/activity_package_edit.xml" />
-        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageEditActivity.java" />
-        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java" />
-        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageViewActivity.java" />
-        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/fragments/PackageViewFragment.java" />
-        <option value="$PROJECT_DIR$/Tracker/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/BackupAgent.java" />
         <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/backend/Store.java" />
         <option value="$PROJECT_DIR$/Tracker/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/Tracker/src/main/res/values-de/strings.xml" />
         <option value="$PROJECT_DIR$/Tracker/src/main/res/values-pt/strings.xml" />
         <option value="$PROJECT_DIR$/Tracker/src/main/res/layout/fragment_package_view.xml" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageEditActivity.java" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageViewActivity.java" />
+        <option value="$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/fragments/PackageViewFragment.java" />
       </list>
     </option>
   </component>
@@ -1023,7 +1040,11 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tracker" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1049,26 +1070,16 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
+              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
+              <option name="myItemId" value="tracker" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Tracker" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tracker-Tracker" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.packageview.AndroidModuleNode" />
+              <option name="myItemId" value="activities" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -1145,6 +1156,20 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tracker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tracker-Tracker" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.packageview.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1215,19 +1240,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -1253,6 +1265,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1366,7 +1391,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30229226" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30229226" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1379,11 +1404,11 @@
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36279684" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28683835" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28540772" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2858166" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28540772" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1406,7 +1431,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="8" />
+      <option name="time" value="13" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -1703,42 +1728,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageEditActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="798" max-vertical-offset="2550">
-          <caret line="120" column="40" selection-start-line="120" selection-start-column="40" selection-end-line="120" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="630" max-vertical-offset="4515">
-          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageViewActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="530" max-vertical-offset="1665">
-          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/fragments/PackageListFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
           <caret line="41" column="1" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/fragments/PackageViewFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44520548" vertical-offset="1625" max-vertical-offset="2355">
-          <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#5606#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1767,14 +1760,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.061643835" vertical-offset="0" max-vertical-offset="730">
           <caret line="3" column="37" selection-start-line="3" selection-start-column="37" selection-end-line="3" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tracker/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16438356" vertical-offset="0" max-vertical-offset="1110">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1811,26 +1796,64 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.7283072" vertical-offset="0" max-vertical-offset="1305">
-          <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.3200569" vertical-offset="0" max-vertical-offset="1305">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5068493" vertical-offset="485" max-vertical-offset="1230">
+          <caret line="57" column="22" selection-start-line="57" selection-start-column="22" selection-end-line="57" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageEditActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="2595">
+          <caret line="76" column="38" selection-start-line="64" selection-start-column="8" selection-end-line="76" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23972602" vertical-offset="1820" max-vertical-offset="3855">
+          <caret line="184" column="0" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/activities/PackageViewActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="1755">
+          <caret line="74" column="63" selection-start-line="74" selection-start-column="63" selection-end-line="74" selection-end-column="63" />
           <folding>
-            <element signature="e#513#536#0" expanded="true" />
-            <element signature="e#789#811#0" expanded="true" />
-            <element signature="e#851#874#0" expanded="true" />
-            <element signature="e#968#984#0" expanded="true" />
-            <element signature="e#1176#1198#0" expanded="true" />
-            <element signature="e#1237#1260#0" expanded="true" />
-            <element signature="e#1352#1366#0" expanded="true" />
-            <element signature="e#1653#1676#0" expanded="true" />
-            <element signature="e#1711#1727#0" expanded="true" />
-            <element signature="e#1761#1777#0" expanded="true" />
-            <element signature="e#1895#1917#0" expanded="true" />
-            <element signature="e#1942#1965#0" expanded="true" />
-            <element signature="e#2206#2228#0" expanded="true" />
-            <element signature="e#2358#2381#0" expanded="true" />
-            <element signature="e#2417#2433#0" expanded="true" />
-            <element signature="e#2467#2483#0" expanded="true" />
-            <element signature="e#2555#2578#0" expanded="true" />
+            <element signature="e#3705#3739#0" expanded="true" />
+            <element signature="e#3911#3932#0" expanded="true" />
+            <element signature="e#4020#4032#0" expanded="true" />
+            <element signature="e#4034#4443#0" expanded="true" />
+            <element signature="e#4424#4425#0" expanded="true" />
+            <element signature="e#4489#4500#0" expanded="true" />
+            <element signature="e#4502#4744#0" expanded="true" />
+            <element signature="e#4725#4726#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tracker/src/main/java/br/mg/cefet/tracker/fragments/PackageViewFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.2054794" vertical-offset="0" max-vertical-offset="2460">
+          <caret line="168" column="0" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#6399#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#4891#4925#0" expanded="true" />
+            <element signature="e#5137#5158#0" expanded="true" />
+            <element signature="e#5270#5282#0" expanded="true" />
+            <element signature="e#5869#5880#0" expanded="true" />
           </folding>
         </state>
       </provider>

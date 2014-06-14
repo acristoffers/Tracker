@@ -39,7 +39,6 @@ import br.mg.cefet.tracker.fragments.PackageViewFragment;
 
 public class PackageViewActivity extends ActionBarActivity {
 
-    private PackageViewFragment fragment;
     private Package pkg;
 
     @Override
@@ -52,15 +51,29 @@ public class PackageViewActivity extends ActionBarActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        String code = getIntent().getStringExtra(PackageEditActivity.EXTRA_PACKAGE_CODE);
+        String code;
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            code = intent.getStringExtra(PackageEditActivity.EXTRA_PACKAGE_CODE);
+        } else if (savedInstanceState != null) {
+            code = savedInstanceState.getString(PackageEditActivity.EXTRA_PACKAGE_CODE);
+        } else {
+            finish();
+            return;
+        }
+
         pkg = new Package(code, this);
 
         if (!pkg.getName().isEmpty()) {
             setTitle(pkg.getName());
         }
 
-        fragment = new PackageViewFragment();
-        fragment.setPackage(pkg);
+        Bundle bundle = new Bundle();
+        bundle.putString(PackageEditActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
+
+        PackageViewFragment fragment = new PackageViewFragment();
+        fragment.setArguments(bundle);
 
         getSupportFragmentManager()
                 .beginTransaction()

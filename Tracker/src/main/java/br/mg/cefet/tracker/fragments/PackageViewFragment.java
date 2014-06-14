@@ -22,6 +22,7 @@
 
 package br.mg.cefet.tracker.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -43,20 +44,18 @@ import br.mg.cefet.tracker.backend.Package;
 
 public class PackageViewFragment extends Fragment {
 
+    String code = null;
     Package pkg = null;
     Activity activity = null;
-    View view;
-
-    public void setPackage(Package pkg) {
-        this.pkg = pkg;
-    }
+    View view = null;
 
     @Override
     public void onAttach(Activity activity) {
-        this.activity = activity;
         super.onAttach(activity);
+        this.activity = activity;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_package_view, null);
@@ -64,65 +63,14 @@ public class PackageViewFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        this.view = view;
-        reload();
-
-        if (!PackageListActivity.isTablet) {
-            View v = view.findViewById(R.id.button_bar);
-            if (v != null) {
-                v.setVisibility(View.GONE);
-            }
-
-        } else {
-            Button edit = (Button) view.findViewById(R.id.edit);
-            if (edit != null) {
-                edit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(activity, PackageEditActivity.class);
-                        intent.putExtra(PackageEditActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
-                        startActivity(intent);
-                    }
-                });
-            }
-
-            Button remove = (Button) view.findViewById(R.id.remove);
-            if (remove != null) {
-                remove.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String body = getString(R.string.confirm_delete);
-                        body = String.format(body, pkg.getName());
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                        builder.setTitle(R.string.are_you_sure);
-                        builder.setMessage(body);
-
-                        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                                pkg.remove();
-                                PackageListActivity listActivity = (PackageListActivity) activity;
-                                listActivity.reloadAndSelectNone();
-                            }
-                        });
-
-                        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        });
-
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }
-                });
-            }
-        }
-
         super.onViewCreated(view, savedInstanceState);
+        this.view = view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        reload();
     }
 
     @Override
@@ -131,22 +79,91 @@ public class PackageViewFragment extends Fragment {
         reload();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(PackageEditActivity.EXTRA_PACKAGE_CODE, code);
+    }
+
     public void reload() {
-        pkg = new Package(pkg.getCod(), activity);
-
-        TextView name = (TextView) view.findViewById(R.id.name);
-        if (name != null) {
-            name.setText(pkg.getName());
+        if (code == null) {
+            final Bundle arguments = getArguments();
+            if (arguments != null) {
+                code = arguments.getString(PackageEditActivity.EXTRA_PACKAGE_CODE);
+            }
         }
 
-        TextView cod = (TextView) view.findViewById(R.id.code);
-        if (cod != null) {
-            cod.setText(pkg.getCod());
-        }
+        if (activity != null && view != null && code != null) {
+            pkg = new Package(code, activity);
 
-        ListView listView = (ListView) view.findViewById(R.id.steps);
-        if (listView != null) {
-            listView.setAdapter(new StepsListAdapter(activity, pkg));
+            TextView name = (TextView) view.findViewById(R.id.name);
+            if (name != null) {
+                name.setText(pkg.getName());
+            }
+
+            TextView cod = (TextView) view.findViewById(R.id.code);
+            if (cod != null) {
+                cod.setText(pkg.getCod());
+            }
+
+            ListView listView = (ListView) view.findViewById(R.id.steps);
+            if (listView != null) {
+                listView.setAdapter(new StepsListAdapter(activity, pkg));
+            }
+
+            if (!PackageListActivity.isTablet) {
+                View v = view.findViewById(R.id.button_bar);
+                if (v != null) {
+                    v.setVisibility(View.GONE);
+                }
+
+            } else {
+                Button edit = (Button) view.findViewById(R.id.edit);
+                if (edit != null) {
+                    edit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(activity, PackageEditActivity.class);
+                            intent.putExtra(PackageEditActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
+                            startActivity(intent);
+                        }
+                    });
+                }
+
+                Button remove = (Button) view.findViewById(R.id.remove);
+                if (remove != null) {
+                    remove.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String body = getString(R.string.confirm_delete);
+                            body = String.format(body, pkg.getName());
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                            builder.setTitle(R.string.are_you_sure);
+                            builder.setMessage(body);
+
+                            builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    pkg.remove();
+                                    PackageListActivity listActivity = (PackageListActivity) activity;
+                                    listActivity.reloadAndSelectNone();
+                                }
+                            });
+
+                            builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            });
+
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                    });
+                }
+            }
         }
     }
 

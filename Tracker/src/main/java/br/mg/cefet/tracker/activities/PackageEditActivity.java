@@ -22,6 +22,7 @@
 
 package br.mg.cefet.tracker.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -61,7 +62,18 @@ public class PackageEditActivity extends ActionBarActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        String code = getIntent().getStringExtra(EXTRA_PACKAGE_CODE);
+        String code;
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            code = intent.getStringExtra(EXTRA_PACKAGE_CODE);
+        } else if (savedInstanceState != null) {
+            code = savedInstanceState.getString(EXTRA_PACKAGE_CODE);
+        } else {
+            finish();
+            return;
+        }
+
         pkg = new Package(code, this);
 
         if (!pkg.getName().isEmpty()) {
