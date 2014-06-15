@@ -7,7 +7,6 @@
 
     <string name="invalid_tracking_number">Invalid tracking number. Must have 13 characters</string>
     <string name="searching_for_package">Searching for package…</string>
-    <string name="package_not_found">Package not found!</string>
 
     <string name="edit_package">Edit package</string>
     <string name="view_package">View package</string>
@@ -46,6 +45,6 @@
     <string name="no">No</string>
     <string name="ok">OK</string>
 
-    <string name="empty_steps">There are no updates on this package yet. Updates will appear here as soon as they get available.</string>
+    <string name="empty_steps">There are no updates on this package yet. Updates will appear here as soon as they become available.</string>
 
 </resources>

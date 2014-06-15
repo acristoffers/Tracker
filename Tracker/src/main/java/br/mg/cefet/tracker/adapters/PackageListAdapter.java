@@ -102,14 +102,16 @@ public class PackageListAdapter extends BaseAdapter implements Package.StatusRea
 
         String name = pkg.getName();
         String code = pkg.getCod();
-        String title = "";
+        String title;
         String date = "";
+        String local = "";
 
         List<Correios.Step> steps = pkg.getSteps();
         if (steps.size() > 0) {
             Correios.Step step = steps.get(0);
             DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
             title = step.title;
+            local = step.local;
             date = sdf.format(step.date);
         } else {
             title = view.getResources().getString(R.string.empty_steps);
@@ -133,6 +135,11 @@ public class PackageListAdapter extends BaseAdapter implements Package.StatusRea
         textView = (TextView) view.findViewById(R.id.date);
         if (textView != null) {
             textView.setText(date);
+        }
+
+        textView = (TextView) view.findViewById(R.id.local);
+        if (textView != null) {
+            textView.setText(local);
         }
 
         return view;

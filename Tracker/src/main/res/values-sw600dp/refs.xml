@@ -1,3 +1,0 @@
-<resources>
-    <item name="fragment_list_root" type="layout">@layout/activity_panes</item>
-</resources>

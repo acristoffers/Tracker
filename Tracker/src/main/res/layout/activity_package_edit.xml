@@ -71,6 +71,8 @@
         android:id="@+id/active"
         android:layout_width="match_parent"
         android:layout_height="@dimen/widget_height"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/code"
         android:layout_marginBottom="@dimen/widget_padding"
         android:layout_marginLeft="@dimen/margins"
@@ -78,13 +80,14 @@
         android:layout_marginTop="@dimen/widget_padding"
         android:hint="@string/active_hint"
         android:text="@string/active"
+        android:textColor="@android:color/black"
         />
 
     <TextView
         android:id="@+id/emptyStepView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/active"
         android:layout_margin="@dimen/margins"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/empty_steps"

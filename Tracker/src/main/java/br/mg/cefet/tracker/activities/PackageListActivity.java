@@ -220,6 +220,19 @@ public class PackageListActivity extends FragmentActivity implements Package.Sta
                     return false;
                 }
             });
+
+            searchPackage.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                    if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && keyCode == KeyEvent.KEYCODE_ENTER) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                        searchForPackage();
+                        return true;
+                    }
+                    return false;
+                }
+            });
         }
 
         ListView listView = (ListView) findViewById(R.id.packages);

@@ -45,6 +45,7 @@
         android:gravity="left|center_vertical"
         android:text="Local"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/black"
         tools:ignore="HardcodedText"/>
 
     <TextView
@@ -59,6 +60,7 @@
         android:minHeight="@dimen/widget_height"
         android:text="Description"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/black"
         tools:ignore="HardcodedText"/>
 
 </RelativeLayout>

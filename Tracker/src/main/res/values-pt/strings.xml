@@ -15,7 +15,6 @@
     <string name="no">Não</string>
     <string name="notification_package_updated_body">Há atualizações para o pacote %s</string>
     <string name="notification_package_updated_title">%s atualizado!</string>
-    <string name="package_not_found">Pacote não encontrado!</string>
     <string name="please_type_name">Favor digiar um nome para identificar este pacote</string>
     <string name="remove">Apagar</string>
     <string name="save">Salvar</string>

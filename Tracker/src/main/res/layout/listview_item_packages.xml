@@ -34,7 +34,7 @@
         android:typeface="monospace"
         tools:ignore="HardcodedText"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/green_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,7 +49,11 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/widget_padding"
+            android:layout_marginRight="@dimen/widget_padding"
+            android:layout_marginTop="@dimen/widget_padding"
             android:gravity="left|center_vertical"
             android:minHeight="@dimen/widget_height"
             android:text="Last Title"
@@ -58,17 +62,35 @@
             tools:ignore="HardcodedText"/>
 
         <TextView
+            android:id="@+id/local"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/title"
+            android:layout_marginBottom="@dimen/widget_padding"
+            android:layout_marginLeft="@dimen/widget_padding"
+            android:layout_toLeftOf="@+id/date"
+            android:gravity="left|center_vertical"
+            android:text="Local"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white"
+            tools:ignore="HardcodedText"/>
+
+        <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/title"
             android:layout_marginBottom="@dimen/widget_padding"
             android:layout_marginLeft="@dimen/widget_padding"
-            android:gravity="left|center_vertical"
+            android:layout_marginRight="@dimen/widget_padding"
+            android:gravity="right|center_vertical"
             android:text="Date"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/white"
             tools:ignore="HardcodedText"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
