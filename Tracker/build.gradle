@@ -1,15 +1,6 @@
 apply plugin: 'android'
 
 android {
-    signingConfigs {
-        Alan {
-            keyAlias 'alan'
-            keyPassword 'ClearL00k'
-            storeFile file('/Users/Alan/Documents/Android/key-store/key-store.jks')
-            storePassword 'ClearL00k'
-        }
-    }
-
     compileSdkVersion 19
     buildToolsVersion '19.1'
 
@@ -30,10 +21,13 @@ android {
         release {
             runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.Alan
             proguardFile '/Users/Alan/AndroidStudioProjects/Tracker/Tracker/proguard-rules.pro'
             zipAlign true
         }
+    }
+
+    if (project.hasProperty("Tracker.signing") && new File((String) project.property("Tracker.signing")).exists()) {
+        apply from: project.property("Tracker.signing");
     }
 
     productFlavors {
