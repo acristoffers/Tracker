@@ -31,4 +31,6 @@ THE SOFTWARE.
 EXCEPTION
 =========
 
-The app icon and its derivatives can not be used without authorization.
+The application icon and the other icons that derive from it are not under MIT license and should not be used without authorization.
+
+O ícone do aplicativo e os outros icons derivados deste não estão sob a licensa MIT e não devem ser utilizados sem autorizaçao.
