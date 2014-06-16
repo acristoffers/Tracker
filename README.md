@@ -5,6 +5,13 @@ Correios Tracker é um aplicativo que verifica o status de encomendas por você.
 
 Correios Tracker is an application that relieves you the burden of accessing the institution's site to see if there are changes on its status. Just add the track number, give it a name and it will notify you when there are changes in the tracking status.
 
+
+Play Store
+----------
+
+http://goo.gl/QrEwYK
+
+
 LICENSE
 =======
 
