@@ -56,10 +56,8 @@ public class PackageListAdapter extends BaseAdapter implements Package.StatusRea
     public void updatePackageList() {
         packageList = new ArrayList<>();
 
-        List<String> codes = Package.getCodes(context);
-        for (String code : codes) {
-            Package pkg = new Package(code, context);
-
+        List<Package> packages = Package.allPackages(context);
+        for (Package pkg : packages) {
             if (pkg.getName().isEmpty()) {
                 pkg.remove();
                 continue;

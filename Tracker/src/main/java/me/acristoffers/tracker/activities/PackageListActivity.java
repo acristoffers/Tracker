@@ -49,8 +49,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import me.acristoffers.tracker.AlarmReceiver;
 import br.mg.cefet.tracker.R;
+import me.acristoffers.tracker.AlarmReceiver;
 import me.acristoffers.tracker.adapters.PackageListAdapter;
 import me.acristoffers.tracker.backend.Package;
 import me.acristoffers.tracker.fragments.PackageViewFragment;
@@ -131,17 +131,18 @@ public class PackageListActivity extends FragmentActivity implements Package.Sta
     }
 
     protected void checkForUpdates() {
-        List<String> codes = Package.getCodes(this);
-        updating = codes.size();
+        Toast toast = Toast.makeText(this, R.string.checking_for_updates, Toast.LENGTH_SHORT);
+        toast.show();
 
-        for (String code : codes) {
-            Package pkg = new Package(code, this);
+        List<Package> packages = Package.allPackages(this);
+        for (Package pkg : packages) {
+            if (pkg.isActive()) {
+                updating++;
+            }
+
             pkg.setListener(this);
             pkg.checkForStatusUpdates();
         }
-
-        Toast toast = Toast.makeText(this, R.string.checking_for_updates, Toast.LENGTH_SHORT);
-        toast.show();
     }
 
     @SuppressLint("InflateParams")

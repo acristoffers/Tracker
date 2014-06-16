@@ -24,8 +24,10 @@ package me.acristoffers.tracker.backend;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class Package implements Correios.SyncDone {
 
@@ -34,25 +36,52 @@ public class Package implements Correios.SyncDone {
     private StatusReady listener = null;
 
     private int id = -1;
-    private String name;
-    private boolean active;
+    private String name = "";
+    private boolean active = false;
     private List<Correios.Step> steps;
-    private Date timeCreated;
-    private Date timeUpdated;
+    private Date timeCreated = new Date();
+    private Date timeUpdated = new Date();
 
     public Package(String cod, Context context) {
         store = new Store(context);
         steps = store.getSteps(cod);
-        name = store.getName(cod);
-        active = store.getActive(cod);
-        id = store.getId(cod);
+
+        Map<String, Object> pkg = store.getPackage(cod);
+
+        if (pkg.containsKey(Store.KEY_NAME)) {
+            name = (String) pkg.get(Store.KEY_NAME);
+        }
+
+        if (pkg.containsKey(Store.KEY_ACTIVE)) {
+            active = (boolean) pkg.get(Store.KEY_ACTIVE);
+        }
+
+        if (pkg.containsKey(Store.KEY_ID)) {
+            id = (int) pkg.get(Store.KEY_ID);
+        }
+
+        if (pkg.containsKey(Store.KEY_TIME_CREATED)) {
+            timeCreated = (Date) pkg.get(Store.KEY_TIME_CREATED);
+        }
+
+        if (pkg.containsKey(Store.KEY_TIME_UPDATED)) {
+            timeUpdated = (Date) pkg.get(Store.KEY_TIME_UPDATED);
+        }
+
         correios = new Correios(cod, this);
-        timeCreated = store.getTimeCreated(cod);
-        timeUpdated = store.getTimeUpdated(cod);
     }
 
-    public static List<String> getCodes(Context context) {
-        return Store.getCodes(context);
+    public static List<Package> allPackages(Context context) {
+        List<Package> packages = new ArrayList<>();
+        Store store = new Store(context);
+
+        List<String> codes = store.allCodes();
+        for (String code : codes) {
+            Package pkg = new Package(code,context);
+            packages.add(pkg);
+        }
+
+        return packages;
     }
 
     public Date getTimeUpdated() {

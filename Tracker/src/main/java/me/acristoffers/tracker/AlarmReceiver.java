@@ -57,11 +57,11 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
 
         this.context = context;
 
-        List<String> codes = Package.getCodes(context);
-        for (String code : codes) {
-            Package pkg = new Package(code, context);
-
+        List<Package> packages = Package.allPackages(context);
+        for (Package pkg : packages) {
             int count = pkg.getSteps().size();
+            String code = pkg.getCod();
+
             countSteps.put(code, count);
 
             pkg.setListener(this);

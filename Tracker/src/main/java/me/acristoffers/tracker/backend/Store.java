@@ -31,30 +31,28 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Store extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "packageTracker";
-
+    public static final String KEY_ID = "id";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_COD = "cod";
+    public static final String KEY_ACTIVE = "active";
+    public static final String KEY_TIME_CREATED = "creation_time";
+    public static final String KEY_TIME_UPDATED = "update_time";
+    public static final String KEY_DATE = "date";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_LOCAL = "local";
+    public static final String KEY_PACKAGE = "package";
+    public static final String KEY_STEPS = "steps";
     private static final int DATABASE_VERSION = 2;
     private static final String TABLE_PACKAGES = "packages";
     private static final String TABLE_STEPS = "steps";
-
-    private static final String KEY_ID = "id";
-
-    private static final String KEY_NAME = "name";
-    private static final String KEY_COD = "cod";
-    private static final String KEY_ACTIVE = "active";
-    private static final String KEY_TIME_CREATED = "creation_time";
-    private static final String KEY_TIME_UPDATED = "update_time";
-
-    private static final String KEY_DATE = "date";
-    private static final String KEY_TITLE = "title";
-    private static final String KEY_DESCRIPTION = "description";
-    private static final String KEY_LOCAL = "local";
-    private static final String KEY_PACKAGE = "package";
-
     private Context context;
 
     public Store(Context context) {
@@ -62,12 +60,7 @@ public class Store extends SQLiteOpenHelper {
         this.context = context;
     }
 
-    public static List<String> getCodes(Context context) {
-        Store store = new Store(context);
-        return store.getCodes();
-    }
-
-    public List<String> getCodes() {
+    public List<String> allCodes() {
         List<String> codes = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -124,84 +117,77 @@ public class Store extends SQLiteOpenHelper {
         }
     }
 
-    public Date getTimeUpdated(String cod) {
-        Date date = new Date();
+    public Map<String, Object> getPackage(String cod) {
+        Map<String, Object> pkg = new HashMap<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         if (db != null) {
-            Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_TIME_UPDATED}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
-            if (cursor.moveToFirst()) {
-                date = new Date(cursor.getInt(cursor.getColumnIndex(KEY_TIME_UPDATED)));
-            }
+            int id = -1;
+            String name = "";
+            boolean active = false;
+            Date timeCreated = new Date();
+            Date timeUpdated = new Date();
 
-            db.close();
-        }
-
-        return date;
-    }
-
-    public Date getTimeCreated(String cod) {
-        Date date = new Date();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        if (db != null) {
-            Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_TIME_CREATED}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
-            if (cursor.moveToFirst()) {
-                date = new Date(cursor.getInt(cursor.getColumnIndex(KEY_TIME_CREATED)));
-            }
-
-            db.close();
-        }
-
-        return date;
-    }
-
-    public boolean getActive(String cod) {
-        boolean active = true;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        if (db != null) {
-            Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_ACTIVE}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
-            if (cursor.moveToFirst()) {
-                active = cursor.getInt(cursor.getColumnIndex(KEY_ACTIVE)) == 1;
-            }
-
-            db.close();
-        }
-
-        return active;
-    }
-
-    public int getId(String cod) {
-        int id = -1;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        if (db != null) {
             Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_ID}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
             if (cursor.moveToFirst()) {
                 id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
             }
 
+            cursor = db.query(TABLE_PACKAGES, new String[]{KEY_NAME}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                name = cursor.getString(cursor.getColumnIndex(KEY_NAME));
+            }
+
+            cursor = db.query(TABLE_PACKAGES, new String[]{KEY_ACTIVE}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                active = cursor.getInt(cursor.getColumnIndex(KEY_ACTIVE)) == 1;
+            }
+
+            cursor = db.query(TABLE_PACKAGES, new String[]{KEY_TIME_CREATED}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                timeCreated = new Date(cursor.getInt(cursor.getColumnIndex(KEY_TIME_CREATED)));
+            }
+
+            cursor = db.query(TABLE_PACKAGES, new String[]{KEY_TIME_UPDATED}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
+            if (cursor.moveToFirst()) {
+                timeUpdated = new Date(cursor.getInt(cursor.getColumnIndex(KEY_TIME_UPDATED)));
+            }
+
+            pkg.put(KEY_ID, id);
+            pkg.put(KEY_NAME, name);
+            pkg.put(KEY_ACTIVE, active);
+            pkg.put(KEY_TIME_CREATED, timeCreated);
+            pkg.put(KEY_TIME_UPDATED, timeUpdated);
+
             db.close();
         }
 
-        return id;
+        return pkg;
     }
 
-    public String getName(String cod) {
-        String name = "";
+    public List<Correios.Step> getSteps(String cod) {
+        List<Correios.Step> steps = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         if (db != null) {
-            Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_NAME}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
-            if (cursor.moveToFirst()) {
-                name = cursor.getString(cursor.getColumnIndex(KEY_NAME));
+            Cursor cursor = db.query(TABLE_STEPS, new String[]{KEY_DATE, KEY_TITLE, KEY_DESCRIPTION, KEY_LOCAL}, KEY_PACKAGE + "=?", new String[]{cod}, null, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    Correios.Step step = new Correios.Step();
+
+                    step.title = cursor.getString(cursor.getColumnIndex(KEY_TITLE));
+                    step.description = cursor.getString(cursor.getColumnIndex(KEY_DESCRIPTION));
+                    step.local = cursor.getString(cursor.getColumnIndex(KEY_LOCAL));
+                    step.date = new Date(cursor.getLong(cursor.getColumnIndex(KEY_DATE)));
+
+                    steps.add(step);
+                } while (cursor.moveToNext());
             }
 
             db.close();
         }
 
-        return name;
+        return steps;
     }
 
     public void updatePackage(Package pkg) {
@@ -288,32 +274,6 @@ public class Store extends SQLiteOpenHelper {
 
             db.close();
         }
-    }
-
-    public List<Correios.Step> getSteps(String cod) {
-        List<Correios.Step> steps = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        if (db != null) {
-            Cursor cursor = db.query(TABLE_STEPS, new String[]{KEY_DATE, KEY_TITLE, KEY_DESCRIPTION, KEY_LOCAL}, KEY_PACKAGE + "=?", new String[]{cod}, null, null, null, null);
-
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    Correios.Step step = new Correios.Step();
-
-                    step.title = cursor.getString(cursor.getColumnIndex(KEY_TITLE));
-                    step.description = cursor.getString(cursor.getColumnIndex(KEY_DESCRIPTION));
-                    step.local = cursor.getString(cursor.getColumnIndex(KEY_LOCAL));
-                    step.date = new Date(cursor.getLong(cursor.getColumnIndex(KEY_DATE)));
-
-                    steps.add(step);
-                } while (cursor.moveToNext());
-            }
-
-            db.close();
-        }
-
-        return steps;
     }
 
 }
