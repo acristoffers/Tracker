@@ -140,7 +140,7 @@ public class PackageListActivity extends FragmentActivity implements Package.Sta
             pkg.checkForStatusUpdates();
         }
 
-        Toast toast = Toast.makeText(this, R.string.checking_for_updates, Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(this, R.string.checking_for_updates, Toast.LENGTH_SHORT);
         toast.show();
     }
 
@@ -343,7 +343,7 @@ public class PackageListActivity extends FragmentActivity implements Package.Sta
             pkg.save();
             updating--;
             if (updating == 0) {
-                Toast toast = Toast.makeText(this, R.string.finished_checking_for_updates, Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(this, R.string.finished_checking_for_updates, Toast.LENGTH_SHORT);
                 toast.show();
                 packageListAdapter.updatePackageList();
             }
