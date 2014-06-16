@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker.adapters;
+package me.acristoffers.tracker.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -36,8 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.mg.cefet.tracker.R;
-import br.mg.cefet.tracker.backend.Correios;
-import br.mg.cefet.tracker.backend.Package;
+import me.acristoffers.tracker.backend.Correios;
+import me.acristoffers.tracker.backend.Package;
 
 public class PackageListAdapter extends BaseAdapter implements Package.StatusReady {
 

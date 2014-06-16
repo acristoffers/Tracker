@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context="${relativePackage}.${activityClass}">
 
-    <br.mg.cefet.tracker.PackageSearchEditText
+    <me.acristoffers.tracker.PackageSearchEditText
         android:id="@+id/search_package"
         android:layout_width="match_parent"
         android:layout_height="@dimen/widget_height"

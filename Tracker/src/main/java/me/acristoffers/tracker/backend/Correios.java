@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker.backend;
+package me.acristoffers.tracker.backend;
 
 import android.os.Handler;
 import android.os.Looper;

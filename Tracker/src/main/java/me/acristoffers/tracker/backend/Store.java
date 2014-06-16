@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker.backend;
+package me.acristoffers.tracker.backend;
 
 import android.app.backup.BackupManager;
 import android.content.ContentValues;

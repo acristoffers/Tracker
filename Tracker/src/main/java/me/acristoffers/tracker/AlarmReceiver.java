@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker;
+package me.acristoffers.tracker;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -37,9 +37,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.mg.cefet.tracker.activities.PackageEditActivity;
-import br.mg.cefet.tracker.activities.PackageViewActivity;
-import br.mg.cefet.tracker.backend.Package;
+import br.mg.cefet.tracker.R;
+import me.acristoffers.tracker.activities.PackageEditActivity;
+import me.acristoffers.tracker.activities.PackageViewActivity;
+import me.acristoffers.tracker.backend.Package;
 
 public class AlarmReceiver extends BroadcastReceiver implements Package.StatusReady {
 

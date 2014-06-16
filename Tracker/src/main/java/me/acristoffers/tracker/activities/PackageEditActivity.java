@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker.activities;
+package me.acristoffers.tracker.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,8 +39,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.mg.cefet.tracker.R;
-import br.mg.cefet.tracker.adapters.StepsListAdapter;
-import br.mg.cefet.tracker.backend.Package;
+import me.acristoffers.tracker.adapters.StepsListAdapter;
+import me.acristoffers.tracker.backend.Package;
 
 public class PackageEditActivity extends ActionBarActivity {
 

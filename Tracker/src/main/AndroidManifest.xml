@@ -17,17 +17,17 @@
 
     <application
         android:allowBackup="true"
-        android:backupAgent="BackupAgent"
+        android:backupAgent="me.acristoffers.tracker.BackupAgent"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
         <meta-data
             android:name="com.google.android.backup.api_key"
-            android:value="AEdPqrEAAAAIgj5VlsxdvWi2hJWROxHu5TSroA3tt0Dgmgxnrg"/>
+            android:value="AEdPqrEAAAAImJ_QP4NAmp8OnzYorGNuMcm3WJOwPtZr_1ehOA"/>
 
         <activity
-            android:name=".activities.PackageListActivity"
+            android:name="me.acristoffers.tracker.activities.PackageListActivity"
             android:label="@string/app_name">
 
             <intent-filter>
@@ -38,9 +38,9 @@
         </activity>
 
         <activity
-            android:name=".activities.PackageEditActivity"
+            android:name="me.acristoffers.tracker.activities.PackageEditActivity"
             android:label="@string/edit_package"
-            android:parentActivityName=".activities.PackageListActivity"
+            android:parentActivityName="me.acristoffers.tracker.activities.PackageListActivity"
             tools:ignore="UnusedAttribute">
 
             <meta-data
@@ -50,9 +50,9 @@
         </activity>
 
         <activity
-            android:name=".activities.PackageViewActivity"
+            android:name="me.acristoffers.tracker.activities.PackageViewActivity"
             android:label="@string/view_package"
-            android:parentActivityName=".activities.PackageListActivity"
+            android:parentActivityName="me.acristoffers.tracker.activities.PackageListActivity"
             tools:ignore="UnusedAttribute">
 
             <meta-data
@@ -62,7 +62,7 @@
         </activity>
 
         <receiver
-            android:name=".AlarmReceiver"
+            android:name="me.acristoffers.tracker.AlarmReceiver"
             android:enabled="true">
 
             <intent-filter>

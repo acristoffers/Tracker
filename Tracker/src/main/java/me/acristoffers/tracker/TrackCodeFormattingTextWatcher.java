@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker;
+package me.acristoffers.tracker;
 
 import android.text.Editable;
 import android.text.Spanned;

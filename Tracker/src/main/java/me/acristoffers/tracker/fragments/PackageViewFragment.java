@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker.fragments;
+package me.acristoffers.tracker.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -37,10 +37,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import br.mg.cefet.tracker.R;
-import br.mg.cefet.tracker.activities.PackageEditActivity;
-import br.mg.cefet.tracker.activities.PackageListActivity;
-import br.mg.cefet.tracker.adapters.StepsListAdapter;
-import br.mg.cefet.tracker.backend.Package;
+import me.acristoffers.tracker.activities.PackageEditActivity;
+import me.acristoffers.tracker.activities.PackageListActivity;
+import me.acristoffers.tracker.adapters.StepsListAdapter;
+import me.acristoffers.tracker.backend.Package;
 
 public class PackageViewFragment extends Fragment {
 

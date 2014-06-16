@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker.activities;
+package me.acristoffers.tracker.activities;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -49,11 +49,11 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import br.mg.cefet.tracker.AlarmReceiver;
+import me.acristoffers.tracker.AlarmReceiver;
 import br.mg.cefet.tracker.R;
-import br.mg.cefet.tracker.adapters.PackageListAdapter;
-import br.mg.cefet.tracker.backend.Package;
-import br.mg.cefet.tracker.fragments.PackageViewFragment;
+import me.acristoffers.tracker.adapters.PackageListAdapter;
+import me.acristoffers.tracker.backend.Package;
+import me.acristoffers.tracker.fragments.PackageViewFragment;
 
 public class PackageListActivity extends FragmentActivity implements Package.StatusReady {
 

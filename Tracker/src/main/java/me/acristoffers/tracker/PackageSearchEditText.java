@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker;
+package me.acristoffers.tracker;
 
 import android.content.Context;
 import android.text.InputType;

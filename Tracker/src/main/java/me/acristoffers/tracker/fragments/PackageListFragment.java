@@ -20,19 +20,23 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker;
+package me.acristoffers.tracker.fragments;
 
-import android.app.backup.BackupAgentHelper;
-import android.app.backup.FileBackupHelper;
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import br.mg.cefet.tracker.backend.Store;
+import br.mg.cefet.tracker.R;
 
-public class BackupAgent extends BackupAgentHelper {
+public class PackageListFragment extends Fragment {
 
+    @SuppressLint("InflateParams")
     @Override
-    public void onCreate() {
-        FileBackupHelper helper = new FileBackupHelper(this, Store.DATABASE_NAME);
-        addHelper("database", helper);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_package_list, null);
     }
 
 }

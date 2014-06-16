@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package br.mg.cefet.tracker.activities;
+package me.acristoffers.tracker.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -34,8 +34,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import br.mg.cefet.tracker.R;
-import br.mg.cefet.tracker.backend.Package;
-import br.mg.cefet.tracker.fragments.PackageViewFragment;
+import me.acristoffers.tracker.backend.Package;
+import me.acristoffers.tracker.fragments.PackageViewFragment;
 
 public class PackageViewActivity extends ActionBarActivity {
 
