@@ -23,6 +23,8 @@
 package me.acristoffers.tracker.activities;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -79,6 +81,9 @@ public class PackageViewActivity extends ActionBarActivity {
                 .beginTransaction()
                 .replace(R.id.fragment, fragment, "viewFragment")
                 .commit();
+
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancel(pkg.getId());
     }
 
     @Override
