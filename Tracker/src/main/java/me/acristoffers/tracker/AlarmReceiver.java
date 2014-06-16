@@ -59,6 +59,10 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
 
         List<Package> packages = Package.allPackages(context);
         for (Package pkg : packages) {
+            if (!pkg.isActive()) {
+                continue;
+            }
+
             int count = pkg.getSteps().size();
             String code = pkg.getCod();
 

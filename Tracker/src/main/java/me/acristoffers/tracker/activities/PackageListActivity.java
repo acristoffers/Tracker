@@ -136,10 +136,11 @@ public class PackageListActivity extends FragmentActivity implements Package.Sta
 
         List<Package> packages = Package.allPackages(this);
         for (Package pkg : packages) {
-            if (pkg.isActive()) {
-                updating++;
+            if (!pkg.isActive()) {
+                continue;
             }
 
+            updating++;
             pkg.setListener(this);
             pkg.checkForStatusUpdates();
         }
