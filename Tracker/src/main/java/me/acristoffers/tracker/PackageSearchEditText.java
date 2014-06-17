@@ -23,6 +23,7 @@
 package me.acristoffers.tracker;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.widget.EditText;
@@ -47,10 +48,12 @@ public class PackageSearchEditText extends EditText {
         int type = getInputType();
         if (cursor > 1 && cursor < 11) {
             if (type != InputType.TYPE_CLASS_NUMBER) {
+                SystemClock.sleep(500);
                 setInputType(InputType.TYPE_CLASS_NUMBER);
             }
         } else {
             if (type != InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS) {
+                SystemClock.sleep(500);
                 setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
             }
         }
