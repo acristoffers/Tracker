@@ -22,10 +22,10 @@
 
 package me.acristoffers.tracker.activities;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,7 +42,7 @@ import br.mg.cefet.tracker.R;
 import me.acristoffers.tracker.adapters.StepsListAdapter;
 import me.acristoffers.tracker.backend.Package;
 
-public class PackageEditActivity extends ActionBarActivity {
+public class PackageEditActivity extends Activity {
 
     public static final String EXTRA_PACKAGE_CODE = "package_code";
 
@@ -57,7 +57,7 @@ public class PackageEditActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_package_edit);
 
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }

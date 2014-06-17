@@ -21,7 +21,7 @@
     <string name="search_for_package">Procurar por pacote…</string>
     <string name="searching_for_package">Procurando por pacote…</string>
     <string name="show_inactive">Mostrar inativos</string>
-    <string name="type_code_above">Digite um código de rastreamento no campo acima para procurar e adicionar</string>
+    <string name="type_code_above">Use a busca para procurar por um pacote</string>
     <string name="view_package">Exibir pacote</string>
     <string name="yes">Sim</string>
     <string name="ok">OK</string>

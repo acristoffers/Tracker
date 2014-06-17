@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <me.acristoffers.tracker.PackageSearchEditText
+        android:id="@+id/search_widget"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="@string/search_for_package"
+        android:imeOptions="actionSearch"
+        android:inputType="textNoSuggestions"
+        android:minWidth="350dp"
+        android:typeface="monospace"/>
+
+</RelativeLayout>

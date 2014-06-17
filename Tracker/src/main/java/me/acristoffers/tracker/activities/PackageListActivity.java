@@ -23,6 +23,7 @@
 package me.acristoffers.tracker.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,7 +31,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
@@ -44,6 +44,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,20 +56,77 @@ import me.acristoffers.tracker.adapters.PackageListAdapter;
 import me.acristoffers.tracker.backend.Package;
 import me.acristoffers.tracker.fragments.PackageViewFragment;
 
-public class PackageListActivity extends FragmentActivity implements Package.StatusReady {
+public class PackageListActivity extends Activity implements Package.StatusReady {
 
     private static final int REQUEST_SAVE_PACKAGE = 0;
     public static boolean isTablet = false;
     private static boolean showingInactive = false;
-    private EditText searchPackage = null;
+    private EditText searchView = null;
     private Package searchingForPackage = null;
     private AlertDialog dialog = null;
     private int updating = 0;
     private PackageListAdapter packageListAdapter;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_list_root);
+
+        isTablet = (findViewById(R.id.view_fragment) != null);
+
+        packageListAdapter = new PackageListAdapter(this, showingInactive);
+
+        ListView listView = (ListView) findViewById(R.id.packages);
+        if (listView != null) {
+            View view = findViewById(R.id.emptyPackageView);
+
+            listView.setEmptyView(view);
+            listView.setAdapter(packageListAdapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Package pkg = (Package) packageListAdapter.getItem(i);
+
+                    if (isTablet) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(PackageEditActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
+
+                        PackageViewFragment viewFragment = new PackageViewFragment();
+                        viewFragment.setArguments(bundle);
+
+                        getFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.view_fragment, viewFragment, "viewFragment")
+                                .commit();
+                    } else {
+                        Intent intent = new Intent(PackageListActivity.this, PackageViewActivity.class);
+                        intent.putExtra(PackageEditActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
+
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.abc_fade_out);
+                    }
+                }
+            });
+        }
+
+        AlarmReceiver.setAlarm(this);
+    }
+
+    @Override
     protected void onRestart() {
         super.onRestart();
+        packageListAdapter.updatePackageList();
+        overridePendingTransition(R.anim.abc_fade_in, R.anim.slide_out_right);
+
+        View view = findViewById(R.id.container);
+        if (view != null) {
+            view.requestFocus();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         packageListAdapter.updatePackageList();
         overridePendingTransition(R.anim.abc_fade_in, R.anim.slide_out_right);
 
@@ -88,6 +146,61 @@ public class PackageListActivity extends FragmentActivity implements Package.Sta
             item.setTitle(R.string.hide_inactive);
         } else {
             item.setTitle(R.string.show_inactive);
+        }
+
+        MenuItem actionView = menu.findItem(R.id.search);
+        RelativeLayout layout = (RelativeLayout) actionView.getActionView();
+        searchView = (EditText) layout.findViewById(R.id.search_widget);
+
+        if (searchView != null) {
+            actionView.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                @Override
+                public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                    searchView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            searchView.requestFocus();
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
+                        }
+                    });
+
+                    return true;
+                }
+
+                @Override
+                public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                    return true;
+                }
+            });
+
+            searchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                        searchForPackage();
+                        return true;
+                    }
+
+                    return false;
+                }
+            });
+
+            searchView.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                    if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && keyCode == KeyEvent.KEYCODE_ENTER) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                        searchForPackage();
+                        return true;
+                    }
+                    return false;
+                }
+            });
         }
 
         return true;
@@ -199,80 +312,6 @@ public class PackageListActivity extends FragmentActivity implements Package.Sta
         packageListAdapter.updatePackageList();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_list_root);
-
-        isTablet = (findViewById(R.id.view_fragment) != null);
-
-        packageListAdapter = new PackageListAdapter(this, showingInactive);
-
-        searchPackage = (EditText) findViewById(R.id.search_package);
-        if (searchPackage != null) {
-            searchPackage.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                        searchForPackage();
-                        return true;
-                    }
-
-                    return false;
-                }
-            });
-
-            searchPackage.setOnKeyListener(new View.OnKeyListener() {
-                @Override
-                public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-                    if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && keyCode == KeyEvent.KEYCODE_ENTER) {
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                        searchForPackage();
-                        return true;
-                    }
-                    return false;
-                }
-            });
-        }
-
-        ListView listView = (ListView) findViewById(R.id.packages);
-        if (listView != null) {
-            View view = findViewById(R.id.emptyPackageView);
-
-            listView.setEmptyView(view);
-            listView.setAdapter(packageListAdapter);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Package pkg = (Package) packageListAdapter.getItem(i);
-
-                    if (isTablet) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString(PackageEditActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
-
-                        PackageViewFragment viewFragment = new PackageViewFragment();
-                        viewFragment.setArguments(bundle);
-
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.view_fragment, viewFragment, "viewFragment")
-                                .commit();
-                    } else {
-                        Intent intent = new Intent(PackageListActivity.this, PackageViewActivity.class);
-                        intent.putExtra(PackageEditActivity.EXTRA_PACKAGE_CODE, pkg.getCod());
-
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.abc_fade_out);
-                    }
-                }
-            });
-        }
-
-        AlarmReceiver.setAlarm(this);
-    }
-
     @SuppressLint("InflateParams")
     private void searchForPackage() {
         if (searchingForPackage == null) {
@@ -302,12 +341,8 @@ public class PackageListActivity extends FragmentActivity implements Package.Sta
     private String getSearchPackageText() {
         String text = "";
 
-        if (searchPackage == null) {
-            searchPackage = (EditText) findViewById(R.id.search_package);
-        }
-
-        if (searchPackage != null) {
-            Editable editable = searchPackage.getText();
+        if (searchView != null) {
+            Editable editable = searchView.getText();
             if (editable != null) {
                 text = editable.toString();
             }
@@ -317,24 +352,12 @@ public class PackageListActivity extends FragmentActivity implements Package.Sta
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        packageListAdapter.updatePackageList();
-        overridePendingTransition(R.anim.abc_fade_in, R.anim.slide_out_right);
-
-        View view = findViewById(R.id.container);
-        if (view != null) {
-            view.requestFocus();
-        }
-    }
-
-    @Override
     public void statusUpdated(Package pkg) {
         if (dialog != null) {
             dialog.dismiss();
             dialog = null;
 
-            searchPackage.setText("");
+            searchView.setText("");
             pkg.save();
 
             Intent intent = new Intent(this, PackageEditActivity.class);
@@ -354,9 +377,9 @@ public class PackageListActivity extends FragmentActivity implements Package.Sta
 
     public void reloadAndSelectNone() {
         packageListAdapter.updatePackageList();
-        getSupportFragmentManager()
+        getFragmentManager()
                 .beginTransaction()
-                .remove(getSupportFragmentManager().findFragmentByTag("viewFragment"))
+                .remove(getFragmentManager().findFragmentByTag("viewFragment"))
                 .commit();
     }
 

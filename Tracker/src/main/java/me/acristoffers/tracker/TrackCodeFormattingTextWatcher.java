@@ -125,7 +125,7 @@ public class TrackCodeFormattingTextWatcher implements TextWatcher {
         removeSpan(editable, UnderlineSpan.class);
         removeSpan(editable, URLSpan.class);
 
-        editable.setSpan(new ForegroundColorSpan(0xFF000000), 0, editable.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        editable.setSpan(new ForegroundColorSpan(0xFFFFFFFF), 0, editable.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         editable.setSpan(new BackgroundColorSpan(0x00000000), 0, editable.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
     }
 

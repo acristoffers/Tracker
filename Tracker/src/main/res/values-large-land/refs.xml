@@ -1,3 +1,4 @@
 <resources>
     <item name="fragment_list_root" type="layout">@layout/activity_panes</item>
+    <item name="search_layout" type="layout">@layout/search_layout_tablet</item>
 </resources>

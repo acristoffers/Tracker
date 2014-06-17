@@ -22,6 +22,8 @@
 
 package me.acristoffers.tracker.activities;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -29,8 +31,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,7 +39,7 @@ import br.mg.cefet.tracker.R;
 import me.acristoffers.tracker.backend.Package;
 import me.acristoffers.tracker.fragments.PackageViewFragment;
 
-public class PackageViewActivity extends ActionBarActivity {
+public class PackageViewActivity extends Activity {
 
     private Package pkg;
 
@@ -48,7 +48,7 @@ public class PackageViewActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.full_fragment);
 
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -77,7 +77,7 @@ public class PackageViewActivity extends ActionBarActivity {
         PackageViewFragment fragment = new PackageViewFragment();
         fragment.setArguments(bundle);
 
-        getSupportFragmentManager()
+        getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment, fragment, "viewFragment")
                 .commit();

@@ -5,10 +5,10 @@ android {
     buildToolsVersion '19.1'
 
     defaultConfig {
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 19
-        versionCode 5
-        versionName '1.2'
+        versionCode 6
+        versionName '1.3'
         applicationId 'me.acristoffers.tracker'
     }
 
@@ -36,6 +36,5 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:19.+'
-    compile 'com.android.support:appcompat-v7:19.+'
+    compile 'com.android.support:support-v4:19.+'
 }
