@@ -31,6 +31,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.text.Editable;
 import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
@@ -153,7 +154,7 @@ public class PackageListActivity extends Activity implements Package.StatusReady
         searchView = (EditText) layout.findViewById(R.id.search_widget);
 
         if (searchView != null) {
-            actionView.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            MenuItemCompat.setOnActionExpandListener(actionView, new MenuItemCompat.OnActionExpandListener() {
                 @Override
                 public boolean onMenuItemActionExpand(MenuItem menuItem) {
                     searchView.post(new Runnable() {

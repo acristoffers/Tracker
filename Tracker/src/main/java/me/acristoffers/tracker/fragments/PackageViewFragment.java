@@ -62,13 +62,8 @@ public class PackageViewFragment extends Fragment {
     @SuppressLint("InflateParams")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_package_view, null);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        this.view = view;
+        view = inflater.inflate(R.layout.fragment_package_view, null);
+        return view;
     }
 
     @Override
