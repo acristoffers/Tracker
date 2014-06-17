@@ -47,4 +47,6 @@
 
     <string name="empty_steps">There are no updates on this package yet. Updates will appear here as soon as they become available.</string>
 
+    <string name="code_copied">Tracking code copied</string>
+
 </resources>

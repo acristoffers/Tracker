@@ -25,6 +25,9 @@ package me.acristoffers.tracker.fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +38,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import br.mg.cefet.tracker.R;
 import me.acristoffers.tracker.activities.PackageEditActivity;
@@ -103,6 +107,25 @@ public class PackageViewFragment extends Fragment {
             TextView cod = (TextView) view.findViewById(R.id.code);
             if (cod != null) {
                 cod.setText(pkg.getCod());
+                cod.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+                        if (clipboardManager != null) {
+                            TextView tv = (TextView) view;
+                            String code = tv.getText().toString();
+                            ClipData clipData = ClipData.newPlainText(code, code);
+                            clipboardManager.setPrimaryClip(clipData);
+
+                            Toast toast = Toast.makeText(activity, R.string.code_copied, Toast.LENGTH_SHORT);
+                            toast.show();
+
+                            return true;
+                        }
+
+                        return false;
+                    }
+                });
             }
 
             ListView listView = (ListView) view.findViewById(R.id.steps);
