@@ -129,6 +129,7 @@ public class TrackCodeFormattingTextWatcher implements TextWatcher {
         editable.setSpan(new BackgroundColorSpan(0x00000000), 0, editable.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
     }
 
+    @SuppressWarnings("unchecked")
     private void removeSpan(Editable editable, Class spanClass) {
         Object spans[] = editable.getSpans(0, editable.length(), spanClass);
         for (Object span : spans) {

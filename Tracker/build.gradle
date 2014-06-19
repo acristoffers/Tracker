@@ -1,4 +1,16 @@
+import groovy.swing.SwingBuilder
+
 apply plugin: 'android'
+
+def keystore = System.getenv('ANDROID_KEYSTORE')
+
+if (keystore == null || keystore.isEmpty()) {
+    keystore = 'icon.svg' // allows the build to run on Android Studio.
+                          // It won't, however, be able to build the release version from there.
+                          // To build the release (signed) version, set ANDROID_KEYSTORE and
+                          // ANDROID_KEYALIAS environment variables and run gradle build from a
+                          // console
+}
 
 android {
     compileSdkVersion 19
@@ -21,20 +33,65 @@ android {
         release {
             runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            proguardFile '/Users/Alan/AndroidStudioProjects/Tracker/Tracker/proguard-rules.pro'
             zipAlign true
         }
     }
 
-    if (project.hasProperty("Tracker.signing") && new File((String) project.property("Tracker.signing")).exists()) {
-        apply from: project.property("Tracker.signing");
+    signingConfigs {
+        release {
+            storeFile file(keystore)
+            keyAlias System.getenv('ANDROID_KEYALIAS')
+            storePassword ''
+            keyPassword ''
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
     }
 
     productFlavors {
     }
+
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:19.+'
+}
+
+gradle.taskGraph.whenReady { taskGraph ->
+
+    if (taskGraph.hasTask(':Tracker:assembleRelease')) {
+        def pass = ''
+
+        if (System.console() == null) {
+            new SwingBuilder().edt {
+                dialog(modal: true, title: 'Enter password', alwaysOnTop: true, resizable: false, locationRelativeTo: null, pack: true, show: true) {
+                    vbox {
+                        label(text: "Please enter key passphrase:")
+                        input = passwordField()
+                        button(defaultButton: true, text: 'OK', actionPerformed: {
+                            pass = input.password;
+                            dispose();
+                        })
+                    }
+                }
+            }
+        } else {
+            pass = System.console().readPassword("\nPlease enter key passphrase: ")
+        }
+
+        pass = new String(pass)
+
+        if (pass.size() <= 0) {
+            throw new InvalidUserDataException("You must enter a password to proceed.")
+        }
+
+        android.signingConfigs.release.storePassword = pass
+        android.signingConfigs.release.keyPassword = pass
+    }
+
 }
