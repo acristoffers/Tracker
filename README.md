@@ -40,4 +40,4 @@ EXCEPTION
 
 The application icon and the other icons that derive from it are not under MIT license and should not be used without authorization.
 
-O ícone do aplicativo e os outros icons derivados deste não estão sob a licensa MIT e não devem ser utilizados sem autorizaçao.
+O ícone do aplicativo e os outros ícones derivados deste não estão sob a licensa MIT e não devem ser utilizados sem autorizaçao.
