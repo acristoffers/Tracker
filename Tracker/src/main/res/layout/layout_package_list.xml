@@ -24,7 +24,7 @@
         android:id="@+id/packages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/holo_blue_light"
+        android:divider="@color/holo_green_light"
         android:dividerHeight="1dp"/>
 
 </RelativeLayout>

@@ -3,4 +3,10 @@
     <dimen name="widget_height">48dp</dimen>
     <dimen name="widget_padding">8dp</dimen>
     <dimen name="margins">16dp</dimen>
+
+    <dimen name="tab_host_default_height">48dp</dimen>
+
+    <dimen name="text_title">16sp</dimen>
+    <dimen name="text_subtitle">12sp</dimen>
+    <dimen name="text_normal">14sp</dimen>
 </resources>

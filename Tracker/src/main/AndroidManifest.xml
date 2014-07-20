@@ -19,6 +19,7 @@
         android:allowBackup="true"
         android:backupAgent="me.acristoffers.tracker.BackupAgent"
         android:icon="@drawable/ic_launcher"
+        android:logo="@drawable/ic_stat_app"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
@@ -27,7 +28,7 @@
             android:value="AEdPqrEAAAAImJ_QP4NAmp8OnzYorGNuMcm3WJOwPtZr_1ehOA"/>
 
         <activity
-            android:name="me.acristoffers.tracker.activities.PackageListActivity"
+            android:name="me.acristoffers.tracker.activities.Main"
             android:label="@string/app_name">
 
             <intent-filter>
@@ -35,6 +36,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
+        </activity>
+
+        <activity
+            android:name="me.acristoffers.tracker.activities.PackageListActivity"
+            android:icon="@drawable/ic_stat_app"
+            android:label="@string/app_name">
         </activity>
 
         <activity

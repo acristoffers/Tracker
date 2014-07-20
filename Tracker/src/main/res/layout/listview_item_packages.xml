@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/widget_height"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="@dimen/widget_padding"
-        android:gravity="left|center_vertical"
-        android:padding="@dimen/widget_padding"
-        android:text="Quite Cool Stuff"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/holo_green_dark"
-        tools:ignore="HardcodedText"/>
+    <RelativeLayout
+        android:id="@+id/blue_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/holo_green_light"
+        android:minHeight="@dimen/widget_height">
 
-    <TextView
-        android:id="@+id/code"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/widget_height"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="@dimen/widget_padding"
-        android:gravity="left|center_vertical"
-        android:padding="@dimen/widget_padding"
-        android:text="AB123456789CD"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/holo_blue_dark"
-        android:typeface="monospace"
-        tools:ignore="HardcodedText"/>
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/widget_height"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="@dimen/widget_padding"
+            android:gravity="left|center_vertical"
+            android:padding="@dimen/widget_padding"
+            android:text="Quite Cool Stuff"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_title"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/code"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/widget_height"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="@dimen/widget_padding"
+            android:gravity="left|center_vertical"
+            android:padding="@dimen/widget_padding"
+            android:text="AB123456789CD"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_subtitle"
+            android:typeface="monospace"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/green_bar"
@@ -40,9 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/code"
+        android:layout_below="@id/blue_bar"
         android:layout_marginBottom="@dimen/widget_padding"
-        android:background="@color/holo_green_light"
         android:orientation="vertical">
 
         <TextView
@@ -58,8 +67,8 @@
             android:minHeight="@dimen/widget_height"
             android:text="Last Title"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white"
-            tools:ignore="HardcodedText"/>
+            android:textSize="@dimen/text_normal"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/local"
@@ -73,8 +82,8 @@
             android:gravity="left|center_vertical"
             android:text="Local"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/white"
-            tools:ignore="HardcodedText"/>
+            android:textSize="@dimen/text_normal"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/date"
@@ -88,8 +97,8 @@
             android:gravity="right|center_vertical"
             android:text="Date"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/white"
-            tools:ignore="HardcodedText"/>
+            android:textSize="@dimen/text_normal"
+            tools:ignore="HardcodedText" />
 
     </RelativeLayout>
 

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:padding="@dimen/margins">
+    android:background="@android:color/white">
 
     <TextView
         android:id="@+id/title"
@@ -15,12 +13,15 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="@dimen/widget_padding"
+        android:background="@color/holo_blue_light"
         android:gravity="left|center_vertical"
         android:minHeight="@dimen/widget_height"
+        android:padding="@dimen/widget_padding"
         android:text="Title"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/holo_blue_dark"
-        tools:ignore="HardcodedText"/>
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_title"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/date"
@@ -28,13 +29,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/title"
+        android:layout_margin="@dimen/widget_padding"
         android:layout_marginBottom="@dimen/widget_padding"
         android:layout_toLeftOf="@id/local"
         android:gravity="left|center_vertical"
         android:text="Date"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/holo_green_dark"
-        tools:ignore="HardcodedText"/>
+        android:textSize="@dimen/text_normal"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/local"
@@ -42,11 +45,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@id/title"
+        android:layout_margin="@dimen/widget_padding"
         android:gravity="left|center_vertical"
         android:text="Local"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@android:color/black"
-        tools:ignore="HardcodedText"/>
+        android:textSize="@dimen/text_normal"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/description"
@@ -55,6 +60,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@id/local"
+        android:layout_margin="@dimen/widget_padding"
         android:layout_marginBottom="@dimen/widget_padding"
         android:layout_marginTop="@dimen/widget_padding"
         android:gravity="left|center_vertical"
@@ -62,6 +68,7 @@
         android:text="Description"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/black"
-        tools:ignore="HardcodedText"/>
+        android:textSize="@dimen/text_title"
+        tools:ignore="HardcodedText" />
 
 </RelativeLayout>

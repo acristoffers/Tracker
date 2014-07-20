@@ -65,7 +65,6 @@
     <orderEntry type="library" exported="" name="google-api-client-1.18.0-rc" level="project" />
     <orderEntry type="library" exported="" name="google-api-services-analytics-v3-rev98-1.18.0-rc" level="project" />
     <orderEntry type="library" exported="" name="google-oauth-client-1.18.0-rc" level="project" />
-    <orderEntry type="library" exported="" name="internal_impl-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="google-http-client-1.18.0-rc" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-20.0.0" level="project" />
