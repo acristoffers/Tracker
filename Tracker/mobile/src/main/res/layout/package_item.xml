@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/pkg_card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    card_view:cardBackgroundColor="@android:color/white"
+    card_view:cardCornerRadius="4dp">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/blue_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="@dimen/widget_padding"
+                android:gravity="start|center_vertical"
+                android:padding="@dimen/widget_padding"
+                android:text="Quite Cool Stuff"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                tools:ignore="HardcodedText"/>
+
+            <TextView
+                android:id="@+id/code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="start|center_vertical"
+                android:padding="@dimen/widget_padding"
+                android:text="AB123456789CD"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:typeface="monospace"
+                tools:ignore="HardcodedText"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/green_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/blue_bar"
+            android:layout_marginBottom="@dimen/widget_padding"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/widget_padding"
+                android:layout_marginStart="@dimen/widget_padding"
+                android:layout_toLeftOf="@+id/date"
+                android:layout_toStartOf="@+id/date"
+                android:gravity="start|center_vertical"
+                android:text="Last Title"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                tools:ignore="HardcodedText"/>
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="end|center_vertical"
+                android:padding="@dimen/widget_padding"
+                android:text="Date"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                tools:ignore="HardcodedText"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/local"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/green_bar"
+            android:layout_marginBottom="@dimen/widget_padding"
+            android:layout_marginLeft="@dimen/widget_padding"
+            android:layout_marginStart="@dimen/widget_padding"
+            android:layout_marginTop="@dimen/widget_padding"
+            android:gravity="start|center_vertical"
+            android:text="Local"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            tools:ignore="HardcodedText"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

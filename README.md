@@ -3,14 +3,17 @@ Correios Tracker
 
 Correios Tracker é um aplicativo que verifica o status de encomendas por você. Apenas insira o código de rastreamento, dê um nome e aguarde! O aplicativo notifica automaticamente quando o status do pacote muda.
 
-Correios Tracker is an application that relieves you the burden of accessing the institution's site to see if there are changes on its status. Just add the track number, give it a name and it will notify you when there are changes in the tracking status.
+Versão 2.0 em desenvolvimento (Reescrita com Material Design).
+Backend alterado. Por hora utiliza a API encontrada aqui: http://developers.agenciaideias.com.br/correios/rastreamento
+Infelizmente ela contém um limite diário de utilização.
 
+Quase tudo da versão 1.0 já foi portado, falta recriar o backend que atualiza de tempo em tempo (desta vez haverá a opção de escolher de quanto em quanto tempo :) )
+Outras novidades de funcionalidades por vir.
 
 Play Store
 ----------
 
 http://goo.gl/QrEwYK
-
 
 LICENSE
 =======

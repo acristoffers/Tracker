@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/toggle_inactive"
+        android:title="@string/show_inactive"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/check_for_updates"
+        android:title="@string/check_for_updates"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/about"
+        android:title="@string/about"
+        app:showAsAction="never"/>
+
+</menu>
