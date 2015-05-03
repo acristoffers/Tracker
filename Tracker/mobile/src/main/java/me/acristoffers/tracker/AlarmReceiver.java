@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.acristoffers.tracker.activities.PackageDetails;
+import me.acristoffers.tracker.activities.PackageDetailsActivity;
 
 public class AlarmReceiver extends BroadcastReceiver implements Package.StatusReady {
 
@@ -112,8 +112,8 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
                 String title = context.getString(R.string.notification_package_updated_title, pkg.getName());
                 String message = context.getString(R.string.notification_package_updated_body, pkg.getName());
 
-                Intent intent = new Intent(context, PackageDetails.class);
-                intent.putExtra(PackageDetails.PACKAGE_CODE, code);
+                Intent intent = new Intent(context, PackageDetailsActivity.class);
+                intent.putExtra(PackageDetailsActivity.PACKAGE_CODE, code);
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 Bitmap icon = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);

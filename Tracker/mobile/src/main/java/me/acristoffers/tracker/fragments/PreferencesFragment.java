@@ -31,7 +31,7 @@ import android.preference.PreferenceScreen;
 import me.acristoffers.tracker.AlarmReceiver;
 import me.acristoffers.tracker.R;
 
-public class Settings extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class PreferencesFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private EditTextPreference editTextPreference = null;
 

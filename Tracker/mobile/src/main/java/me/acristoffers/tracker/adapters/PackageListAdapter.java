@@ -25,7 +25,6 @@ package me.acristoffers.tracker.adapters;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +39,6 @@ import java.util.List;
 import me.acristoffers.tracker.Correios;
 import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;
-import me.acristoffers.tracker.activities.PackageDetails;
 
 public class PackageListAdapter extends RecyclerView.Adapter implements Package.StatusReady {
 
@@ -48,6 +46,7 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
     private List<Package> packages = new ArrayList<>();
     private boolean showInactive = false;
     private LayoutInflater layoutInflater;
+    private OnCardViewClickedListener listener = null;
 
     public PackageListAdapter(Activity context) {
         this.context = context;
@@ -115,10 +114,9 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, PackageDetails.class);
-                intent.putExtra(PackageDetails.PACKAGE_CODE, pkg.getCod());
-
-                context.startActivity(intent);
+                if (listener != null) {
+                    listener.onCardViewClicked(pkg);
+                }
             }
         });
     }
@@ -163,6 +161,18 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
         }
 
         notifyDataSetChanged();
+    }
+
+    public OnCardViewClickedListener getListener() {
+        return listener;
+    }
+
+    public void setListener(OnCardViewClickedListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnCardViewClickedListener {
+        void onCardViewClicked(Package pkg);
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {

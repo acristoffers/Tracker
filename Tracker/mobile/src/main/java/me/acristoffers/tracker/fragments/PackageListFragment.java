@@ -20,28 +20,23 @@
  *  THE SOFTWARE.
  */
 
-package me.acristoffers.tracker.activities;
+package me.acristoffers.tracker.fragments;
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.text.method.LinkMovementMethod;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -49,54 +44,50 @@ import me.acristoffers.tracker.AlarmReceiver;
 import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;
 import me.acristoffers.tracker.TrackCodeFormattingTextWatcher;
+import me.acristoffers.tracker.activities.PackageListActivity;
 import me.acristoffers.tracker.adapters.PackageListAdapter;
 
-public class MainActivityPhoneTablet extends AppCompatActivity implements Package.StatusReady {
+public class PackageListFragment extends Fragment implements Package.StatusReady {
     private RecyclerView recyclerView;
     private int updating = 0;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private Activity activity;
+    private View view;
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
-        adapter.filterPackages();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_package_list, container, false);
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
-        adapter.filterPackages();
-    }
+        activity = getActivity();
+        view = getView();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_package_list);
+        PreferenceManager.setDefaultValues(activity, R.xml.preferences, false);
 
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        AlarmReceiver.setAlarm(activity);
 
-        AlarmReceiver.setAlarm(this);
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
         if (recyclerView == null) {
-            finish();
+            activity.finish();
             System.exit(0);
         }
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
 
-        final RecyclerView.Adapter recyclerViewAdapter = new PackageListAdapter(this);
+        final RecyclerView.Adapter recyclerViewAdapter = new PackageListAdapter(activity);
         recyclerView.setAdapter(recyclerViewAdapter);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        ((PackageListAdapter) recyclerViewAdapter).setListener((PackageListActivity) activity);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         if (swipeRefreshLayout == null) {
-            finish();
+            activity.finish();
             System.exit(0);
         }
 
@@ -109,14 +100,14 @@ public class MainActivityPhoneTablet extends AppCompatActivity implements Packag
             }
         });
 
-        Button button = (Button) findViewById(R.id.addButton);
+        Button button = (Button) view.findViewById(R.id.addButton);
         if (button != null) {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final View view = View.inflate(MainActivityPhoneTablet.this, R.layout.search_package, null);
+                    final View view = View.inflate(activity, R.layout.search_package, null);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivityPhoneTablet.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                     builder.setTitle(R.string.search_for_package);
                     builder.setView(view);
 
@@ -129,13 +120,13 @@ public class MainActivityPhoneTablet extends AppCompatActivity implements Packag
                             EditText code = (EditText) view.findViewById(R.id.code);
                             EditText name = (EditText) view.findViewById(R.id.name);
 
-                            Package p = null;
+                            me.acristoffers.tracker.Package p = null;
 
                             if (code != null) {
                                 Editable editable = code.getText();
                                 if (editable != null) {
                                     String s = editable.toString();
-                                    p = new Package(s, MainActivityPhoneTablet.this);
+                                    p = new Package(s, activity);
                                 }
                             }
 
@@ -162,50 +153,25 @@ public class MainActivityPhoneTablet extends AppCompatActivity implements Packag
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main_activity_phone_tablet, menu);
-        return true;
+    public void onStart() {
+        super.onStart();
+
+        PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
+        adapter.filterPackages();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    public void onResume() {
+        super.onResume();
 
-        switch (id) {
-            case R.id.check_for_updates:
-                checkForUpdates();
-                return true;
-
-            case R.id.toggle_inactive:
-                PackageListAdapter recyclerViewAdapter = (PackageListAdapter) recyclerView.getAdapter();
-                recyclerViewAdapter.setShowInactive(!recyclerViewAdapter.getShowInactive());
-
-                if (recyclerViewAdapter.getShowInactive()) {
-                    item.setTitle(R.string.hide_inactive);
-                } else {
-                    item.setTitle(R.string.show_inactive);
-                }
-
-                return true;
-
-            case R.id.about:
-                about();
-                return true;
-
-            case R.id.settings:
-                Intent intent = new Intent(this, Preferences.class);
-                startActivity(intent);
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
+        adapter.filterPackages();
     }
 
-    protected void checkForUpdates() {
+    public void checkForUpdates() {
         swipeRefreshLayout.setRefreshing(true);
 
-        List<Package> packages = Package.allPackages(this);
+        List<Package> packages = Package.allPackages(getActivity());
         for (Package pkg : packages) {
             if (!pkg.isActive()) {
                 continue;
@@ -215,48 +181,6 @@ public class MainActivityPhoneTablet extends AppCompatActivity implements Packag
             pkg.setListener(this);
             pkg.checkForStatusUpdates();
         }
-    }
-
-    @SuppressLint("InflateParams")
-    public void about() {
-        View about = View.inflate(this, R.layout.about, null);
-
-        PackageManager manager = this.getPackageManager();
-        String packageName = getPackageName();
-        int versionCode = 0;
-        String versionName = "";
-
-        try {
-            PackageInfo info = manager.getPackageInfo(packageName, 0);
-            versionCode = info.versionCode;
-            versionName = info.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        TextView version = (TextView) about.findViewById(R.id.version);
-        if (version != null) {
-            String versionText = getString(R.string.version, versionName, versionCode);
-            version.setText(versionText);
-        }
-
-        TextView issues = (TextView) about.findViewById(R.id.issues);
-        if (issues != null) {
-            issues.setMovementMethod(LinkMovementMethod.getInstance());
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.app_name);
-        builder.setView(about);
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-
-        AlertDialog aboutDialog = builder.create();
-        aboutDialog.show();
     }
 
     @Override
@@ -274,4 +198,10 @@ public class MainActivityPhoneTablet extends AppCompatActivity implements Packag
         }
     }
 
+    public boolean toggleShowInactive() {
+        PackageListAdapter recyclerViewAdapter = (PackageListAdapter) recyclerView.getAdapter();
+        recyclerViewAdapter.setShowInactive(!recyclerViewAdapter.getShowInactive());
+
+        return recyclerViewAdapter.getShowInactive();
+    }
 }
