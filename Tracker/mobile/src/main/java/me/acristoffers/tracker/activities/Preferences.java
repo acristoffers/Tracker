@@ -25,18 +25,14 @@ package me.acristoffers.tracker.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import me.acristoffers.tracker.fragments.Settings;
+import me.acristoffers.tracker.R;
 
 public class Preferences extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getFragmentManager()
-                .beginTransaction()
-                .replace(android.R.id.content, new Settings())
-                .commit();
+        setContentView(R.layout.preferences);
     }
 
 }
