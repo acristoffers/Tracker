@@ -43,6 +43,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import me.acristoffers.tracker.AlarmReceiver;
 import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;
 import me.acristoffers.tracker.TrackCodeFormattingTextWatcher;
@@ -73,6 +74,8 @@ public class MainActivityPhoneTablet extends AppCompatActivity implements Packag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_package_list);
+
+        AlarmReceiver.setAlarm(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
