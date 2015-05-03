@@ -29,8 +29,10 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 
 import java.util.HashMap;
@@ -46,13 +48,30 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
 
     public static void setAlarm(Context context) {
         Intent intent = new Intent(context, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,
-                AlarmManager.INTERVAL_FIFTEEN_MINUTES,
-                AlarmManager.INTERVAL_FIFTEEN_MINUTES,
-                pendingIntent);
+        long fiveMinutes = 5 * 60 * 1000;
+        long repeatMinutes;
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        String minutes = sharedPref.getString("sync_interval", "15");
+
+        try {
+            repeatMinutes = Long.parseLong(minutes);
+        } catch (NumberFormatException e) {
+            repeatMinutes = 15;
+        }
+
+        repeatMinutes *= 60 * 1000;
+
+        boolean active = sharedPref.getBoolean("autosync", true);
+
+        if (active) {
+            alarmManager.cancel(pendingIntent);
+        } else {
+            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, fiveMinutes, repeatMinutes, pendingIntent);
+        }
     }
 
     @Override

@@ -24,9 +24,11 @@ package me.acristoffers.tracker.activities;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -74,6 +76,8 @@ public class MainActivityPhoneTablet extends AppCompatActivity implements Packag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_package_list);
+
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         AlarmReceiver.setAlarm(this);
 
@@ -186,6 +190,11 @@ public class MainActivityPhoneTablet extends AppCompatActivity implements Packag
 
             case R.id.about:
                 about();
+                return true;
+
+            case R.id.settings:
+                Intent intent = new Intent(this, Preferences.class);
+                startActivity(intent);
                 return true;
 
             default:

@@ -52,10 +52,13 @@
 
     <string name="code_copied">Tracking code copied</string>
     <string name="add_symbol">+</string>
-    <string name="title_activity_package_details">PackageDetails</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_package_edit">PackageEdit</string>
+
+    <string name="sync_group">Sync</string>
+    <string name="autosync_option">Enable Autoupdate</string>
+    <string name="sync_interval">Sync Interval</string>
+    <string name="sync_every">Sync every (Minutes)</string>
+    <string name="title_activity_preferences">Preferences</string>
 
 </resources>

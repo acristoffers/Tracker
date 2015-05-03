@@ -56,6 +56,14 @@
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name=".activities.Preferences"
+            android:label="@string/title_activity_preferences"
+            android:parentActivityName=".activities.MainActivityPhoneTablet" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="me.acristoffers.tracker.activities.MainActivityPhoneTablet" />
+        </activity>
     </application>
 
 </manifest>

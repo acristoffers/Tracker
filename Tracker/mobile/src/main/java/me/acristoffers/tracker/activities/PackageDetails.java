@@ -22,6 +22,7 @@
 
 package me.acristoffers.tracker.activities;
 
+import android.app.NotificationManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -102,6 +103,9 @@ public class PackageDetails extends AppCompatActivity {
             textView = (TextView) findViewById(R.id.emptyStepView);
             textView.setVisibility(View.INVISIBLE);
         }
+
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancel(pkg.getId());
     }
 
     @Override

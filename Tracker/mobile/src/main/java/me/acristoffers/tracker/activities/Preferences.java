@@ -20,17 +20,23 @@
  *  THE SOFTWARE.
  */
 
-package me.acristoffers.tracker;
+package me.acristoffers.tracker.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-public class MainActivityWear extends Activity {
+import me.acristoffers.tracker.fragments.Settings;
+
+public class Preferences extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_activity_wear);
+
+        getFragmentManager()
+                .beginTransaction()
+                .replace(android.R.id.content, new Settings())
+                .commit();
     }
 
 }

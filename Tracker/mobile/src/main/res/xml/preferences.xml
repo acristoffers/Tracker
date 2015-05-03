@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="sync_group"
+        android:title="@string/sync_group">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:icon="@null"
+            android:key="autosync"
+            android:title="@string/autosync_option"/>
+
+        <EditTextPreference
+            android:defaultValue="15"
+            android:dependency="autosync"
+            android:dialogTitle="@string/sync_every"
+            android:icon="@null"
+            android:inputType="number"
+            android:key="sync_interval"
+            android:title="@string/sync_interval"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
