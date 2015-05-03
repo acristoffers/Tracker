@@ -60,7 +60,7 @@ public class Store extends SQLiteOpenHelper {
         this.context = context;
     }
 
-    public List<String> allCodes() {
+    public synchronized List<String> allCodes() {
         List<String> codes = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -79,7 +79,7 @@ public class Store extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public synchronized void onCreate(SQLiteDatabase db) {
         final String CREATE_PACKAGES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_PACKAGES + "("
                 + KEY_ID + " INTEGER PRIMARY KEY,"
                 + KEY_NAME + " TEXT,"
@@ -100,7 +100,7 @@ public class Store extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public synchronized void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String sql;
         ContentValues values;
 
@@ -117,7 +117,7 @@ public class Store extends SQLiteOpenHelper {
         }
     }
 
-    public Map<String, Object> getPackage(String cod) {
+    public synchronized Map<String, Object> getPackage(String cod) {
         Map<String, Object> pkg = new HashMap<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -165,7 +165,7 @@ public class Store extends SQLiteOpenHelper {
         return pkg;
     }
 
-    public List<Correios.Step> getSteps(String cod) {
+    public synchronized List<Correios.Step> getSteps(String cod) {
         List<Correios.Step> steps = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -190,7 +190,7 @@ public class Store extends SQLiteOpenHelper {
         return steps;
     }
 
-    public void updatePackage(Package pkg) {
+    public synchronized void updatePackage(Package pkg) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         if (pkg.getName().isEmpty() || pkg.getCod().isEmpty()) {
@@ -231,7 +231,7 @@ public class Store extends SQLiteOpenHelper {
         }
     }
 
-    public void insertPackage(Package pkg) {
+    public synchronized void insertPackage(Package pkg) {
         List<Correios.Step> steps = pkg.getSteps();
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -267,7 +267,7 @@ public class Store extends SQLiteOpenHelper {
         }
     }
 
-    public void removePackage(Package pkg) {
+    public synchronized void removePackage(Package pkg) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         if (db != null) {

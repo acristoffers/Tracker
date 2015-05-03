@@ -142,10 +142,7 @@ public class MainActivityPhoneTablet extends AppCompatActivity implements Packag
                                     p.setName(s);
                                     p.setActive(true);
                                     p.save();
-                                    p.checkForStatusUpdates();
-
-                                    PackageListAdapter adapter = (PackageListAdapter) recyclerViewAdapter;
-                                    adapter.filterPackages();
+                                    checkForUpdates();
                                 }
                             }
 

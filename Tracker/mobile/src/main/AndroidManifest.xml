@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="me.acristoffers.tracker"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="me.acristoffers.tracker" >
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <supports-screens
         android:anyDensity="true"
@@ -12,59 +11,49 @@
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="false"
-        android:xlargeScreens="true"/>
+        android:xlargeScreens="true" />
 
     <application
         android:allowBackup="true"
-        android:backupAgent="me.acristoffers.tracker.BackupAgent"
+        android:backupAgent=".BackupAgent"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/TrackerTheme">
-
+        android:theme="@style/TrackerTheme" >
         <meta-data
             android:name="com.google.android.backup.api_key"
 
         <activity
             android:name=".activities.MainActivityPhoneTablet"
-            android:label="@string/app_name">
-
+            android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".activities.PackageDetails"
             android:label="@string/app_name"
-            android:parentActivityName=".activities.MainActivityPhoneTablet">
-
+            android:parentActivityName=".activities.MainActivityPhoneTablet" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.acristoffers.tracker.activities.MainActivityPhoneTablet"/>
-
+                android:value="me.acristoffers.tracker.activities.MainActivityPhoneTablet" />
         </activity>
-
         <activity
             android:name=".activities.PackageEdit"
             android:label="@string/app_name"
-            android:parentActivityName=".activities.MainActivityPhoneTablet">
-
+            android:parentActivityName=".activities.MainActivityPhoneTablet" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.acristoffers.tracker.activities.MainActivityPhoneTablet"/>
-
+                android:value="me.acristoffers.tracker.activities.MainActivityPhoneTablet" />
         </activity>
 
         <receiver
-            android:name="me.acristoffers.tracker.AlarmReceiver"
-            android:enabled="true">
-
+            android:name=".AlarmReceiver"
+            android:enabled="true" >
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-
         </receiver>
 
     </application>
