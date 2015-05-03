@@ -55,7 +55,6 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
         filterPackages();
     }
 
-    // Create new views
     @Override
     @SuppressLint("InflateParams")
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -63,7 +62,6 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
         return new ViewHolder(view);
     }
 
-    // Recycle views
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         View view = holder.itemView;
@@ -113,6 +111,7 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
             textView.setText(local);
         }
 
+        view = viewHolder.getLayout();
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,6 +167,7 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name, code, title, date, local;
+        private View layout;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -177,6 +177,7 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
             title = (TextView) itemView.findViewById(R.id.title);
             date = (TextView) itemView.findViewById(R.id.date);
             local = (TextView) itemView.findViewById(R.id.local);
+            layout = itemView.findViewById(R.id.layout);
         }
 
         public TextView getName() {
@@ -197,6 +198,10 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
 
         public TextView getLocal() {
             return local;
+        }
+
+        public View getLayout() {
+            return layout;
         }
     }
 }
