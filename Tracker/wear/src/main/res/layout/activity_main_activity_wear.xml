@@ -9,4 +9,4 @@
     app:rectLayout="@layout/rect_activity_main_activity_wear"
     app:roundLayout="@layout/round_activity_main_activity_wear"
     tools:context=".MainActivityWear"
-    tools:deviceIds="wear"></android.support.wearable.view.WatchViewStub>
+    tools:deviceIds="wear"/>

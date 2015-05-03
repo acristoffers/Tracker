@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            keyAlias 'alan'
-            storeFile file('/Users/Alan/Documents/Android/key-store/key-store.jks')
-            storePassword ''
-            keyPassword 'ClearL00k'
+            keyAlias "$System.env.ANDROID_KEYALIAS"
+            storeFile file("$System.env.ANDROID_KEYSTORE")
+            storePassword "$System.env.ANDROID_KEYSTORE_PASSWD"
+            keyPassword "$System.env.ANDROID_KEYALIAS_PASSWD"
         }
     }
     compileSdkVersion 22
@@ -21,8 +21,9 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            shrinkResources true
             zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
     }
