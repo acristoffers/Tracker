@@ -6,6 +6,8 @@
     <string name="edit_package">Edit package</string>
     <string name="view_package">View package</string>
 
+    <string name="search_for_package">Search for package</string>
+
     <string name="save">Save</string>
     <string name="edit">Edit</string>
     <string name="remove">Remove</string>

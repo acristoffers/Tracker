@@ -20,17 +20,19 @@
  *  THE SOFTWARE.
  */
 
-package me.acristoffers.tracker;
+package me.acristoffers.tracker.activities;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+import me.acristoffers.tracker.R;
+
+public class PackageListActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_activity_wear);
     }
 
 }
