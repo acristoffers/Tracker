@@ -56,7 +56,6 @@ public class PackageDetailsFragment extends Fragment {
 
     private Package pkg = null;
     private Activity activity;
-    private View view;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -83,7 +82,7 @@ public class PackageDetailsFragment extends Fragment {
 
     private void setupUI() {
         activity = getActivity();
-        view = getView();
+        View view = getView();
 
         if (activity == null || view == null) {
             return;
@@ -185,12 +184,14 @@ public class PackageDetailsFragment extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         pkg.remove();
 
-                        if (PackageListActivity.isTablet) {
+                        if (PackageListActivity.isTablet()) {
                             PackageListActivity listActivity = (PackageListActivity) activity;
                             FragmentManager fragmentManager = listActivity.getSupportFragmentManager();
-                            FragmentTransaction transaction = fragmentManager.beginTransaction();
-                            transaction.replace(R.id.package_details, new BlankFragment());
-                            transaction.commit();
+                            if (fragmentManager != null) {
+                                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                                transaction.replace(R.id.package_details, new BlankFragment());
+                                transaction.commit();
+                            }
                         } else {
                             activity.finish();
                         }
@@ -211,7 +212,7 @@ public class PackageDetailsFragment extends Fragment {
                 return true;
 
             case R.id.edit:
-                if (PackageListActivity.isTablet) {
+                if (PackageListActivity.isTablet()) {
                     Bundle args = new Bundle();
                     args.putString(PackageDetailsActivity.PACKAGE_CODE, pkg.getCod());
 
@@ -220,9 +221,11 @@ public class PackageDetailsFragment extends Fragment {
 
                     PackageListActivity listActivity = (PackageListActivity) activity;
                     FragmentManager supportFragmentManager = listActivity.getSupportFragmentManager();
-                    FragmentTransaction transaction = supportFragmentManager.beginTransaction();
-                    transaction.replace(R.id.package_details, fragment);
-                    transaction.commit();
+                    if (supportFragmentManager != null) {
+                        FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+                        transaction.replace(R.id.package_details, fragment);
+                        transaction.commit();
+                    }
                 } else {
                     Intent intent = new Intent(activity, PackageEditActivity.class);
                     intent.putExtra(PackageDetailsActivity.PACKAGE_CODE, pkg.getCod());

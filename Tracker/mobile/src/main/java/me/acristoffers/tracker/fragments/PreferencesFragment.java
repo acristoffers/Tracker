@@ -48,11 +48,15 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
         super.onResume();
 
         PreferenceScreen preferenceScreen = getPreferenceScreen();
-        SharedPreferences sharedPreferences = preferenceScreen.getSharedPreferences();
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        if (preferenceScreen != null) {
+            SharedPreferences sharedPreferences = preferenceScreen.getSharedPreferences();
+            if (sharedPreferences != null) {
+                sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 
-        String interval = sharedPreferences.getString("sync_interval", "15");
-        editTextPreference.setSummary(interval);
+                String interval = sharedPreferences.getString("sync_interval", "15");
+                editTextPreference.setSummary(interval);
+            }
+        }
     }
 
     @Override
@@ -60,8 +64,12 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
         super.onPause();
 
         PreferenceScreen preferenceScreen = getPreferenceScreen();
-        SharedPreferences sharedPreferences = preferenceScreen.getSharedPreferences();
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        if (preferenceScreen != null) {
+            SharedPreferences sharedPreferences = preferenceScreen.getSharedPreferences();
+            if (sharedPreferences != null) {
+                sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+            }
+        }
     }
 
     @Override

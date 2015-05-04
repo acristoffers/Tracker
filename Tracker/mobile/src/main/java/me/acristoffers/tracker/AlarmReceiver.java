@@ -35,42 +35,45 @@ import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import me.acristoffers.tracker.activities.PackageDetailsActivity;
 
 public class AlarmReceiver extends BroadcastReceiver implements Package.StatusReady {
 
-    private final Map<String, Integer> countSteps = new HashMap<>();
-    private Context context;
+    private final HashMap<String, Integer> countSteps = new HashMap<>();
+    private Context context = null;
 
     public static void setAlarm(Context context) {
-        Intent intent = new Intent(context, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        long fiveMinutes = 5 * 60 * 1000;
-        long repeatMinutes;
-
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        String minutes = sharedPref.getString("sync_interval", "15");
-
         try {
-            repeatMinutes = Long.parseLong(minutes);
-        } catch (NumberFormatException e) {
-            repeatMinutes = 15;
-        }
+            Intent intent = new Intent(context, AlarmReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        repeatMinutes *= 60 * 1000;
+            long fiveMinutes = 5 * 60 * 1000;
+            long repeatMinutes;
 
-        boolean active = sharedPref.getBoolean("autosync", true);
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+            String minutes = sharedPref.getString("sync_interval", "15");
 
-        if (active) {
-            alarmManager.cancel(pendingIntent);
-        } else {
-            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, fiveMinutes, repeatMinutes, pendingIntent);
+            try {
+                repeatMinutes = Long.parseLong(minutes);
+            } catch (NumberFormatException e) {
+                repeatMinutes = 15;
+            }
+
+            repeatMinutes *= 60 * 1000;
+
+            boolean active = sharedPref.getBoolean("autosync", true);
+
+            if (active) {
+                alarmManager.cancel(pendingIntent);
+            } else {
+                alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, fiveMinutes, repeatMinutes, pendingIntent);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 
@@ -84,7 +87,7 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
 
         this.context = context;
 
-        List<Package> packages = Package.allPackages(context);
+        ArrayList<Package> packages = Package.allPackages(context);
         for (Package pkg : packages) {
             if (!pkg.isActive()) {
                 continue;

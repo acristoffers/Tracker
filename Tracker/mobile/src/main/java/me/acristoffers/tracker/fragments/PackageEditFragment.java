@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -130,20 +131,27 @@ public class PackageEditFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.save) {
-            String name;
-            boolean active;
+            String name = "";
+            boolean active = true;
 
             EditText editText = (EditText) view.findViewById(R.id.name);
-            name = editText.getText().toString();
+            if (editText != null) {
+                Editable editable = editText.getText();
+                if (editable != null) {
+                    name = editable.toString();
+                }
+            }
 
             SwitchCompat switchCompat = (SwitchCompat) view.findViewById(R.id.active);
-            active = switchCompat.isChecked();
+            if (switchCompat != null) {
+                active = switchCompat.isChecked();
+            }
 
             pkg.setName(name);
             pkg.setActive(active);
             pkg.save();
 
-            if (PackageListActivity.isTablet) {
+            if (PackageListActivity.isTablet()) {
                 PackageListActivity listActivity = (PackageListActivity) activity;
                 listActivity.onCardViewClicked(pkg);
             } else {

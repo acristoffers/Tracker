@@ -33,7 +33,6 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import me.acristoffers.tracker.Correios;
 import me.acristoffers.tracker.Package;
@@ -43,8 +42,8 @@ public class StepListAdapter extends RecyclerView.Adapter {
 
     private Context context = null;
     private Package pkg = null;
-    private List<Correios.Step> steps = new ArrayList<>();
-    private LayoutInflater layoutInflater;
+    private ArrayList<Correios.Step> steps = new ArrayList<>();
+    private LayoutInflater layoutInflater = null;
 
     public StepListAdapter(Package pkg, Context context) {
         this.pkg = pkg;
@@ -64,7 +63,6 @@ public class StepListAdapter extends RecyclerView.Adapter {
     // Recycle views
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        View view = holder.itemView;
         ViewHolder viewHolder = (ViewHolder) holder;
 
         final Correios.Step step = steps.get(position);

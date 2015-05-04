@@ -23,6 +23,7 @@
 package me.acristoffers.tracker.activities;
 
 import android.annotation.SuppressLint;
+import android.app.backup.BackupManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -42,10 +43,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;
+import me.acristoffers.tracker.TrackerRestoreObserver;
 import me.acristoffers.tracker.adapters.PackageListAdapter;
 import me.acristoffers.tracker.fragments.BlankFragment;
 import me.acristoffers.tracker.fragments.PackageDetailsFragment;
@@ -54,21 +55,30 @@ import me.acristoffers.tracker.fragments.PackageListFragment;
 
 public class PackageListActivity extends AppCompatActivity implements PackageListAdapter.OnCardViewClickedListener, ActionMode.Callback {
 
-    public static boolean isTablet;
-    private PackageListFragment packageListFragment;
+    private static boolean isTablet;
+    private PackageListFragment packageListFragment = null;
     private Package longClickPackage = null;
     private ArrayList<Package> selection = new ArrayList<>();
     private ActionMode actionMode = null;
+
+    public static boolean isTablet() {
+        return isTablet;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_package_list);
 
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
-        packageListFragment = (PackageListFragment) supportFragmentManager.findFragmentById(R.id.package_list);
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager != null) {
+            packageListFragment = (PackageListFragment) manager.findFragmentById(R.id.package_list);
+        }
 
         updateIsTablet();
+
+        BackupManager bm = new BackupManager(this);
+        bm.requestRestore(new TrackerRestoreObserver());
     }
 
     private void updateIsTablet() {
@@ -77,7 +87,9 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_package_list, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_package_list, menu);
+
         return true;
     }
 
@@ -105,11 +117,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
             case R.id.toggle_inactive:
                 boolean showInactive = packageListFragment.toggleShowInactive();
 
-                if (showInactive) {
-                    item.setTitle(R.string.hide_inactive);
-                } else {
-                    item.setTitle(R.string.show_inactive);
-                }
+                item.setTitle(showInactive ? R.string.hide_inactive : R.string.show_inactive);
 
                 return true;
 
@@ -131,7 +139,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
     public void about() {
         View about = View.inflate(this, R.layout.about, null);
 
-        PackageManager manager = this.getPackageManager();
+        PackageManager manager = getPackageManager();
         String packageName = getPackageName();
         int versionCode = 0;
         String versionName = "";
@@ -173,7 +181,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
     public void onCardViewClicked(me.acristoffers.tracker.Package pkg) {
         if (PackageListAdapter.isSelecting) {
             if (selection.contains(pkg)) {
-                List<Package> removeList = new ArrayList<>();
+                ArrayList<Package> removeList = new ArrayList<>();
                 for (Package p : selection) {
                     if (p.equals(pkg)) {
                         removeList.add(p);
@@ -184,12 +192,18 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                 selection.add(pkg);
             }
 
-            if (selection.isEmpty() && actionMode != null) {
-                actionMode.finish();
-            }
-
             if (actionMode != null) {
-                actionMode.getMenu().findItem(R.id.edit).setVisible(selection.size() == 1);
+                if (selection.isEmpty()) {
+                    actionMode.finish();
+                }
+
+                Menu menu = actionMode.getMenu();
+                if (menu != null) {
+                    MenuItem menuItem = menu.findItem(R.id.edit);
+                    if (menuItem != null) {
+                        menuItem.setVisible(selection.size() == 1);
+                    }
+                }
             }
         } else {
             if (isTablet) {
@@ -200,13 +214,14 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                 fragment.setArguments(args);
 
                 FragmentManager supportFragmentManager = getSupportFragmentManager();
-                FragmentTransaction transaction = supportFragmentManager.beginTransaction();
-                transaction.replace(R.id.package_details, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                if (supportFragmentManager != null) {
+                    FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+                    transaction.replace(R.id.package_details, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
 
-                packageListFragment.toggleShowInactive();
-                packageListFragment.toggleShowInactive();
+                packageListFragment.reloadData();
             } else {
                 Intent intent = new Intent(this, PackageDetailsActivity.class);
                 intent.putExtra(PackageDetailsActivity.PACKAGE_CODE, pkg.getCod());
@@ -237,7 +252,9 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
         }
 
         View addButton = findViewById(R.id.addButton);
-        addButton.setVisibility(View.INVISIBLE);
+        if (addButton != null) {
+            addButton.setVisibility(View.INVISIBLE);
+        }
 
         return true;
     }
@@ -250,6 +267,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
     @Override
     public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
         boolean result = false;
+        final ActionMode mode = actionMode;
 
         switch (menuItem.getItemId()) {
             case R.id.remove:
@@ -259,18 +277,15 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                 builder.setTitle(R.string.are_you_sure);
                 builder.setMessage(body);
 
-                final ArrayList selectionCopy = (ArrayList) selection.clone();
-
                 builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        for (Object o : selectionCopy) {
+                        for (Object o : selection) {
                             Package pkg = (Package) o;
                             pkg.remove();
                         }
 
-                        packageListFragment.toggleShowInactive();
-                        packageListFragment.toggleShowInactive();
+                        packageListFragment.reloadData();
 
                         if (isTablet) {
                             FragmentManager supportFragmentManager = getSupportFragmentManager();
@@ -280,6 +295,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                         }
 
                         dialogInterface.dismiss();
+                        mode.finish();
                     }
                 });
 
@@ -293,8 +309,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
-                result = true;
-                break;
+                return true;
 
             case R.id.toggle_active:
                 for (Package pkg : selection) {
@@ -302,8 +317,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                     pkg.save();
                 }
 
-                packageListFragment.toggleShowInactive();
-                packageListFragment.toggleShowInactive();
+                packageListFragment.reloadData();
 
                 result = true;
                 break;
@@ -317,9 +331,11 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                     fragment.setArguments(args);
 
                     FragmentManager supportFragmentManager = getSupportFragmentManager();
-                    FragmentTransaction transaction = supportFragmentManager.beginTransaction();
-                    transaction.replace(R.id.package_details, fragment);
-                    transaction.commit();
+                    if (supportFragmentManager != null) {
+                        FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+                        transaction.replace(R.id.package_details, fragment);
+                        transaction.commit();
+                    }
                 } else {
                     Intent intent = new Intent(this, PackageEditActivity.class);
                     intent.putExtra(PackageDetailsActivity.PACKAGE_CODE, selection.get(0).getCod());
@@ -345,13 +361,15 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
         }
 
         View addButton = findViewById(R.id.addButton);
-        addButton.setVisibility(View.VISIBLE);
+        if (addButton != null) {
+            addButton.setVisibility(View.VISIBLE);
+        }
 
         PackageListAdapter.isSelecting = false;
         selection.clear();
         this.actionMode = null;
 
-        packageListFragment.toggleShowInactive();
-        packageListFragment.toggleShowInactive();
+        packageListFragment.reloadData();
     }
+
 }

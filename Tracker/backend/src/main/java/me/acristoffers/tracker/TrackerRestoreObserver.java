@@ -20,19 +20,27 @@
  *  THE SOFTWARE.
  */
 
-package me.acristoffers.tracker.activities;
+package me.acristoffers.tracker;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.app.backup.RestoreObserver;
 
-import me.acristoffers.tracker.R;
-
-public class PackageEditActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_package_edit_phone);
+public class TrackerRestoreObserver extends RestoreObserver {
+    public TrackerRestoreObserver() {
+        super();
     }
 
+    @Override
+    public void restoreStarting(int numPackages) {
+        super.restoreStarting(numPackages);
+    }
+
+    @Override
+    public void onUpdate(int nowBeingRestored, String currentPackage) {
+        super.onUpdate(nowBeingRestored, currentPackage);
+    }
+
+    @Override
+    public void restoreFinished(int error) {
+        super.restoreFinished(error);
+    }
 }

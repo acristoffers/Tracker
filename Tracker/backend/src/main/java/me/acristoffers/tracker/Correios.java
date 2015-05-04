@@ -36,13 +36,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
 public class Correios {
 
-    private final List<Step> steps = new ArrayList<>();
+    private final ArrayList<Step> steps = new ArrayList<>();
     private String pack;
     private SyncDone listener = null;
     private Thread thread = null;
@@ -183,7 +182,7 @@ public class Correios {
         return pack;
     }
 
-    public synchronized List<Step> getSteps() {
+    public synchronized ArrayList<Step> getSteps() {
         return steps;
     }
 

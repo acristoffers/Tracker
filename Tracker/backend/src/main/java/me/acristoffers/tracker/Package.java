@@ -26,8 +26,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.HashMap;
 
 public class Package implements Correios.SyncDone {
 
@@ -38,7 +37,7 @@ public class Package implements Correios.SyncDone {
     private int id = -1;
     private String name = "";
     private boolean active = false;
-    private List<Correios.Step> steps;
+    private ArrayList<Correios.Step> steps;
     private Date timeCreated = new Date();
     private Date timeUpdated = new Date();
 
@@ -46,7 +45,7 @@ public class Package implements Correios.SyncDone {
         store = new Store(context);
         steps = store.getSteps(cod);
 
-        Map<String, Object> pkg = store.getPackage(cod);
+        HashMap<String, Object> pkg = store.getPackage(cod);
 
         if (pkg.containsKey(Store.KEY_NAME)) {
             name = (String) pkg.get(Store.KEY_NAME);
@@ -71,11 +70,11 @@ public class Package implements Correios.SyncDone {
         correios = new Correios(cod, this);
     }
 
-    public static List<Package> allPackages(Context context) {
-        List<Package> packages = new ArrayList<>();
+    public static ArrayList<Package> allPackages(Context context) {
+        ArrayList<Package> packages = new ArrayList<>();
         Store store = new Store(context);
 
-        List<String> codes = store.allCodes();
+        ArrayList<String> codes = store.allCodes();
         for (String code : codes) {
             Package pkg = new Package(code, context);
             packages.add(pkg);
@@ -102,7 +101,7 @@ public class Package implements Correios.SyncDone {
 
     @Override
     public void finishedSyncing(boolean success) {
-        List<Correios.Step> steps = correios.getSteps();
+        ArrayList<Correios.Step> steps = correios.getSteps();
         if (success && steps != null) {
             this.steps = steps;
         }
@@ -132,7 +131,7 @@ public class Package implements Correios.SyncDone {
         return id;
     }
 
-    public List<Correios.Step> getSteps() {
+    public ArrayList<Correios.Step> getSteps() {
         return steps;
     }
 

@@ -42,7 +42,6 @@ import java.util.List;
 import me.acristoffers.tracker.Correios;
 import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;
-import me.acristoffers.tracker.fragments.PackageListFragment;
 
 public class PackageListAdapter extends RecyclerView.Adapter implements Package.StatusReady {
 
@@ -50,7 +49,7 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
     private Activity context = null;
     private ArrayList<Package> packages = new ArrayList<>();
     private boolean showInactive = false;
-    private LayoutInflater layoutInflater;
+    private LayoutInflater layoutInflater = null;
     private OnCardViewClickedListener listener = null;
     private ArrayList<Package> selection = new ArrayList<>();
 
@@ -63,7 +62,7 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
     @Override
     @SuppressLint("InflateParams")
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.package_item, null);
+        View view = layoutInflater.inflate(R.layout.package_item, parent, false);
 
         CardView cardView = (CardView) view;
         cardView.setMaxCardElevation(view.getResources().getDimension(R.dimen.card_elevation_selected));

@@ -32,8 +32,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Store extends SQLiteOpenHelper {
 
@@ -60,18 +58,18 @@ public class Store extends SQLiteOpenHelper {
         this.context = context;
     }
 
-    public synchronized List<String> allCodes() {
-        List<String> codes = new ArrayList<>();
+    public synchronized ArrayList<String> allCodes() {
+        ArrayList<String> codes = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
         if (db != null) {
             Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_COD}, null, null, null, null, null, null);
-            if (cursor != null) {
-                while (cursor.moveToNext()) {
-                    codes.add(cursor.getString(cursor.getColumnIndex(KEY_COD)));
-                }
+
+            while (cursor.moveToNext()) {
+                codes.add(cursor.getString(cursor.getColumnIndex(KEY_COD)));
             }
 
+            cursor.close();
             db.close();
         }
 
@@ -117,8 +115,8 @@ public class Store extends SQLiteOpenHelper {
         }
     }
 
-    public synchronized Map<String, Object> getPackage(String cod) {
-        Map<String, Object> pkg = new HashMap<>();
+    public synchronized HashMap<String, Object> getPackage(String cod) {
+        HashMap<String, Object> pkg = new HashMap<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         if (db != null) {
@@ -132,26 +130,31 @@ public class Store extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
             }
+            cursor.close();
 
             cursor = db.query(TABLE_PACKAGES, new String[]{KEY_NAME}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
             if (cursor.moveToFirst()) {
                 name = cursor.getString(cursor.getColumnIndex(KEY_NAME));
             }
+            cursor.close();
 
             cursor = db.query(TABLE_PACKAGES, new String[]{KEY_ACTIVE}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
             if (cursor.moveToFirst()) {
                 active = cursor.getInt(cursor.getColumnIndex(KEY_ACTIVE)) == 1;
             }
+            cursor.close();
 
             cursor = db.query(TABLE_PACKAGES, new String[]{KEY_TIME_CREATED}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
             if (cursor.moveToFirst()) {
                 timeCreated = new Date(cursor.getInt(cursor.getColumnIndex(KEY_TIME_CREATED)));
             }
+            cursor.close();
 
             cursor = db.query(TABLE_PACKAGES, new String[]{KEY_TIME_UPDATED}, KEY_COD + "=?", new String[]{cod}, null, null, null, null);
             if (cursor.moveToFirst()) {
                 timeUpdated = new Date(cursor.getInt(cursor.getColumnIndex(KEY_TIME_UPDATED)));
             }
+            cursor.close();
 
             pkg.put(KEY_ID, id);
             pkg.put(KEY_NAME, name);
@@ -165,13 +168,13 @@ public class Store extends SQLiteOpenHelper {
         return pkg;
     }
 
-    public synchronized List<Correios.Step> getSteps(String cod) {
-        List<Correios.Step> steps = new ArrayList<>();
+    public synchronized ArrayList<Correios.Step> getSteps(String cod) {
+        ArrayList<Correios.Step> steps = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         if (db != null) {
             Cursor cursor = db.query(TABLE_STEPS, new String[]{KEY_DATE, KEY_TITLE, KEY_DESCRIPTION, KEY_LOCAL}, KEY_PACKAGE + "=?", new String[]{cod}, null, null, null, null);
-            if (cursor != null && cursor.moveToFirst()) {
+            if (cursor.moveToFirst()) {
                 do {
                     Correios.Step step = new Correios.Step();
 
@@ -184,6 +187,7 @@ public class Store extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
 
+            cursor.close();
             db.close();
         }
 
@@ -200,10 +204,12 @@ public class Store extends SQLiteOpenHelper {
         if (db != null) {
             Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_ID}, KEY_COD + "=?", new String[]{pkg.getCod()}, null, null, null, null);
             if (cursor.getCount() == 0) {
+                cursor.close();
                 db.close();
                 insertPackage(pkg);
                 return;
             }
+            cursor.close();
 
             String cod = pkg.getCod();
             ContentValues values = new ContentValues();
@@ -214,7 +220,7 @@ public class Store extends SQLiteOpenHelper {
             db.update(TABLE_PACKAGES, values, KEY_COD + "=?", new String[]{cod});
             db.delete(TABLE_STEPS, KEY_PACKAGE + "=?", new String[]{cod});
 
-            List<Correios.Step> steps = pkg.getSteps();
+            ArrayList<Correios.Step> steps = pkg.getSteps();
             for (Correios.Step step : steps) {
                 values = new ContentValues();
 
@@ -228,11 +234,13 @@ public class Store extends SQLiteOpenHelper {
             }
 
             db.close();
+
+            scheduleBackup();
         }
     }
 
     public synchronized void insertPackage(Package pkg) {
-        List<Correios.Step> steps = pkg.getSteps();
+        ArrayList<Correios.Step> steps = pkg.getSteps();
         SQLiteDatabase db = this.getWritableDatabase();
 
         if (db != null) {
@@ -262,8 +270,7 @@ public class Store extends SQLiteOpenHelper {
         }
 
         if (!pkg.getName().isEmpty()) {
-            BackupManager bm = new BackupManager(context);
-            bm.dataChanged();
+            scheduleBackup();
         }
     }
 
@@ -277,7 +284,12 @@ public class Store extends SQLiteOpenHelper {
             db.delete(TABLE_PACKAGES, KEY_COD + "=?", new String[]{cod});
 
             db.close();
+            scheduleBackup();
         }
     }
 
+    private void scheduleBackup() {
+        BackupManager bm = new BackupManager(context);
+        bm.dataChanged();
+    }
 }

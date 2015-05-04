@@ -38,7 +38,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import me.acristoffers.tracker.AlarmReceiver;
 import me.acristoffers.tracker.Package;
@@ -65,13 +65,15 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
         activity = getActivity();
         View view = getView();
 
+        if (view == null || activity == null) {
+            return;
+        }
+
         PreferenceManager.setDefaultValues(activity, R.xml.preferences, false);
 
         AlarmReceiver.setAlarm(activity);
 
-        if (view != null) {
-            recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        }
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
         if (recyclerView == null) {
             activity.finish();
@@ -81,15 +83,11 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
 
-        final RecyclerView.Adapter recyclerViewAdapter = new PackageListAdapter(activity);
+        final PackageListAdapter recyclerViewAdapter = new PackageListAdapter(activity);
         recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerViewAdapter.setListener((PackageListActivity) activity);
 
-        ((PackageListAdapter) recyclerViewAdapter).setListener((PackageListActivity) activity);
-
-        if (view != null) {
-            swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
-        }
-
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         if (swipeRefreshLayout == null) {
             activity.finish();
             System.exit(0);
@@ -104,11 +102,7 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
             }
         });
 
-        Button button = null;
-        if (view != null) {
-            button = (Button) view.findViewById(R.id.addButton);
-        }
-
+        Button button = (Button) view.findViewById(R.id.addButton);
         if (button != null) {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,7 +114,9 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
                     builder.setView(view);
 
                     EditText code = (EditText) view.findViewById(R.id.code);
-                    code.addTextChangedListener(new TrackCodeFormattingTextWatcher(code));
+                    if (code != null) {
+                        code.addTextChangedListener(new TrackCodeFormattingTextWatcher(code));
+                    }
 
                     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
@@ -179,7 +175,7 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
     public void checkForUpdates() {
         swipeRefreshLayout.setRefreshing(true);
 
-        List<Package> packages = Package.allPackages(getActivity());
+        ArrayList<Package> packages = Package.allPackages(getActivity());
         for (Package pkg : packages) {
             if (!pkg.isActive()) {
                 continue;
@@ -211,5 +207,10 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
         recyclerViewAdapter.setShowInactive(!recyclerViewAdapter.getShowInactive());
 
         return recyclerViewAdapter.getShowInactive();
+    }
+
+    public void reloadData() {
+        PackageListAdapter recyclerViewAdapter = (PackageListAdapter) recyclerView.getAdapter();
+        recyclerViewAdapter.filterPackages();
     }
 }
