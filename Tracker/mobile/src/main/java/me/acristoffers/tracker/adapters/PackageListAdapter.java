@@ -42,6 +42,7 @@ import java.util.List;
 import me.acristoffers.tracker.Correios;
 import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;
+import me.acristoffers.tracker.fragments.PackageListFragment;
 
 public class PackageListAdapter extends RecyclerView.Adapter implements Package.StatusReady {
 
@@ -215,10 +216,6 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
         }
 
         notifyDataSetChanged();
-    }
-
-    public OnCardViewClickedListener getListener() {
-        return listener;
     }
 
     public void setListener(OnCardViewClickedListener listener) {

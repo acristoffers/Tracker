@@ -48,11 +48,10 @@ import me.acristoffers.tracker.activities.PackageListActivity;
 import me.acristoffers.tracker.adapters.PackageListAdapter;
 
 public class PackageListFragment extends Fragment implements Package.StatusReady {
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView = null;
     private int updating = 0;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private Activity activity;
-    private View view;
+    private SwipeRefreshLayout swipeRefreshLayout = null;
+    private Activity activity = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,13 +63,15 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
         super.onActivityCreated(savedInstanceState);
 
         activity = getActivity();
-        view = getView();
+        View view = getView();
 
         PreferenceManager.setDefaultValues(activity, R.xml.preferences, false);
 
         AlarmReceiver.setAlarm(activity);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        if (view != null) {
+            recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        }
 
         if (recyclerView == null) {
             activity.finish();
@@ -85,7 +86,10 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
 
         ((PackageListAdapter) recyclerViewAdapter).setListener((PackageListActivity) activity);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+        if (view != null) {
+            swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+        }
+
         if (swipeRefreshLayout == null) {
             activity.finish();
             System.exit(0);
@@ -100,7 +104,11 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
             }
         });
 
-        Button button = (Button) view.findViewById(R.id.addButton);
+        Button button = null;
+        if (view != null) {
+            button = (Button) view.findViewById(R.id.addButton);
+        }
+
         if (button != null) {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
