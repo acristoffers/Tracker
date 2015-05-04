@@ -77,7 +77,7 @@ public class Package implements Correios.SyncDone {
 
         List<String> codes = store.allCodes();
         for (String code : codes) {
-            Package pkg = new Package(code,context);
+            Package pkg = new Package(code, context);
             packages.add(pkg);
         }
 
@@ -148,8 +148,19 @@ public class Package implements Correios.SyncDone {
         this.listener = listener;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        try {
+            Package pkg = (Package) o;
+            String code = pkg.getCod();
+
+            return getCod().equalsIgnoreCase(code);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public interface StatusReady {
         public void statusUpdated(Package pkg);
     }
-
 }

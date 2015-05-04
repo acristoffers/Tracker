@@ -25,6 +25,9 @@ package me.acristoffers.tracker.adapters;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,11 +45,13 @@ import me.acristoffers.tracker.R;
 
 public class PackageListAdapter extends RecyclerView.Adapter implements Package.StatusReady {
 
+    public static boolean isSelecting = false;
     private Activity context = null;
-    private List<Package> packages = new ArrayList<>();
+    private ArrayList<Package> packages = new ArrayList<>();
     private boolean showInactive = false;
     private LayoutInflater layoutInflater;
     private OnCardViewClickedListener listener = null;
+    private ArrayList<Package> selection = new ArrayList<>();
 
     public PackageListAdapter(Activity context) {
         this.context = context;
@@ -58,13 +63,21 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
     @SuppressLint("InflateParams")
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.package_item, null);
+
+        CardView cardView = (CardView) view;
+        cardView.setMaxCardElevation(view.getResources().getDimension(R.dimen.card_elevation_selected));
+
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        View view = holder.itemView;
+        final View view = holder.itemView;
         ViewHolder viewHolder = (ViewHolder) holder;
+
+        if (!isSelecting) {
+            selection.clear();
+        }
 
         final Package pkg = packages.get(position);
 
@@ -110,15 +123,56 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
             textView.setText(local);
         }
 
-        view = viewHolder.getLayout();
-        view.setOnClickListener(new View.OnClickListener() {
+        View layout = viewHolder.getLayout();
+        layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
+                    if (isSelecting) {
+                        if (selection.contains(pkg)) {
+                            List<Package> removeList = new ArrayList<>();
+                            for (Package p : selection) {
+                                if (p.equals(pkg)) {
+                                    removeList.add(p);
+                                }
+                            }
+                            selection.removeAll(removeList);
+                        } else {
+                            selection.add(pkg);
+                        }
+
+                        notifyDataSetChanged();
+                    }
+
                     listener.onCardViewClicked(pkg);
                 }
             }
         });
+
+        layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (listener != null && !isSelecting) {
+                    listener.onCardViewLongClicked(pkg);
+                    isSelecting = true;
+                    selection.add(pkg);
+                    notifyDataSetChanged();
+                }
+
+                return true;
+            }
+        });
+
+        CardView cardView = (CardView) view;
+
+        if (selection.contains(pkg)) {
+            Resources resources = view.getResources();
+            cardView.setCardElevation(resources.getDimension(R.dimen.card_elevation_selected));
+            cardView.setCardBackgroundColor(resources.getColor(R.color.accent));
+        } else {
+            cardView.setCardElevation(view.getResources().getDimension(R.dimen.card_elevation));
+            cardView.setCardBackgroundColor(Color.WHITE);
+        }
     }
 
     @Override
@@ -173,6 +227,8 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
 
     public interface OnCardViewClickedListener {
         void onCardViewClicked(Package pkg);
+
+        void onCardViewLongClicked(Package pkg);
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {

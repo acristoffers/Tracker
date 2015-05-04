@@ -25,12 +25,7 @@ package me.acristoffers.tracker.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.TextView;
 
-import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;
 import me.acristoffers.tracker.fragments.PackageEditFragment;
 
@@ -47,37 +42,4 @@ public class PackageEditActivity extends AppCompatActivity {
         packageEditFragment = (PackageEditFragment) supportFragmentManager.findFragmentById(R.id.package_edit);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_package_edit, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        final Package pkg = packageEditFragment.getPkg();
-
-        if (id == R.id.save) {
-            String name;
-            boolean active;
-
-            TextView textView = (TextView) findViewById(R.id.name);
-            name = textView.getText().toString();
-
-            SwitchCompat switchCompat = (SwitchCompat) findViewById(R.id.active);
-            active = switchCompat.isChecked();
-
-            pkg.setName(name);
-            pkg.setActive(active);
-            pkg.save();
-
-            finish();
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

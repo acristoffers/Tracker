@@ -7,8 +7,7 @@ Versão 2.0 em desenvolvimento (Reescrita com Material Design).
 Backend alterado. Por hora utiliza a API encontrada aqui: http://developers.agenciaideias.com.br/correios/rastreamento
 Infelizmente ela contém um limite diário de utilização.
 
-Quase tudo da versão 1.0 já foi portado, falta recriar o backend que atualiza de tempo em tempo (desta vez haverá a opção de escolher de quanto em quanto tempo :) )
-Outras novidades de funcionalidades por vir.
+Tudo da versão 1 foi portado. Novas funcionalidades estão sendo implementadas. Suporte para mais dispositivos planejado.
 
 Play Store
 ----------

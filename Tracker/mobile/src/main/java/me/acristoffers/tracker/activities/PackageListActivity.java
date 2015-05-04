@@ -27,27 +27,38 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
+import android.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;
 import me.acristoffers.tracker.adapters.PackageListAdapter;
+import me.acristoffers.tracker.fragments.BlankFragment;
 import me.acristoffers.tracker.fragments.PackageDetailsFragment;
+import me.acristoffers.tracker.fragments.PackageEditFragment;
 import me.acristoffers.tracker.fragments.PackageListFragment;
 
-public class PackageListActivity extends AppCompatActivity implements PackageListAdapter.OnCardViewClickedListener {
+public class PackageListActivity extends AppCompatActivity implements PackageListAdapter.OnCardViewClickedListener, ActionMode.Callback {
 
     public static boolean isTablet;
     private PackageListFragment packageListFragment;
+    private Package longClickPackage = null;
+    private ArrayList<Package> selection = new ArrayList<>();
+    private ActionMode actionMode = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +77,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main_activity_phone_tablet, menu);
+        getMenuInflater().inflate(R.menu.menu_package_list, menu);
         return true;
     }
 
@@ -159,29 +170,188 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        updateIsTablet();
+    public void onCardViewClicked(me.acristoffers.tracker.Package pkg) {
+        if (PackageListAdapter.isSelecting) {
+            if (selection.contains(pkg)) {
+                List<Package> removeList = new ArrayList<>();
+                for (Package p : selection) {
+                    if (p.equals(pkg)) {
+                        removeList.add(p);
+                    }
+                }
+                selection.removeAll(removeList);
+            } else {
+                selection.add(pkg);
+            }
+
+            if (selection.isEmpty() && actionMode != null) {
+                actionMode.finish();
+            }
+
+            if (actionMode != null) {
+                actionMode.getMenu().findItem(R.id.edit).setVisible(selection.size() == 1);
+            }
+        } else {
+            if (isTablet) {
+                Bundle args = new Bundle();
+                args.putString(PackageDetailsActivity.PACKAGE_CODE, pkg.getCod());
+
+                PackageDetailsFragment fragment = new PackageDetailsFragment();
+                fragment.setArguments(args);
+
+                FragmentManager supportFragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+                transaction.replace(R.id.package_details, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+                packageListFragment.toggleShowInactive();
+                packageListFragment.toggleShowInactive();
+            } else {
+                Intent intent = new Intent(this, PackageDetailsActivity.class);
+                intent.putExtra(PackageDetailsActivity.PACKAGE_CODE, pkg.getCod());
+                startActivity(intent);
+            }
+        }
     }
 
     @Override
-    public void onCardViewClicked(me.acristoffers.tracker.Package pkg) {
-        if (isTablet) {
-            Bundle args = new Bundle();
-            args.putString(PackageDetailsActivity.PACKAGE_CODE, pkg.getCod());
-
-            PackageDetailsFragment fragment = new PackageDetailsFragment();
-            fragment.setArguments(args);
-
-            FragmentManager supportFragmentManager = getSupportFragmentManager();
-            FragmentTransaction transaction = supportFragmentManager.beginTransaction();
-            transaction.replace(R.id.package_details, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        } else {
-            Intent intent = new Intent(this, PackageDetailsActivity.class);
-            intent.putExtra(PackageDetailsActivity.PACKAGE_CODE, pkg.getCod());
-            startActivity(intent);
+    public void onCardViewLongClicked(me.acristoffers.tracker.Package pkg) {
+        if (longClickPackage == null) {
+            longClickPackage = pkg;
+            selection.add(pkg);
+            startActionMode(this);
         }
+    }
+
+    @Override
+    public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+        MenuInflater inflater = actionMode.getMenuInflater();
+        inflater.inflate(R.menu.menu_package_long_click, menu);
+
+        this.actionMode = actionMode;
+
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.hide();
+        }
+
+        View addButton = findViewById(R.id.addButton);
+        addButton.setVisibility(View.INVISIBLE);
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+        return false;
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+        boolean result = false;
+
+        switch (menuItem.getItemId()) {
+            case R.id.remove:
+                String body = getString(R.string.confirm_delete, longClickPackage.getName());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.are_you_sure);
+                builder.setMessage(body);
+
+                final ArrayList selectionCopy = (ArrayList) selection.clone();
+
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        for (Object o : selectionCopy) {
+                            Package pkg = (Package) o;
+                            pkg.remove();
+                        }
+
+                        packageListFragment.toggleShowInactive();
+                        packageListFragment.toggleShowInactive();
+
+                        if (isTablet) {
+                            FragmentManager supportFragmentManager = getSupportFragmentManager();
+                            FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+                            transaction.replace(R.id.package_details, new BlankFragment());
+                            transaction.commit();
+                        }
+
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                result = true;
+                break;
+
+            case R.id.toggle_active:
+                for (Package pkg : selection) {
+                    pkg.setActive(!pkg.isActive());
+                    pkg.save();
+                }
+
+                packageListFragment.toggleShowInactive();
+                packageListFragment.toggleShowInactive();
+
+                result = true;
+                break;
+
+            case R.id.edit:
+                if (isTablet) {
+                    Bundle args = new Bundle();
+                    args.putString(PackageDetailsActivity.PACKAGE_CODE, selection.get(0).getCod());
+
+                    PackageEditFragment fragment = new PackageEditFragment();
+                    fragment.setArguments(args);
+
+                    FragmentManager supportFragmentManager = getSupportFragmentManager();
+                    FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+                    transaction.replace(R.id.package_details, fragment);
+                    transaction.commit();
+                } else {
+                    Intent intent = new Intent(this, PackageDetailsActivity.class);
+                    intent.putExtra(PackageDetailsActivity.PACKAGE_CODE, selection.get(0).getCod());
+                    startActivity(intent);
+                }
+
+                result = true;
+                break;
+        }
+
+        actionMode.finish();
+
+        return result;
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode actionMode) {
+        longClickPackage = null;
+
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.show();
+        }
+
+        View addButton = findViewById(R.id.addButton);
+        addButton.setVisibility(View.VISIBLE);
+
+        PackageListAdapter.isSelecting = false;
+        selection.clear();
+        this.actionMode = null;
+
+        packageListFragment.toggleShowInactive();
+        packageListFragment.toggleShowInactive();
     }
 }

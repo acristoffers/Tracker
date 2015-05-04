@@ -15,7 +15,7 @@ android {
         applicationId "me.acristoffers.tracker"
         minSdkVersion 21
         targetSdkVersion 22
-        versionCode 1
+        versionCode 8
         versionName "2.0"
     }
     buildTypes {

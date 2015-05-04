@@ -28,46 +28,91 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;
 import me.acristoffers.tracker.activities.PackageDetailsActivity;
+import me.acristoffers.tracker.activities.PackageListActivity;
 
 public class PackageEditFragment extends Fragment {
 
     private Package pkg = null;
-    private Activity activity;
-    private View view;
+    private View view = null;
+    private Activity activity = null;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setupUI();
+    }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        setupUI();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setupUI();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupUI();
+    }
+
+    private void setupUI() {
         activity = getActivity();
         view = getView();
 
-        String code;
+        if (activity == null || view == null) {
+            return;
+        }
 
-        Intent intent = activity.getIntent();
-        if (intent != null) {
-            code = intent.getStringExtra(PackageDetailsActivity.PACKAGE_CODE);
-        } else if (savedInstanceState != null) {
-            code = savedInstanceState.getString(PackageDetailsActivity.PACKAGE_CODE);
-        } else {
-            activity.finish();
+        String code = null;
+
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            code = arguments.getString(PackageDetailsActivity.PACKAGE_CODE);
+        }
+
+        if (code == null || code.isEmpty()) {
+            Intent intent = activity.getIntent();
+            if (intent != null) {
+                code = intent.getStringExtra(PackageDetailsActivity.PACKAGE_CODE);
+            }
+        }
+
+        if (code == null || code.isEmpty()) {
             return;
         }
 
         pkg = new Package(code, activity);
 
-        TextView textView = (TextView) activity.findViewById(R.id.name);
-        textView.setText(pkg.getName());
+        EditText editText = (EditText) view.findViewById(R.id.name);
+        if (editText != null) {
+            editText.setText(pkg.getName());
+        }
 
         SwitchCompat switchCompat = (SwitchCompat) view.findViewById(R.id.active);
-        switchCompat.setChecked(pkg.isActive());
+        if (switchCompat != null) {
+            switchCompat.setChecked(pkg.isActive());
+        }
     }
 
     @Override
@@ -75,7 +120,39 @@ public class PackageEditFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_package_edit, container, false);
     }
 
-    public Package getPkg() {
-        return pkg;
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_package_edit, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.save) {
+            String name;
+            boolean active;
+
+            EditText editText = (EditText) view.findViewById(R.id.name);
+            name = editText.getText().toString();
+
+            SwitchCompat switchCompat = (SwitchCompat) view.findViewById(R.id.active);
+            active = switchCompat.isChecked();
+
+            pkg.setName(name);
+            pkg.setActive(active);
+            pkg.save();
+
+            if (PackageListActivity.isTablet) {
+                PackageListActivity listActivity = (PackageListActivity) activity;
+                listActivity.onCardViewClicked(pkg);
+            } else {
+                activity.finish();
+            }
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

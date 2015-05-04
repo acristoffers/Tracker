@@ -29,6 +29,7 @@
 
     <string name="show_inactive">Show inactive</string>
     <string name="hide_inactive">Hide Inactive</string>
+    <string name="toggle_active">Toggle Active</string>
 
     <string name="type_code_above">Use the search field to look for packages.</string>
 

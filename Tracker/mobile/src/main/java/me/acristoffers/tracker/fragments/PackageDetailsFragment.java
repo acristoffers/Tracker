@@ -27,12 +27,19 @@ import android.app.NotificationManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -41,6 +48,8 @@ import android.widget.Toast;
 import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;
 import me.acristoffers.tracker.activities.PackageDetailsActivity;
+import me.acristoffers.tracker.activities.PackageEditActivity;
+import me.acristoffers.tracker.activities.PackageListActivity;
 import me.acristoffers.tracker.adapters.StepListAdapter;
 
 public class PackageDetailsFragment extends Fragment {
@@ -148,7 +157,81 @@ public class PackageDetailsFragment extends Fragment {
         setupUI();
     }
 
-    public Package getPkg() {
-        return pkg;
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_package_view, menu);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.remove:
+                String body = getString(R.string.confirm_delete, pkg.getName());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setTitle(R.string.are_you_sure);
+                builder.setMessage(body);
+
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        pkg.remove();
+
+                        if (PackageListActivity.isTablet) {
+                            PackageListActivity listActivity = (PackageListActivity) activity;
+                            FragmentManager fragmentManager = listActivity.getSupportFragmentManager();
+                            FragmentTransaction transaction = fragmentManager.beginTransaction();
+                            transaction.replace(R.id.package_details, new BlankFragment());
+                            transaction.commit();
+                        } else {
+                            activity.finish();
+                        }
+
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return true;
+
+            case R.id.edit:
+                if (PackageListActivity.isTablet) {
+                    Bundle args = new Bundle();
+                    args.putString(PackageDetailsActivity.PACKAGE_CODE, pkg.getCod());
+
+                    PackageEditFragment fragment = new PackageEditFragment();
+                    fragment.setArguments(args);
+
+                    PackageListActivity listActivity = (PackageListActivity) activity;
+                    FragmentManager supportFragmentManager = listActivity.getSupportFragmentManager();
+                    FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+                    transaction.replace(R.id.package_details, fragment);
+                    transaction.commit();
+                } else {
+                    Intent intent = new Intent(activity, PackageEditActivity.class);
+                    intent.putExtra(PackageDetailsActivity.PACKAGE_CODE, pkg.getCod());
+                    startActivity(intent);
+                }
+
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
