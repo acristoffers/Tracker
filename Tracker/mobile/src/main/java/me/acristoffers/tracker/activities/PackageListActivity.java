@@ -321,7 +321,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                     transaction.replace(R.id.package_details, fragment);
                     transaction.commit();
                 } else {
-                    Intent intent = new Intent(this, PackageDetailsActivity.class);
+                    Intent intent = new Intent(this, PackageEditActivity.class);
                     intent.putExtra(PackageDetailsActivity.PACKAGE_CODE, selection.get(0).getCod());
                     startActivity(intent);
                 }
