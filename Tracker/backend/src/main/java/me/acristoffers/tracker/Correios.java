@@ -99,67 +99,71 @@ public class Correios {
     }
 
     private synchronized boolean processAPIbody(String body) {
-            steps.clear();
+        steps.clear();
 
-            StringReader stringReader = new StringReader(body);
-            JsonReader jsonReader = new JsonReader(stringReader);
+        if (body == null || body.isEmpty()) {
+            return false;
+        }
 
-            try {
-                jsonReader.beginArray();
+        StringReader stringReader = new StringReader(body);
+        JsonReader jsonReader = new JsonReader(stringReader);
+
+        try {
+            jsonReader.beginArray();
+
+            while (jsonReader.hasNext()) {
+                Step step = new Step();
+
+                jsonReader.beginObject();
 
                 while (jsonReader.hasNext()) {
-                    Step step = new Step();
+                    String name = jsonReader.nextName();
 
-                    jsonReader.beginObject();
+                    switch (name) {
+                        case "acao":
+                            step.title = jsonReader.nextString();
+                            break;
+                        case "data":
+                            String dateString = jsonReader.nextString();
+                            String[] dateAndTime = dateString.split(" ");
+                            String[] dateParts = dateAndTime[0].split("/");
+                            String[] timeParts = dateAndTime[1].split(":");
 
-                    while (jsonReader.hasNext()) {
-                        String name = jsonReader.nextName();
+                            int year = Integer.parseInt(dateParts[2]);
+                            int month = Integer.parseInt(dateParts[1]);
+                            int day = Integer.parseInt(dateParts[0]);
 
-                        switch (name) {
-                            case "acao":
-                                step.title = jsonReader.nextString();
-                                break;
-                            case "data":
-                                String dateString = jsonReader.nextString();
-                                String[] dateAndTime = dateString.split(" ");
-                                String[] dateParts = dateAndTime[0].split("/");
-                                String[] timeParts = dateAndTime[1].split(":");
+                            int hour = Integer.parseInt(timeParts[0]);
+                            int minute = Integer.parseInt(timeParts[1]);
+                            int second = 0;
 
-                                int year = Integer.parseInt(dateParts[2]);
-                                int month = Integer.parseInt(dateParts[1]);
-                                int day = Integer.parseInt(dateParts[0]);
+                            TimeZone timeZone = TimeZone.getTimeZone("GMT-03:00");
+                            Calendar calendar = Calendar.getInstance(timeZone);
 
-                                int hour = Integer.parseInt(timeParts[0]);
-                                int minute = Integer.parseInt(timeParts[1]);
-                                int second = 0;
+                            calendar.set(year, month, day, hour, minute, second);
 
-                                TimeZone timeZone = TimeZone.getTimeZone("GMT-03:00");
-                                Calendar calendar = Calendar.getInstance(timeZone);
-
-                                calendar.set(year, month, day, hour, minute, second);
-
-                                step.date = calendar.getTime();
-                                break;
-                            case "detalhes":
-                                step.description = jsonReader.nextString();
-                                break;
-                            case "local":
-                                step.local = jsonReader.nextString();
-                                break;
-                        }
+                            step.date = calendar.getTime();
+                            break;
+                        case "detalhes":
+                            step.description = jsonReader.nextString();
+                            break;
+                        case "local":
+                            step.local = jsonReader.nextString();
+                            break;
                     }
-
-                    jsonReader.endObject();
-
-                    steps.add(step);
                 }
 
-                jsonReader.endArray();
-            } catch (Exception e) {
-                return false;
+                jsonReader.endObject();
+
+                steps.add(step);
             }
 
-            return true;
+            jsonReader.endArray();
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
     }
 
     private void notifyOnMainThread(final boolean b) {
