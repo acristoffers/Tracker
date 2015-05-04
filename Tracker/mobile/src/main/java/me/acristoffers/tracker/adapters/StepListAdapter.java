@@ -65,7 +65,7 @@ public class StepListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
 
-        final Correios.Step step = steps.get(position);
+        final Correios.Step step = steps.get(steps.size() - position - 1);
 
         String title;
         String date = "";

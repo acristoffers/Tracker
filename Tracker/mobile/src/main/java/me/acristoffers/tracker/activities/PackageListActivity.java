@@ -23,7 +23,6 @@
 package me.acristoffers.tracker.activities;
 
 import android.annotation.SuppressLint;
-import android.app.backup.BackupManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -46,7 +45,6 @@ import java.util.ArrayList;
 
 import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;
-import me.acristoffers.tracker.TrackerRestoreObserver;
 import me.acristoffers.tracker.adapters.PackageListAdapter;
 import me.acristoffers.tracker.fragments.BlankFragment;
 import me.acristoffers.tracker.fragments.PackageDetailsFragment;
@@ -76,9 +74,6 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
         }
 
         updateIsTablet();
-
-        BackupManager bm = new BackupManager(this);
-        bm.requestRestore(new TrackerRestoreObserver());
     }
 
     private void updateIsTablet() {
@@ -193,16 +188,16 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
             }
 
             if (actionMode != null) {
-                if (selection.isEmpty()) {
-                    actionMode.finish();
-                }
-
                 Menu menu = actionMode.getMenu();
                 if (menu != null) {
                     MenuItem menuItem = menu.findItem(R.id.edit);
                     if (menuItem != null) {
                         menuItem.setVisible(selection.size() == 1);
                     }
+                }
+
+                if (selection.isEmpty()) {
+                    actionMode.finish();
                 }
             }
         } else {

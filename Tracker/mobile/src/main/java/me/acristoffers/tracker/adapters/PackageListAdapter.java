@@ -89,7 +89,7 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
 
         List<Correios.Step> steps = pkg.getSteps();
         if (steps.size() > 0) {
-            Correios.Step step = steps.get(0);
+            Correios.Step step = steps.get(steps.size() - 1);
             DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
             title = step.title;
             local = step.local;

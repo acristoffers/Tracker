@@ -23,6 +23,7 @@
 
         <meta-data
             android:name="com.google.android.backup.api_key"
+            android:value="AEdPqrEAAAAImJ_QP4NAmp8OnzYorGNuMcm3WJOwPtZr_1ehOA"/>
 
         <activity
             android:name=".activities.PackageListActivity"
