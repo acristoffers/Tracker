@@ -129,7 +129,7 @@ public class Correios {
                             String[] timeParts = dateAndTime[1].split(":");
 
                             int year = Integer.parseInt(dateParts[2]);
-                            int month = Integer.parseInt(dateParts[1]);
+                            int month = Integer.parseInt(dateParts[1]) - 1;
                             int day = Integer.parseInt(dateParts[0]);
 
                             int hour = Integer.parseInt(timeParts[0]);
