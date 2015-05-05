@@ -168,7 +168,7 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
         if (selection.contains(pkg)) {
             Resources resources = view.getResources();
             cardView.setCardElevation(resources.getDimension(R.dimen.card_elevation_selected));
-            cardView.setCardBackgroundColor(resources.getColor(R.color.accent));
+            cardView.setCardBackgroundColor(resources.getColor(R.color.primary_light));
         } else {
             cardView.setCardElevation(view.getResources().getDimension(R.dimen.card_elevation));
             cardView.setCardBackgroundColor(Color.WHITE);
