@@ -19,6 +19,7 @@
         android:backupAgent=".BackupAgent"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:supportsRtl="true"
         android:theme="@style/TrackerTheme">
 
         <meta-data

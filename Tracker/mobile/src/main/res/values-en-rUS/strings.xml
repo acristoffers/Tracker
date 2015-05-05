@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="edit_package">Edit package</string>
-    <string name="view_package">View package</string>
-
     <string name="search_for_package">Search for package</string>
 
     <string name="save">Save</string>
@@ -12,9 +9,6 @@
     <string name="check_for_updates">Check for updates</string>
 
     <string name="active">Active</string>
-    <string name="active_hint">Will not appear in home if not active</string>
-
-    <string name="please_type_name">Please type a name to identify this package</string>
 
     <string name="notification_package_updated_title">%s updated!</string>
     <string name="notification_package_updated_body">There are updates on package %s</string>
