@@ -40,6 +40,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="ok" translatable="false">OK</string>
+    <string name="cancel">Cancel</string>
 
     <string name="empty_steps">There are no updates on this package yet. Updates will appear here as soon as they become available.</string>
 

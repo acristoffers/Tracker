@@ -30,4 +30,5 @@
     <string name="view_package">Mostrar pacote</string>
     <string name="yes">Sim</string>
     <string name="search_for_package">Procurar por pacote</string>
+    <string name="cancel">Cancelar</string>
 </resources>

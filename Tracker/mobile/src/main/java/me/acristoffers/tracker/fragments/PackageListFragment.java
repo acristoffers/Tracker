@@ -149,6 +149,13 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
                         }
                     });
 
+                    builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
