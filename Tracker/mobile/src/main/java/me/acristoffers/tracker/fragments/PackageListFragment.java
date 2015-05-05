@@ -55,7 +55,7 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_package_list, container, false);
+        return getActivity().getLayoutInflater().inflate(R.layout.fragment_package_list, container, false);
     }
 
     @Override

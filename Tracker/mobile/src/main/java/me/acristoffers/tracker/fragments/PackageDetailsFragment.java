@@ -65,7 +65,7 @@ public class PackageDetailsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_package_details, container, false);
+        return getActivity().getLayoutInflater().inflate(R.layout.fragment_package_details, container, false);
     }
 
     @Override
