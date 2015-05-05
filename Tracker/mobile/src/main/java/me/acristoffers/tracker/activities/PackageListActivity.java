@@ -92,12 +92,18 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
     protected void onRestart() {
         super.onRestart();
         updateIsTablet();
+        selection.clear();
+        PackageListAdapter.isSelecting = false;
+        packageListFragment.reloadData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         updateIsTablet();
+        selection.clear();
+        PackageListAdapter.isSelecting = false;
+        packageListFragment.reloadData();
     }
 
     @Override
