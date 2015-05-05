@@ -180,8 +180,6 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
     }
 
     public void checkForUpdates() {
-        swipeRefreshLayout.setRefreshing(true);
-
         ArrayList<Package> packages = Package.allPackages(getActivity());
         for (Package pkg : packages) {
             if (!pkg.isActive()) {
@@ -192,6 +190,8 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
             pkg.setListener(this);
             pkg.checkForStatusUpdates();
         }
+
+        swipeRefreshLayout.setRefreshing(updating > 0);
     }
 
     @Override
@@ -199,14 +199,11 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
         pkg.save();
 
         updating--;
-        if (updating == 0) {
-            swipeRefreshLayout.setRefreshing(false);
 
-            PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
-            adapter.filterPackages();
-        } else {
-            swipeRefreshLayout.setRefreshing(true);
-        }
+        PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
+        adapter.filterPackages();
+
+        swipeRefreshLayout.setRefreshing(updating > 0);
     }
 
     public boolean toggleShowInactive() {
