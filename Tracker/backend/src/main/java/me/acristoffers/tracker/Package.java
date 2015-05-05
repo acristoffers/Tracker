@@ -160,6 +160,6 @@ public class Package implements Correios.SyncDone {
     }
 
     public interface StatusReady {
-        public void statusUpdated(Package pkg);
+        void statusUpdated(Package pkg);
     }
 }

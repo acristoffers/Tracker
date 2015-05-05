@@ -119,6 +119,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                 boolean showInactive = packageListFragment.toggleShowInactive();
 
                 item.setTitle(showInactive ? R.string.hide_inactive : R.string.show_inactive);
+                item.setIcon(showInactive ? R.drawable.ic_visibility_off_black_48dp : R.drawable.ic_visibility_black_48dp);
 
                 return true;
 

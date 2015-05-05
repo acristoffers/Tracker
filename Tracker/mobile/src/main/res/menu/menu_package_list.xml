@@ -5,21 +5,25 @@
     <item
         android:id="@+id/toggle_inactive"
         android:title="@string/show_inactive"
+        android:icon="@drawable/ic_visibility_black_48dp"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/check_for_updates"
         android:title="@string/check_for_updates"
+        android:icon="@drawable/ic_sync_black_48dp"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/settings"
         android:title="@string/action_settings"
+        android:icon="@drawable/ic_settings_applications_black_48dp"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/about"
         android:title="@string/about"
+        android:icon="@drawable/ic_info_outline_black_48dp"
         app:showAsAction="never"/>
 
 </menu>
