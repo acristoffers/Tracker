@@ -98,6 +98,11 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
             title = view.getResources().getString(R.string.empty_steps);
         }
 
+        View v = viewHolder.getInactiveIcon();
+        if (v != null) {
+            v.setVisibility(pkg.isActive() ? View.GONE : View.VISIBLE);
+        }
+
         TextView textView = viewHolder.getName();
         if (textView != null) {
             textView.setText(name);
@@ -190,8 +195,8 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
     }
 
     public void setShowInactive(boolean showInactive) {
-        if (showInactive != this.showInactive) {
-            this.showInactive = showInactive;
+        if (showInactive != PackageListAdapter.showInactive) {
+            PackageListAdapter.showInactive = showInactive;
             filterPackages();
         }
     }
@@ -230,6 +235,7 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
     private class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name, code, title, date, local;
         private View layout;
+        private View inactiveIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -240,6 +246,7 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
             date = (TextView) itemView.findViewById(R.id.date);
             local = (TextView) itemView.findViewById(R.id.local);
             layout = itemView.findViewById(R.id.layout);
+            inactiveIcon = itemView.findViewById(R.id.inactive_icon);
         }
 
         public TextView getName() {
@@ -264,6 +271,10 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
 
         public View getLayout() {
             return layout;
+        }
+
+        public View getInactiveIcon() {
+            return inactiveIcon;
         }
     }
 }
