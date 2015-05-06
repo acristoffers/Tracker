@@ -46,9 +46,9 @@ import me.acristoffers.tracker.R;
 public class PackageListAdapter extends RecyclerView.Adapter implements Package.StatusReady {
 
     public static boolean isSelecting = false;
+    private static boolean showInactive = false;
     private Activity context = null;
     private ArrayList<Package> packages = new ArrayList<>();
-    private boolean showInactive = false;
     private LayoutInflater layoutInflater = null;
     private OnCardViewClickedListener listener = null;
     private ArrayList<Package> selection = new ArrayList<>();
