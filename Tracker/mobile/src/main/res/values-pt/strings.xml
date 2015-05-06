@@ -27,4 +27,8 @@
     <string name="yes">Sim</string>
     <string name="search_for_package">Procurar por pacote</string>
     <string name="cancel">Cancelar</string>
+    <string name="rate_me">Nos ajude avaliando o aplicativo na Play Store!</string>
+    <string name="rate_now">Avaliar agora!</string>
+    <string name="dont_rate">Não avaliar</string>
+    <string name="later">Mais tarde</string>
 </resources>

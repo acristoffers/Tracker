@@ -40,4 +40,9 @@
     <string name="sync_every">Sync every (Minutes)</string>
     <string name="title_activity_preferences">Preferences</string>
 
+    <string name="rate_me">Help us by rating this app on the Play Store!</string>
+    <string name="rate_now">Rate now!</string>
+    <string name="dont_rate">Don\'t rate</string>
+    <string name="later">Later</string>
+
 </resources>

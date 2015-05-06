@@ -25,9 +25,12 @@ package me.acristoffers.tracker.activities;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -74,6 +77,24 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
         }
 
         updateIsTablet();
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPref != null) {
+            boolean canRate = sharedPref.getBoolean("can_rate", true);
+            if (canRate) {
+                int times = sharedPref.getInt("rate_times", 0) + 1;
+
+                if (times > 5) {
+                    showRateDialog();
+                }
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                if (editor != null) {
+                    editor.putInt("rate_times", times);
+                    editor.apply();
+                }
+            }
+        }
     }
 
     private void updateIsTablet() {
@@ -372,6 +393,73 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
         this.actionMode = null;
 
         packageListFragment.reloadData();
+    }
+
+    private void showRateDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.app_name);
+        builder.setMessage(R.string.rate_me);
+
+        builder.setPositiveButton(R.string.rate_now, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(PackageListActivity.this);
+                if (sharedPref != null) {
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    if (editor != null) {
+                        editor.putBoolean("can_rate", false);
+                        editor.apply();
+                    }
+                }
+
+                /*
+                 * This seems like non-sense, as we know the name of the package
+                 * but makes our life easier if we want to change it later
+                 * as it's only necessary to change two places: the manifest and gradle build file
+                 * (and to copy&paste code into other projects ;)
+                 */
+                String packageName = getPackageName();
+                Uri uri = Uri.parse("market://details?id=" + packageName);
+                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+
+                dialogInterface.dismiss();
+            }
+        });
+
+        builder.setNegativeButton(R.string.dont_rate, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(PackageListActivity.this);
+                if (sharedPref != null) {
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    if (editor != null) {
+                        editor.putBoolean("can_rate", false);
+                        editor.apply();
+                    }
+                }
+
+                dialogInterface.dismiss();
+            }
+        });
+
+        builder.setNeutralButton(R.string.later, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(PackageListActivity.this);
+                if (sharedPref != null) {
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    if (editor != null) {
+                        editor.putInt("rate_times", 0);
+                        editor.apply();
+                    }
+                }
+
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog aboutDialog = builder.create();
+        aboutDialog.show();
     }
 
 }
