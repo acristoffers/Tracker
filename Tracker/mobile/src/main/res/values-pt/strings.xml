@@ -31,4 +31,6 @@
     <string name="rate_now">Avaliar agora!</string>
     <string name="dont_rate">Não avaliar</string>
     <string name="later">Mais tarde</string>
+    <string name="set_active">Ativar</string>
+    <string name="set_inactive">Desativar</string>
 </resources>

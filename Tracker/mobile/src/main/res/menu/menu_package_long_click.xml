@@ -3,12 +3,6 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/toggle_active"
-        android:icon="@drawable/ic_visibility_black_48dp"
-        android:title="@string/toggle_active"
-        app:showAsAction="ifRoom"/>
-
-    <item
         android:id="@+id/edit"
         android:icon="@drawable/ic_edit_black_48dp"
         android:title="@string/edit"
@@ -18,6 +12,18 @@
         android:id="@+id/remove"
         android:icon="@drawable/ic_delete_black_48dp"
         android:title="@string/remove"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/set_active"
+        android:icon="@drawable/ic_visibility_black_48dp"
+        android:title="@string/set_active"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/set_inactive"
+        android:icon="@drawable/ic_visibility_off_black_48dp"
+        android:title="@string/set_inactive"
         app:showAsAction="ifRoom"/>
 
 </menu>

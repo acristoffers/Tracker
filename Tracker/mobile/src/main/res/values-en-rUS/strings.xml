@@ -45,4 +45,7 @@
     <string name="dont_rate">Don\'t rate</string>
     <string name="later">Later</string>
 
+    <string name="set_active">Set active</string>
+    <string name="set_inactive">Set inactive</string>
+
 </resources>

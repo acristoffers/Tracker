@@ -334,9 +334,20 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
 
                 return true;
 
-            case R.id.toggle_active:
+            case R.id.set_active:
                 for (Package pkg : selection) {
-                    pkg.setActive(!pkg.isActive());
+                    pkg.setActive(true);
+                    pkg.save();
+                }
+
+                packageListFragment.reloadData();
+
+                result = true;
+                break;
+
+            case R.id.set_inactive:
+                for (Package pkg : selection) {
+                    pkg.setActive(false);
                     pkg.save();
                 }
 
