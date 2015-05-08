@@ -25,9 +25,11 @@ package me.acristoffers.tracker;
 import android.app.backup.BackupManager;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -290,5 +292,14 @@ class Store extends SQLiteOpenHelper {
     private void scheduleBackup() {
         BackupManager bm = new BackupManager(context);
         bm.dataChanged();
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        if (sharedPref != null) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            if (editor != null) {
+                editor.putBoolean("backup_booked", true);
+                editor.apply();
+            }
+        }
     }
 }

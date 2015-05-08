@@ -87,6 +87,8 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
 
         this.context = context;
 
+        BackupAgent.restoreIfNotBackingUp(context);
+
         ArrayList<Package> packages = Package.allPackages(context);
         for (Package pkg : packages) {
             if (!pkg.isActive()) {

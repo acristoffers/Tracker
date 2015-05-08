@@ -40,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import me.acristoffers.tracker.BackupAgent;
 import me.acristoffers.tracker.Correios;
 import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;

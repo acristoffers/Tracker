@@ -41,6 +41,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 
 import me.acristoffers.tracker.AlarmReceiver;
+import me.acristoffers.tracker.BackupAgent;
 import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;
 import me.acristoffers.tracker.TrackCodeFormattingTextWatcher;
@@ -180,6 +181,8 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
     }
 
     public void checkForUpdates() {
+        BackupAgent.restoreIfNotBackingUp(getActivity());
+
         ArrayList<Package> packages = Package.allPackages(getActivity());
         for (Package pkg : packages) {
             if (!pkg.isActive()) {

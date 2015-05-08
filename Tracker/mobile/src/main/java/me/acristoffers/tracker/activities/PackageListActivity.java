@@ -48,6 +48,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import me.acristoffers.tracker.BackupAgent;
 import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;
 import me.acristoffers.tracker.adapters.PackageListAdapter;
@@ -97,6 +98,8 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                 }
             }
         }
+
+        BackupAgent.restoreIfNotBackingUp(this);
     }
 
     private void updateIsTablet() {

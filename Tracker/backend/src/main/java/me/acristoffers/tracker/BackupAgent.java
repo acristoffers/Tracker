@@ -23,11 +23,31 @@
 package me.acristoffers.tracker;
 
 import android.app.backup.BackupAgentHelper;
+import android.app.backup.BackupDataOutput;
+import android.app.backup.BackupManager;
 import android.app.backup.FileBackupHelper;
+import android.app.backup.RestoreObserver;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.ParcelFileDescriptor;
+import android.preference.PreferenceManager;
 
 import java.io.File;
+import java.io.IOException;
 
 public class BackupAgent extends BackupAgentHelper {
+
+    public static void restoreIfNotBackingUp(Context context) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        if (sharedPref != null) {
+            boolean backupBooked = sharedPref.getBoolean("backup_booked", false);
+            if (!backupBooked) {
+                BackupManager bm = new BackupManager(context);
+                bm.requestRestore(new RestoreObserver() {
+                });
+            }
+        }
+    }
 
     @Override
     public void onCreate() {
@@ -41,4 +61,17 @@ public class BackupAgent extends BackupAgentHelper {
         return path.getParentFile();
     }
 
+    @Override
+    public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data, ParcelFileDescriptor newState) throws IOException {
+        super.onBackup(oldState, data, newState);
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPref != null) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            if (editor != null) {
+                editor.putBoolean("backup_booked", false);
+                editor.apply();
+            }
+        }
+    }
 }
