@@ -62,8 +62,8 @@ import java.util.regex.Pattern;
 
 public class TrackCodeFormattingTextWatcher implements TextWatcher {
 
+    private final WeakReference<EditText> editText;
     private String lastValue;
-    private WeakReference<EditText> editText;
 
     public TrackCodeFormattingTextWatcher(EditText et) {
         editText = new WeakReference<>(et);

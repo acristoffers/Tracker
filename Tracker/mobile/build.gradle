@@ -24,6 +24,7 @@ android {
             shrinkResources true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //noinspection GroovyAssignabilityCheck
             signingConfig signingConfigs.release
         }
     }

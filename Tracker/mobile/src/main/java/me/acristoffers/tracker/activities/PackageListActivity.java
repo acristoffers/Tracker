@@ -58,8 +58,8 @@ import me.acristoffers.tracker.fragments.PackageListFragment;
 
 public class PackageListActivity extends AppCompatActivity implements PackageListAdapter.OnCardViewClickedListener, ActionMode.Callback {
 
+    private static final ArrayList<Package> selection = new ArrayList<>();
     private static boolean isTablet;
-    private static ArrayList<Package> selection = new ArrayList<>();
     private PackageListFragment packageListFragment = null;
     private Package longClickPackage = null;
     private ActionMode actionMode = null;
@@ -214,7 +214,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
     }
 
     @SuppressLint("InflateParams")
-    public void about() {
+    private void about() {
         View about = View.inflate(this, R.layout.about, null);
 
         PackageManager manager = getPackageManager();

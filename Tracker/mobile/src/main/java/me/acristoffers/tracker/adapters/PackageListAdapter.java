@@ -38,18 +38,20 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import me.acristoffers.tracker.BackupAgent;
 import me.acristoffers.tracker.Correios;
 import me.acristoffers.tracker.Package;
 import me.acristoffers.tracker.R;
 
 public class PackageListAdapter extends RecyclerView.Adapter implements Package.StatusReady {
 
+    private static final ArrayList<Package> selection = new ArrayList<>();
     public static boolean isSelecting = false;
     private static boolean showInactive = false;
-    private static ArrayList<Package> selection = new ArrayList<>();
+    private final ArrayList<Package> packages = new ArrayList<>();
     private Activity context = null;
-    private ArrayList<Package> packages = new ArrayList<>();
     private LayoutInflater layoutInflater = null;
     private OnCardViewClickedListener listener = null;
 
@@ -57,6 +59,8 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
         this.context = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         filterPackages();
+
+
     }
 
     @Override
@@ -237,9 +241,10 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
                 continue;
             }
 
-            String queryUpperCase = query.toUpperCase();
-            String pkgNameUpperCase = pkg.getName().toUpperCase();
-            String pkgCodeUpperCase = pkg.getCod().toUpperCase();
+            Locale locale = Locale.getDefault();
+            String queryUpperCase = query.toUpperCase(locale);
+            String pkgNameUpperCase = pkg.getName().toUpperCase(locale);
+            String pkgCodeUpperCase = pkg.getCod().toUpperCase(locale);
             if (!pkgNameUpperCase.contains(queryUpperCase) && !pkgCodeUpperCase.contains(queryUpperCase)) {
                 continue;
             }
@@ -262,9 +267,9 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView name, code, title, date, local;
-        private View layout;
-        private View inactiveIcon;
+        private final TextView name, code, title, date, local;
+        private final View layout;
+        private final View inactiveIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);

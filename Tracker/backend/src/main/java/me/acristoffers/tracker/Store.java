@@ -33,25 +33,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Store extends SQLiteOpenHelper {
+class Store extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "packageTracker";
     public static final String KEY_ID = "id";
     public static final String KEY_NAME = "name";
-    public static final String KEY_COD = "cod";
     public static final String KEY_ACTIVE = "active";
     public static final String KEY_TIME_CREATED = "creation_time";
     public static final String KEY_TIME_UPDATED = "update_time";
-    public static final String KEY_DATE = "date";
-    public static final String KEY_TITLE = "title";
-    public static final String KEY_DESCRIPTION = "description";
-    public static final String KEY_LOCAL = "local";
-    public static final String KEY_PACKAGE = "package";
-    public static final String KEY_STEPS = "steps";
+    private static final String KEY_COD = "cod";
+    private static final String KEY_DATE = "date";
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_DESCRIPTION = "description";
+    private static final String KEY_LOCAL = "local";
+    private static final String KEY_PACKAGE = "package";
     private static final int DATABASE_VERSION = 2;
     private static final String TABLE_PACKAGES = "packages";
     private static final String TABLE_STEPS = "steps";
-    private Context context;
+    private final Context context;
 
     public Store(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -239,7 +238,7 @@ public class Store extends SQLiteOpenHelper {
         }
     }
 
-    public synchronized void insertPackage(Package pkg) {
+    private synchronized void insertPackage(Package pkg) {
         ArrayList<Correios.Step> steps = pkg.getSteps();
         SQLiteDatabase db = this.getWritableDatabase();
 

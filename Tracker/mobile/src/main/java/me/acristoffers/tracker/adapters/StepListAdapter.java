@@ -68,8 +68,8 @@ public class StepListAdapter extends RecyclerView.Adapter {
         final Correios.Step step = steps.get(steps.size() - position - 1);
 
         String title;
-        String date = "";
-        String local = "";
+        String date;
+        String local;
 
         DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
         title = step.title;
@@ -97,14 +97,16 @@ public class StepListAdapter extends RecyclerView.Adapter {
         return steps.size();
     }
 
-    public void updateSteps() {
+    private void updateSteps() {
         pkg = new Package(pkg.getCod(), context);
         steps = pkg.getSteps();
         notifyDataSetChanged();
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView title, date, local;
+        private final TextView title;
+        private final TextView date;
+        private final TextView local;
 
         public ViewHolder(View itemView) {
             super(itemView);

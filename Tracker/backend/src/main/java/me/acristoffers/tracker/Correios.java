@@ -42,7 +42,7 @@ import java.util.TimeZone;
 public class Correios {
 
     private final ArrayList<Step> steps = new ArrayList<>();
-    private String pack;
+    private final String pack;
     private SyncDone listener = null;
     private Thread thread = null;
 
