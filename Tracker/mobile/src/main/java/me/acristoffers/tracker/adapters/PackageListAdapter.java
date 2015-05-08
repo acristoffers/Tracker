@@ -47,11 +47,11 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
 
     public static boolean isSelecting = false;
     private static boolean showInactive = false;
+    private static ArrayList<Package> selection = new ArrayList<>();
     private Activity context = null;
     private ArrayList<Package> packages = new ArrayList<>();
     private LayoutInflater layoutInflater = null;
     private OnCardViewClickedListener listener = null;
-    private ArrayList<Package> selection = new ArrayList<>();
 
     public PackageListAdapter(Activity context) {
         this.context = context;

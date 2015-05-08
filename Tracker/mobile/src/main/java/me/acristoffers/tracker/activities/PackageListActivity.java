@@ -59,9 +59,9 @@ import me.acristoffers.tracker.fragments.PackageListFragment;
 public class PackageListActivity extends AppCompatActivity implements PackageListAdapter.OnCardViewClickedListener, ActionMode.Callback {
 
     private static boolean isTablet;
+    private static ArrayList<Package> selection = new ArrayList<>();
     private PackageListFragment packageListFragment = null;
     private Package longClickPackage = null;
-    private ArrayList<Package> selection = new ArrayList<>();
     private ActionMode actionMode = null;
 
     public static boolean isTablet() {
@@ -164,18 +164,22 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
     protected void onRestart() {
         super.onRestart();
         updateIsTablet();
-        selection.clear();
-        PackageListAdapter.isSelecting = false;
         packageListFragment.reloadData();
+
+        if (PackageListAdapter.isSelecting) {
+            startActionMode(this);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         updateIsTablet();
-        selection.clear();
-        PackageListAdapter.isSelecting = false;
         packageListFragment.reloadData();
+
+        if (PackageListAdapter.isSelecting) {
+            startActionMode(this);
+        }
     }
 
     @Override
