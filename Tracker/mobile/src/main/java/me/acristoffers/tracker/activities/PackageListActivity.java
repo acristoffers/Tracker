@@ -111,7 +111,14 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_package_list, menu);
 
-        MenuItem item = menu.findItem(R.id.search);
+        MenuItem item = menu.findItem(R.id.toggle_inactive);
+
+        boolean showInactive = packageListFragment.isShowInactive();
+
+        item.setTitle(showInactive ? R.string.hide_inactive : R.string.show_inactive);
+        item.setIcon(showInactive ? R.drawable.ic_visibility_off_black_48dp : R.drawable.ic_visibility_black_48dp);
+
+        item = menu.findItem(R.id.search);
         if (item != null) {
             SearchView searchView = (SearchView) item.getActionView();
             if (searchView != null) {

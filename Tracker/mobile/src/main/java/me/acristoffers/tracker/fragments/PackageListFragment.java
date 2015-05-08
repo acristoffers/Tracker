@@ -209,6 +209,11 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
         swipeRefreshLayout.setRefreshing(updating > 0);
     }
 
+    public boolean isShowInactive() {
+        PackageListAdapter recyclerViewAdapter = (PackageListAdapter) recyclerView.getAdapter();
+        return recyclerViewAdapter.getShowInactive();
+    }
+
     public boolean toggleShowInactive() {
         PackageListAdapter recyclerViewAdapter = (PackageListAdapter) recyclerView.getAdapter();
         recyclerViewAdapter.setShowInactive(!recyclerViewAdapter.getShowInactive());
