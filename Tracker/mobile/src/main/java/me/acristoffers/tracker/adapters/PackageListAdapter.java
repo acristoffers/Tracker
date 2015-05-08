@@ -222,6 +222,35 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
         notifyDataSetChanged();
     }
 
+    public void filterPackages(String query) {
+        if (query == null) {
+            filterPackages();
+            return;
+        }
+
+        packages.clear();
+
+        List<Package> allPackages = Package.allPackages(context);
+        for (Package pkg : allPackages) {
+            if (pkg.getName().isEmpty()) {
+                pkg.remove();
+                continue;
+            }
+
+            String queryUpperCase = query.toUpperCase();
+            String pkgNameUpperCase = pkg.getName().toUpperCase();
+            String pkgCodeUpperCase = pkg.getCod().toUpperCase();
+            if (!pkgNameUpperCase.contains(queryUpperCase) && !pkgCodeUpperCase.contains(queryUpperCase)) {
+                continue;
+            }
+
+            pkg.setListener(this);
+            packages.add(pkg);
+        }
+
+        notifyDataSetChanged();
+    }
+
     public void setListener(OnCardViewClickedListener listener) {
         this.listener = listener;
     }

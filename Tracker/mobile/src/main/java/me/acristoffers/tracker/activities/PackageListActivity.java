@@ -36,6 +36,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.text.method.LinkMovementMethod;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -106,7 +108,56 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_package_list, menu);
 
+        MenuItem item = menu.findItem(R.id.search);
+        if (item != null) {
+            SearchView searchView = (SearchView) item.getActionView();
+            if (searchView != null) {
+                searchView.setQueryHint(getResources().getString(R.string.filter));
+
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        filter(query);
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        // Workaround this:
+                        // http://stackoverflow.com/questions/9327826/searchviews-oncloselistener-doesnt-work/12975254#12975254
+                        if (newText.isEmpty()) {
+                            newText = null;
+                        }
+
+                        filter(newText);
+                        return true;
+                    }
+                });
+
+                searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+                    @Override
+                    public boolean onClose() {
+                        filter(null);
+                        return true;
+                    }
+                });
+            }
+        }
+
         return true;
+    }
+
+    private void filter(String query) {
+        View view = packageListFragment.getView();
+        if (view != null) {
+            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+            if (recyclerView != null) {
+                PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
+                if (adapter != null) {
+                    adapter.filterPackages(query);
+                }
+            }
+        }
     }
 
     @Override

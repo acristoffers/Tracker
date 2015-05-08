@@ -47,4 +47,6 @@
     <string name="set_active">Set active</string>
     <string name="set_inactive">Set inactive</string>
 
+    <string name="filter">Filter</string>
+
 </resources>
