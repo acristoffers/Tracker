@@ -83,8 +83,26 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         if (sharedPref != null) {
-            boolean canRate = sharedPref.getBoolean("can_rate", true);
-            if (canRate) {
+            final boolean canRate = sharedPref.getBoolean("can_rate", true);
+            boolean didRate = false;
+
+            try {
+                didRate = sharedPref.getInt("did_rate", 0) > 0;
+                if (!didRate) {
+                    try {
+                        PackageManager packageManager = getPackageManager();
+                        String packageName = getPackageName();
+                        PackageInfo info = packageManager.getPackageInfo(packageName, 0);
+                        didRate = sharedPref.getInt("do_not_rate", 0) >= info.versionCode;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (canRate || !didRate) {
                 int times = sharedPref.getInt("rate_times", 0) + 1;
 
                 if (times > 5) {
@@ -484,6 +502,16 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                     SharedPreferences.Editor editor = sharedPref.edit();
                     if (editor != null) {
                         editor.putBoolean("can_rate", false);
+
+                        try {
+                            PackageManager manager = getPackageManager();
+                            String packageName = getPackageName();
+                            PackageInfo info = manager.getPackageInfo(packageName, 0);
+                            editor.putInt("did_rate", info.versionCode);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                         editor.apply();
                     }
                 }
@@ -510,6 +538,16 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                     SharedPreferences.Editor editor = sharedPref.edit();
                     if (editor != null) {
                         editor.putBoolean("can_rate", false);
+
+                        try {
+                            PackageManager manager = getPackageManager();
+                            String packageName = getPackageName();
+                            PackageInfo info = manager.getPackageInfo(packageName, 0);
+                            editor.putInt("do_not_rate", info.versionCode);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                         editor.apply();
                     }
                 }
