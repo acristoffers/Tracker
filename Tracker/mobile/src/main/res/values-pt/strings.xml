@@ -23,7 +23,6 @@
     <string name="sync_group">Sincronizar</string>
     <string name="sync_interval">Intervalo de sincronia</string>
     <string name="title_activity_preferences">Preferencias</string>
-    <string name="toggle_active">Ativar/Desativar</string>
     <string name="yes">Sim</string>
     <string name="search_for_package">Procurar por pacote</string>
     <string name="cancel">Cancelar</string>
