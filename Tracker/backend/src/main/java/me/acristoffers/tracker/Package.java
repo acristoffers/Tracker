@@ -108,7 +108,7 @@ public class Package implements Correios.SyncDone {
         final Correios correios = new Correios(code, this);
 
         final ArrayList<Correios.Step> steps = correios.getSteps();
-        if (success && steps != null) {
+        if (success && steps != null && !steps.isEmpty()) {
             this.steps = steps;
         }
 
