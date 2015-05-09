@@ -34,10 +34,10 @@ public class Package implements Correios.SyncDone {
     private final WeakReference<Context> context;
     private final WeakReference<StatusReady> listener;
     private final String code;
+    private final ArrayList<Correios.Step> steps = new ArrayList<>();
     private int id = -1;
     private String name = "";
     private boolean active = false;
-    private ArrayList<Correios.Step> steps;
     private Date timeCreated = new Date();
     private Date timeUpdated = new Date();
 
@@ -47,7 +47,8 @@ public class Package implements Correios.SyncDone {
         this.code = cod;
 
         final Store store = new Store(context);
-        steps = store.getSteps(cod);
+        steps.clear();
+        steps.addAll(store.getSteps(cod));
 
         final HashMap<String, Object> pkg = store.getPackage(cod);
 
@@ -104,12 +105,11 @@ public class Package implements Correios.SyncDone {
     }
 
     @Override
-    public void finishedSyncing(final boolean success) {
-        final Correios correios = new Correios(code, this);
-
+    public void finishedSyncing(final boolean success, final Correios correios) {
         final ArrayList<Correios.Step> steps = correios.getSteps();
         if (success && steps != null && !steps.isEmpty()) {
-            this.steps = steps;
+            this.steps.clear();
+            this.steps.addAll(steps);
         }
 
         if (listener.get() != null) {

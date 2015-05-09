@@ -171,7 +171,7 @@ public class Correios {
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.finishedSyncing(b);
+                    listener.finishedSyncing(b, Correios.this);
                 }
             }
         };
@@ -187,7 +187,7 @@ public class Correios {
     }
 
     public interface SyncDone {
-        void finishedSyncing(final boolean success);
+        void finishedSyncing(final boolean success, Correios correios);
     }
 
     public static class Step {
