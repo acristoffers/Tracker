@@ -272,6 +272,15 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                 dialogInterface.dismiss();
             }
         });
+        builder.setNeutralButton(R.string.rate_now, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                final String packageName = getPackageName();
+                final Uri uri = Uri.parse("market://details?id=" + packageName);
+                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                dialogInterface.dismiss();
+            }
+        });
 
         final AlertDialog aboutDialog = builder.create();
         aboutDialog.show();
