@@ -110,7 +110,7 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
 
         if (countSteps.get(code) < count) {
             pkg.save();
-            
+
             final NotificationManager notificationManager = (NotificationManager) context.get().getSystemService(Context.NOTIFICATION_SERVICE);
             if (notificationManager != null) {
                 final String title = context.get().getString(R.string.notification_package_updated_title, pkg.getName());

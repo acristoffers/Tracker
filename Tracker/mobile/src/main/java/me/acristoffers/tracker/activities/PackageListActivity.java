@@ -83,37 +83,30 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
 
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         if (sharedPref != null) {
-            final boolean canRate = sharedPref.getBoolean("can_rate", true);
-            boolean didRate = false;
+            int versionCode = 0;
 
             try {
-                didRate = sharedPref.getInt("did_rate", 0) > 0;
-                if (!didRate) {
-                    try {
-                        PackageManager packageManager = getPackageManager();
-                        String packageName = getPackageName();
-                        PackageInfo info = packageManager.getPackageInfo(packageName, 0);
-                        didRate = sharedPref.getInt("do_not_rate", 0) >= info.versionCode;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+                PackageManager packageManager = getPackageManager();
+                String packageName = getPackageName();
+                PackageInfo info = packageManager.getPackageInfo(packageName, 0);
+                versionCode = info.versionCode;
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            if (canRate || !didRate) {
-                final int times = sharedPref.getInt("rate_times", 0) + 1;
+            final boolean canRate = sharedPref.getBoolean("can_rate", true);
+            final boolean didRate = sharedPref.getInt("did_rate", 0) > 0;
+            final boolean appUpdated = sharedPref.getInt("do_not_rate", 0) < versionCode;
+            final int times = sharedPref.getInt("rate_times", 0) + 1;
 
-                if (times > 5) {
-                    showRateDialog();
-                }
+            final SharedPreferences.Editor editor = sharedPref.edit();
+            if (editor != null) {
+                editor.putInt("rate_times", times);
+                editor.apply();
+            }
 
-                final SharedPreferences.Editor editor = sharedPref.edit();
-                if (editor != null) {
-                    editor.putInt("rate_times", times);
-                    editor.apply();
-                }
+            if (!didRate && (times > 5) && (canRate || appUpdated)) {
+                showRateDialog();
             }
         }
 
@@ -544,6 +537,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                             final String packageName = getPackageName();
                             final PackageInfo info = manager.getPackageInfo(packageName, 0);
                             editor.putInt("do_not_rate", info.versionCode);
+                            editor.putInt("rate_times", 0);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
