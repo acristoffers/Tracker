@@ -31,6 +31,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -52,19 +53,19 @@ class Store extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 2;
     private static final String TABLE_PACKAGES = "packages";
     private static final String TABLE_STEPS = "steps";
-    private final Context context;
+    private final WeakReference<Context> context;
 
-    public Store(Context context) {
+    public Store(final Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context = context;
+        this.context = new WeakReference<>(context);
     }
 
     public synchronized ArrayList<String> allCodes() {
-        ArrayList<String> codes = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
+        final ArrayList<String> codes = new ArrayList<>();
+        final SQLiteDatabase db = this.getReadableDatabase();
 
         if (db != null) {
-            Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_COD}, null, null, null, null, null, null);
+            final Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_COD}, null, null, null, null, null, null);
 
             while (cursor.moveToNext()) {
                 codes.add(cursor.getString(cursor.getColumnIndex(KEY_COD)));
@@ -78,7 +79,7 @@ class Store extends SQLiteOpenHelper {
     }
 
     @Override
-    public synchronized void onCreate(SQLiteDatabase db) {
+    public synchronized void onCreate(final SQLiteDatabase db) {
         final String CREATE_PACKAGES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_PACKAGES + "("
                 + KEY_ID + " INTEGER PRIMARY KEY,"
                 + KEY_NAME + " TEXT,"
@@ -99,27 +100,26 @@ class Store extends SQLiteOpenHelper {
     }
 
     @Override
-    public synchronized void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sql;
-        ContentValues values;
+    public synchronized void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
+        final ContentValues values;
 
         switch (oldVersion) {
             case 1:
-                sql = "ALTER TABLE " + TABLE_PACKAGES + " ADD COLUMN " + KEY_TIME_CREATED + " INT";
-                db.execSQL(sql);
-                sql = "ALTER TABLE " + TABLE_PACKAGES + " ADD COLUMN " + KEY_TIME_UPDATED + " INT";
-                db.execSQL(sql);
+                db.execSQL("ALTER TABLE " + TABLE_PACKAGES + " ADD COLUMN " + KEY_TIME_CREATED + " INT");
+                db.execSQL("ALTER TABLE " + TABLE_PACKAGES + " ADD COLUMN " + KEY_TIME_UPDATED + " INT");
+
                 values = new ContentValues();
                 values.put(KEY_TIME_CREATED, new Date().getTime());
                 values.put(KEY_TIME_UPDATED, new Date().getTime());
+
                 db.update(TABLE_PACKAGES, values, null, null);
         }
     }
 
-    public synchronized HashMap<String, Object> getPackage(String cod) {
-        HashMap<String, Object> pkg = new HashMap<>();
+    public synchronized HashMap<String, Object> getPackage(final String cod) {
+        final HashMap<String, Object> pkg = new HashMap<>();
 
-        SQLiteDatabase db = this.getReadableDatabase();
+        final SQLiteDatabase db = this.getReadableDatabase();
         if (db != null) {
             int id = -1;
             String name = "";
@@ -169,15 +169,15 @@ class Store extends SQLiteOpenHelper {
         return pkg;
     }
 
-    public synchronized ArrayList<Correios.Step> getSteps(String cod) {
-        ArrayList<Correios.Step> steps = new ArrayList<>();
+    public synchronized ArrayList<Correios.Step> getSteps(final String cod) {
+        final ArrayList<Correios.Step> steps = new ArrayList<>();
 
-        SQLiteDatabase db = this.getReadableDatabase();
+        final SQLiteDatabase db = this.getReadableDatabase();
         if (db != null) {
-            Cursor cursor = db.query(TABLE_STEPS, new String[]{KEY_DATE, KEY_TITLE, KEY_DESCRIPTION, KEY_LOCAL}, KEY_PACKAGE + "=?", new String[]{cod}, null, null, null, null);
+            final Cursor cursor = db.query(TABLE_STEPS, new String[]{KEY_DATE, KEY_TITLE, KEY_DESCRIPTION, KEY_LOCAL}, KEY_PACKAGE + "=?", new String[]{cod}, null, null, null, null);
             if (cursor.moveToFirst()) {
                 do {
-                    Correios.Step step = new Correios.Step();
+                    final Correios.Step step = new Correios.Step();
 
                     step.title = cursor.getString(cursor.getColumnIndex(KEY_TITLE));
                     step.description = cursor.getString(cursor.getColumnIndex(KEY_DESCRIPTION));
@@ -195,15 +195,14 @@ class Store extends SQLiteOpenHelper {
         return steps;
     }
 
-    public synchronized void updatePackage(Package pkg) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
+    public synchronized void updatePackage(final Package pkg) {
         if (pkg.getName().isEmpty() || pkg.getCod().isEmpty()) {
             return;
         }
 
+        final SQLiteDatabase db = this.getWritableDatabase();
         if (db != null) {
-            Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_ID}, KEY_COD + "=?", new String[]{pkg.getCod()}, null, null, null, null);
+            final Cursor cursor = db.query(TABLE_PACKAGES, new String[]{KEY_ID}, KEY_COD + "=?", new String[]{pkg.getCod()}, null, null, null, null);
             if (cursor.getCount() == 0) {
                 cursor.close();
                 db.close();
@@ -212,7 +211,7 @@ class Store extends SQLiteOpenHelper {
             }
             cursor.close();
 
-            String cod = pkg.getCod();
+            final String cod = pkg.getCod();
             ContentValues values = new ContentValues();
             values.put(KEY_NAME, pkg.getName());
             values.put(KEY_ACTIVE, pkg.isActive());
@@ -221,8 +220,8 @@ class Store extends SQLiteOpenHelper {
             db.update(TABLE_PACKAGES, values, KEY_COD + "=?", new String[]{cod});
             db.delete(TABLE_STEPS, KEY_PACKAGE + "=?", new String[]{cod});
 
-            ArrayList<Correios.Step> steps = pkg.getSteps();
-            for (Correios.Step step : steps) {
+            final ArrayList<Correios.Step> steps = pkg.getSteps();
+            for (final Correios.Step step : steps) {
                 values = new ContentValues();
 
                 values.put(KEY_TITLE, step.title);
@@ -240,9 +239,9 @@ class Store extends SQLiteOpenHelper {
         }
     }
 
-    private synchronized void insertPackage(Package pkg) {
-        ArrayList<Correios.Step> steps = pkg.getSteps();
-        SQLiteDatabase db = this.getWritableDatabase();
+    private synchronized void insertPackage(final Package pkg) {
+        final ArrayList<Correios.Step> steps = pkg.getSteps();
+        final SQLiteDatabase db = this.getWritableDatabase();
 
         if (db != null) {
             ContentValues values = new ContentValues();
@@ -255,7 +254,7 @@ class Store extends SQLiteOpenHelper {
 
             db.insert(TABLE_PACKAGES, null, values);
 
-            for (Correios.Step step : steps) {
+            for (final Correios.Step step : steps) {
                 values = new ContentValues();
 
                 values.put(KEY_TITLE, step.title);
@@ -275,11 +274,11 @@ class Store extends SQLiteOpenHelper {
         }
     }
 
-    public synchronized void removePackage(Package pkg) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    public synchronized void removePackage(final Package pkg) {
+        final SQLiteDatabase db = this.getWritableDatabase();
 
         if (db != null) {
-            String cod = pkg.getCod();
+            final String cod = pkg.getCod();
 
             db.delete(TABLE_STEPS, KEY_PACKAGE + "=?", new String[]{cod});
             db.delete(TABLE_PACKAGES, KEY_COD + "=?", new String[]{cod});
@@ -290,12 +289,12 @@ class Store extends SQLiteOpenHelper {
     }
 
     private void scheduleBackup() {
-        BackupManager bm = new BackupManager(context);
+        final BackupManager bm = new BackupManager(context.get());
         bm.dataChanged();
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context.get());
         if (sharedPref != null) {
-            SharedPreferences.Editor editor = sharedPref.edit();
+            final SharedPreferences.Editor editor = sharedPref.edit();
             if (editor != null) {
                 editor.putBoolean("backup_booked", true);
                 editor.apply();

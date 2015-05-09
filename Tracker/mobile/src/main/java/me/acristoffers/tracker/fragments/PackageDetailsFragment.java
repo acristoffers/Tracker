@@ -55,7 +55,6 @@ import me.acristoffers.tracker.adapters.StepListAdapter;
 public class PackageDetailsFragment extends Fragment {
 
     private Package pkg = null;
-    private Activity activity;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -81,8 +80,8 @@ public class PackageDetailsFragment extends Fragment {
     }
 
     private void setupUI() {
-        activity = getActivity();
-        View view = getView();
+        final Activity activity = getActivity();
+        final View view = getView();
 
         if (activity == null || view == null) {
             return;
@@ -90,13 +89,13 @@ public class PackageDetailsFragment extends Fragment {
 
         String code = null;
 
-        Bundle arguments = getArguments();
+        final Bundle arguments = getArguments();
         if (arguments != null) {
             code = arguments.getString(PackageDetailsActivity.PACKAGE_CODE);
         }
 
         if (code == null || code.isEmpty()) {
-            Intent intent = activity.getIntent();
+            final Intent intent = activity.getIntent();
             if (intent != null) {
                 code = intent.getStringExtra(PackageDetailsActivity.PACKAGE_CODE);
             }
@@ -106,14 +105,14 @@ public class PackageDetailsFragment extends Fragment {
             return;
         }
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.steps);
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.steps);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);
+        final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
 
-        pkg = new Package(code, activity);
+        pkg = new Package(code, getActivity(), null);
 
-        StepListAdapter stepListAdapter = new StepListAdapter(pkg, activity);
+        final StepListAdapter stepListAdapter = new StepListAdapter(pkg, activity);
         recyclerView.setAdapter(stepListAdapter);
 
         TextView textView = (TextView) view.findViewById(R.id.name);
@@ -124,14 +123,14 @@ public class PackageDetailsFragment extends Fragment {
         textView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+                final ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
                 if (clipboardManager != null) {
-                    String code = pkg.getCod();
+                    final String code = pkg.getCod();
 
-                    ClipData clipData = ClipData.newPlainText(code, code);
+                    final ClipData clipData = ClipData.newPlainText(code, code);
                     clipboardManager.setPrimaryClip(clipData);
 
-                    Toast toast = Toast.makeText(activity, R.string.code_copied, Toast.LENGTH_SHORT);
+                    final Toast toast = Toast.makeText(activity, R.string.code_copied, Toast.LENGTH_SHORT);
                     toast.show();
 
                     return true;
@@ -146,7 +145,7 @@ public class PackageDetailsFragment extends Fragment {
             textView.setVisibility(View.INVISIBLE);
         }
 
-        NotificationManager nm = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager nm = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancel(pkg.getId());
     }
 
@@ -157,25 +156,25 @@ public class PackageDetailsFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         inflater.inflate(R.menu.menu_package_view, menu);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        final int id = item.getItemId();
 
         switch (id) {
             case R.id.remove:
-                String body = getString(R.string.confirm_delete, pkg.getName());
+                final String body = getString(R.string.confirm_delete, pkg.getName());
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle(R.string.are_you_sure);
                 builder.setMessage(body);
 
@@ -185,15 +184,15 @@ public class PackageDetailsFragment extends Fragment {
                         pkg.remove();
 
                         if (PackageListActivity.isTablet()) {
-                            PackageListActivity listActivity = (PackageListActivity) activity;
-                            FragmentManager fragmentManager = listActivity.getSupportFragmentManager();
+                            final PackageListActivity listActivity = (PackageListActivity) getActivity();
+                            final FragmentManager fragmentManager = listActivity.getSupportFragmentManager();
                             if (fragmentManager != null) {
-                                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                                final FragmentTransaction transaction = fragmentManager.beginTransaction();
                                 transaction.replace(R.id.package_details, new BlankFragment());
                                 transaction.commit();
                             }
                         } else {
-                            activity.finish();
+                            getActivity().finish();
                         }
 
                         dialogInterface.dismiss();
@@ -207,27 +206,27 @@ public class PackageDetailsFragment extends Fragment {
                     }
                 });
 
-                AlertDialog dialog = builder.create();
+                final AlertDialog dialog = builder.create();
                 dialog.show();
                 return true;
 
             case R.id.edit:
                 if (PackageListActivity.isTablet()) {
-                    Bundle args = new Bundle();
+                    final Bundle args = new Bundle();
                     args.putString(PackageDetailsActivity.PACKAGE_CODE, pkg.getCod());
 
-                    PackageEditFragment fragment = new PackageEditFragment();
+                    final PackageEditFragment fragment = new PackageEditFragment();
                     fragment.setArguments(args);
 
-                    PackageListActivity listActivity = (PackageListActivity) activity;
-                    FragmentManager supportFragmentManager = listActivity.getSupportFragmentManager();
+                    final PackageListActivity listActivity = (PackageListActivity) getActivity();
+                    final FragmentManager supportFragmentManager = listActivity.getSupportFragmentManager();
                     if (supportFragmentManager != null) {
-                        FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+                        final FragmentTransaction transaction = supportFragmentManager.beginTransaction();
                         transaction.replace(R.id.package_details, fragment);
                         transaction.commit();
                     }
                 } else {
-                    Intent intent = new Intent(activity, PackageEditActivity.class);
+                    final Intent intent = new Intent(getActivity(), PackageEditActivity.class);
                     intent.putExtra(PackageDetailsActivity.PACKAGE_CODE, pkg.getCod());
                     startActivity(intent);
                 }

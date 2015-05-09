@@ -70,18 +70,18 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_package_list);
 
-        FragmentManager manager = getSupportFragmentManager();
+        final FragmentManager manager = getSupportFragmentManager();
         if (manager != null) {
             packageListFragment = (PackageListFragment) manager.findFragmentById(R.id.package_list);
         }
 
         updateIsTablet();
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         if (sharedPref != null) {
             final boolean canRate = sharedPref.getBoolean("can_rate", true);
             boolean didRate = false;
@@ -103,13 +103,13 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
             }
 
             if (canRate || !didRate) {
-                int times = sharedPref.getInt("rate_times", 0) + 1;
+                final int times = sharedPref.getInt("rate_times", 0) + 1;
 
                 if (times > 5) {
                     showRateDialog();
                 }
 
-                SharedPreferences.Editor editor = sharedPref.edit();
+                final SharedPreferences.Editor editor = sharedPref.edit();
                 if (editor != null) {
                     editor.putInt("rate_times", times);
                     editor.apply();
@@ -125,39 +125,40 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_package_list, menu);
 
         MenuItem item = menu.findItem(R.id.toggle_inactive);
 
-        boolean showInactive = packageListFragment.isShowInactive();
+        final boolean showInactive = packageListFragment.isShowInactive();
 
         item.setTitle(showInactive ? R.string.hide_inactive : R.string.show_inactive);
         item.setIcon(showInactive ? R.drawable.ic_visibility_off_black_48dp : R.drawable.ic_visibility_black_48dp);
 
         item = menu.findItem(R.id.search);
         if (item != null) {
-            SearchView searchView = (SearchView) item.getActionView();
+            final SearchView searchView = (SearchView) item.getActionView();
             if (searchView != null) {
                 searchView.setQueryHint(getResources().getString(R.string.filter));
 
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
-                    public boolean onQueryTextSubmit(String query) {
+                    public boolean onQueryTextSubmit(final String query) {
                         filter(query);
                         return true;
                     }
 
                     @Override
-                    public boolean onQueryTextChange(String newText) {
+                    public boolean onQueryTextChange(final String newText) {
                         // Workaround this:
                         // http://stackoverflow.com/questions/9327826/searchviews-oncloselistener-doesnt-work/12975254#12975254
                         if (newText.isEmpty()) {
-                            newText = null;
+                            filter(null);
+                        } else {
+                            filter(newText);
                         }
 
-                        filter(newText);
                         return true;
                     }
                 });
@@ -175,12 +176,12 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
         return true;
     }
 
-    private void filter(String query) {
-        View view = packageListFragment.getView();
+    private void filter(final String query) {
+        final View view = packageListFragment.getView();
         if (view != null) {
-            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+            final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
             if (recyclerView != null) {
-                PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
+                final PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
                 if (adapter != null) {
                     adapter.filterPackages(query);
                 }
@@ -212,7 +213,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        final int id = item.getItemId();
 
         switch (id) {
             case R.id.check_for_updates:
@@ -220,7 +221,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                 return true;
 
             case R.id.toggle_inactive:
-                boolean showInactive = packageListFragment.toggleShowInactive();
+                final boolean showInactive = packageListFragment.toggleShowInactive();
 
                 item.setTitle(showInactive ? R.string.hide_inactive : R.string.show_inactive);
                 item.setIcon(showInactive ? R.drawable.ic_visibility_off_black_48dp : R.drawable.ic_visibility_black_48dp);
@@ -232,7 +233,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                 return true;
 
             case R.id.settings:
-                Intent intent = new Intent(this, PreferencesActivity.class);
+                final Intent intent = new Intent(this, PreferencesActivity.class);
                 startActivity(intent);
                 return true;
 
@@ -243,10 +244,10 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
 
     @SuppressLint("InflateParams")
     private void about() {
-        View about = View.inflate(this, R.layout.about, null);
+        final View about = View.inflate(this, R.layout.about, null);
 
-        PackageManager manager = getPackageManager();
-        String packageName = getPackageName();
+        final PackageManager manager = getPackageManager();
+        final String packageName = getPackageName();
         int versionCode = 0;
         String versionName = "";
 
@@ -258,18 +259,18 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
             e.printStackTrace();
         }
 
-        TextView version = (TextView) about.findViewById(R.id.version);
+        final TextView version = (TextView) about.findViewById(R.id.version);
         if (version != null) {
-            String versionText = getString(R.string.version, versionName, versionCode);
+            final String versionText = getString(R.string.version, versionName, versionCode);
             version.setText(versionText);
         }
 
-        TextView issues = (TextView) about.findViewById(R.id.issues);
+        final TextView issues = (TextView) about.findViewById(R.id.issues);
         if (issues != null) {
             issues.setMovementMethod(LinkMovementMethod.getInstance());
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.app_name);
         builder.setView(about);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -279,16 +280,16 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
             }
         });
 
-        AlertDialog aboutDialog = builder.create();
+        final AlertDialog aboutDialog = builder.create();
         aboutDialog.show();
     }
 
     @Override
-    public void onCardViewClicked(me.acristoffers.tracker.Package pkg) {
+    public void onCardViewClicked(final me.acristoffers.tracker.Package pkg) {
         if (PackageListAdapter.isSelecting) {
             if (selection.contains(pkg)) {
-                ArrayList<Package> removeList = new ArrayList<>();
-                for (Package p : selection) {
+                final ArrayList<Package> removeList = new ArrayList<>();
+                for (final Package p : selection) {
                     if (p.equals(pkg)) {
                         removeList.add(p);
                     }
@@ -299,9 +300,9 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
             }
 
             if (actionMode != null) {
-                Menu menu = actionMode.getMenu();
+                final Menu menu = actionMode.getMenu();
                 if (menu != null) {
-                    MenuItem menuItem = menu.findItem(R.id.edit);
+                    final MenuItem menuItem = menu.findItem(R.id.edit);
                     if (menuItem != null) {
                         menuItem.setVisible(selection.size() == 1);
                     }
@@ -313,15 +314,15 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
             }
         } else {
             if (isTablet) {
-                Bundle args = new Bundle();
+                final Bundle args = new Bundle();
                 args.putString(PackageDetailsActivity.PACKAGE_CODE, pkg.getCod());
 
-                PackageDetailsFragment fragment = new PackageDetailsFragment();
+                final PackageDetailsFragment fragment = new PackageDetailsFragment();
                 fragment.setArguments(args);
 
-                FragmentManager supportFragmentManager = getSupportFragmentManager();
+                final FragmentManager supportFragmentManager = getSupportFragmentManager();
                 if (supportFragmentManager != null) {
-                    FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+                    final FragmentTransaction transaction = supportFragmentManager.beginTransaction();
                     transaction.replace(R.id.package_details, fragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
@@ -329,7 +330,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
 
                 packageListFragment.reloadData();
             } else {
-                Intent intent = new Intent(this, PackageDetailsActivity.class);
+                final Intent intent = new Intent(this, PackageDetailsActivity.class);
                 intent.putExtra(PackageDetailsActivity.PACKAGE_CODE, pkg.getCod());
                 startActivity(intent);
             }
@@ -337,7 +338,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
     }
 
     @Override
-    public void onCardViewLongClicked(me.acristoffers.tracker.Package pkg) {
+    public void onCardViewLongClicked(final me.acristoffers.tracker.Package pkg) {
         if (longClickPackage == null) {
             longClickPackage = pkg;
             selection.add(pkg);
@@ -346,18 +347,18 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
     }
 
     @Override
-    public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-        MenuInflater inflater = actionMode.getMenuInflater();
+    public boolean onCreateActionMode(final ActionMode actionMode, final Menu menu) {
+        final MenuInflater inflater = actionMode.getMenuInflater();
         inflater.inflate(R.menu.menu_package_long_click, menu);
 
         this.actionMode = actionMode;
 
-        ActionBar supportActionBar = getSupportActionBar();
+        final ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             supportActionBar.hide();
         }
 
-        View addButton = findViewById(R.id.addButton);
+        final View addButton = findViewById(R.id.addButton);
         if (addButton != null) {
             addButton.setVisibility(View.INVISIBLE);
         }
@@ -366,42 +367,41 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
     }
 
     @Override
-    public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+    public boolean onPrepareActionMode(final ActionMode actionMode, final Menu menu) {
         return false;
     }
 
     @Override
-    public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+    public boolean onActionItemClicked(final ActionMode actionMode, final MenuItem menuItem) {
         boolean result = false;
-        final ActionMode mode = actionMode;
 
         switch (menuItem.getItemId()) {
             case R.id.remove:
-                String body = getString(R.string.confirm_delete, longClickPackage.getName());
+                final String body = getString(R.string.confirm_delete, longClickPackage.getName());
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(R.string.are_you_sure);
                 builder.setMessage(body);
 
                 builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        for (Object o : selection) {
-                            Package pkg = (Package) o;
+                        for (final Object o : selection) {
+                            final Package pkg = (Package) o;
                             pkg.remove();
                         }
 
                         packageListFragment.reloadData();
 
                         if (isTablet) {
-                            FragmentManager supportFragmentManager = getSupportFragmentManager();
-                            FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+                            final FragmentManager supportFragmentManager = getSupportFragmentManager();
+                            final FragmentTransaction transaction = supportFragmentManager.beginTransaction();
                             transaction.replace(R.id.package_details, new BlankFragment());
                             transaction.commit();
                         }
 
                         dialogInterface.dismiss();
-                        mode.finish();
+                        actionMode.finish();
                     }
                 });
 
@@ -412,13 +412,13 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                     }
                 });
 
-                AlertDialog dialog = builder.create();
+                final AlertDialog dialog = builder.create();
                 dialog.show();
 
                 return true;
 
             case R.id.set_active:
-                for (Package pkg : selection) {
+                for (final Package pkg : selection) {
                     pkg.setActive(true);
                     pkg.save();
                 }
@@ -429,7 +429,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                 break;
 
             case R.id.set_inactive:
-                for (Package pkg : selection) {
+                for (final Package pkg : selection) {
                     pkg.setActive(false);
                     pkg.save();
                 }
@@ -441,20 +441,20 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
 
             case R.id.edit:
                 if (isTablet) {
-                    Bundle args = new Bundle();
+                    final Bundle args = new Bundle();
                     args.putString(PackageDetailsActivity.PACKAGE_CODE, selection.get(0).getCod());
 
-                    PackageEditFragment fragment = new PackageEditFragment();
+                    final PackageEditFragment fragment = new PackageEditFragment();
                     fragment.setArguments(args);
 
-                    FragmentManager supportFragmentManager = getSupportFragmentManager();
+                    final FragmentManager supportFragmentManager = getSupportFragmentManager();
                     if (supportFragmentManager != null) {
-                        FragmentTransaction transaction = supportFragmentManager.beginTransaction();
+                        final FragmentTransaction transaction = supportFragmentManager.beginTransaction();
                         transaction.replace(R.id.package_details, fragment);
                         transaction.commit();
                     }
                 } else {
-                    Intent intent = new Intent(this, PackageEditActivity.class);
+                    final Intent intent = new Intent(this, PackageEditActivity.class);
                     intent.putExtra(PackageDetailsActivity.PACKAGE_CODE, selection.get(0).getCod());
                     startActivity(intent);
                 }
@@ -469,15 +469,15 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
     }
 
     @Override
-    public void onDestroyActionMode(ActionMode actionMode) {
+    public void onDestroyActionMode(final ActionMode actionMode) {
         longClickPackage = null;
 
-        ActionBar supportActionBar = getSupportActionBar();
+        final ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             supportActionBar.show();
         }
 
-        View addButton = findViewById(R.id.addButton);
+        final View addButton = findViewById(R.id.addButton);
         if (addButton != null) {
             addButton.setVisibility(View.VISIBLE);
         }
@@ -490,23 +490,23 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
     }
 
     private void showRateDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.app_name);
         builder.setMessage(R.string.rate_me);
 
         builder.setPositiveButton(R.string.rate_now, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(PackageListActivity.this);
+                final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(PackageListActivity.this);
                 if (sharedPref != null) {
-                    SharedPreferences.Editor editor = sharedPref.edit();
+                    final SharedPreferences.Editor editor = sharedPref.edit();
                     if (editor != null) {
                         editor.putBoolean("can_rate", false);
 
                         try {
-                            PackageManager manager = getPackageManager();
-                            String packageName = getPackageName();
-                            PackageInfo info = manager.getPackageInfo(packageName, 0);
+                            final PackageManager manager = getPackageManager();
+                            final String packageName = getPackageName();
+                            final PackageInfo info = manager.getPackageInfo(packageName, 0);
                             editor.putInt("did_rate", info.versionCode);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -522,8 +522,8 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
                  * as it's only necessary to change two places: the manifest and gradle build file
                  * (and to copy&paste code into other projects ;)
                  */
-                String packageName = getPackageName();
-                Uri uri = Uri.parse("market://details?id=" + packageName);
+                final String packageName = getPackageName();
+                final Uri uri = Uri.parse("market://details?id=" + packageName);
                 startActivity(new Intent(Intent.ACTION_VIEW, uri));
 
                 dialogInterface.dismiss();
@@ -533,16 +533,16 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
         builder.setNegativeButton(R.string.dont_rate, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(PackageListActivity.this);
+                final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(PackageListActivity.this);
                 if (sharedPref != null) {
-                    SharedPreferences.Editor editor = sharedPref.edit();
+                    final SharedPreferences.Editor editor = sharedPref.edit();
                     if (editor != null) {
                         editor.putBoolean("can_rate", false);
 
                         try {
-                            PackageManager manager = getPackageManager();
-                            String packageName = getPackageName();
-                            PackageInfo info = manager.getPackageInfo(packageName, 0);
+                            final PackageManager manager = getPackageManager();
+                            final String packageName = getPackageName();
+                            final PackageInfo info = manager.getPackageInfo(packageName, 0);
                             editor.putInt("do_not_rate", info.versionCode);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -559,9 +559,9 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
         builder.setNeutralButton(R.string.later, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(PackageListActivity.this);
+                final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(PackageListActivity.this);
                 if (sharedPref != null) {
-                    SharedPreferences.Editor editor = sharedPref.edit();
+                    final SharedPreferences.Editor editor = sharedPref.edit();
                     if (editor != null) {
                         editor.putInt("rate_times", 0);
                         editor.apply();
@@ -572,7 +572,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
             }
         });
 
-        AlertDialog aboutDialog = builder.create();
+        final AlertDialog aboutDialog = builder.create();
         aboutDialog.show();
     }
 

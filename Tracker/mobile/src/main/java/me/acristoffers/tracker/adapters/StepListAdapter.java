@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,41 +41,32 @@ import me.acristoffers.tracker.R;
 
 public class StepListAdapter extends RecyclerView.Adapter {
 
-    private Context context = null;
-    private Package pkg = null;
-    private ArrayList<Correios.Step> steps = new ArrayList<>();
-    private LayoutInflater layoutInflater = null;
+    private final WeakReference<Context> context;
+    private final String code;
+    private final ArrayList<Correios.Step> steps = new ArrayList<>();
 
-    public StepListAdapter(Package pkg, Context context) {
-        this.pkg = pkg;
-        this.context = context;
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public StepListAdapter(final Package pkg, final Context context) {
+        this.code = pkg.getCod();
+        this.context = new WeakReference<>(context);
         updateSteps();
     }
 
-    // Create new views
     @Override
     @SuppressLint("InflateParams")
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.steps_item, null);
+    public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        final LayoutInflater layoutInflater = (LayoutInflater) context.get().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = layoutInflater.inflate(R.layout.steps_item, null);
         return new ViewHolder(view);
     }
 
-    // Recycle views
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ViewHolder viewHolder = (ViewHolder) holder;
-
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        final ViewHolder viewHolder = (ViewHolder) holder;
         final Correios.Step step = steps.get(steps.size() - position - 1);
-
-        String title;
-        String date;
-        String local;
-
-        DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
-        title = step.title;
-        local = step.local;
-        date = sdf.format(step.date);
+        final DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
+        final String title = step.title;
+        final String local = step.local;
+        final String date = sdf.format(step.date);
 
         TextView textView = viewHolder.getTitle();
         if (textView != null) {
@@ -98,8 +90,9 @@ public class StepListAdapter extends RecyclerView.Adapter {
     }
 
     private void updateSteps() {
-        pkg = new Package(pkg.getCod(), context);
-        steps = pkg.getSteps();
+        final Package pkg = new Package(code, context.get(), null);
+        steps.clear();
+        steps.addAll(pkg.getSteps());
         notifyDataSetChanged();
     }
 

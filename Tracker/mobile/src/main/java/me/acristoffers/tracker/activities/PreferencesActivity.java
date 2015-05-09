@@ -30,7 +30,7 @@ import me.acristoffers.tracker.R;
 public class PreferencesActivity extends AppCompatActivity {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preferences);
     }

@@ -37,12 +37,12 @@ import java.io.IOException;
 
 public class BackupAgent extends BackupAgentHelper {
 
-    public static void restoreIfNotBackingUp(Context context) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+    public static void restoreIfNotBackingUp(final Context context) {
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         if (sharedPref != null) {
-            boolean backupBooked = sharedPref.getBoolean("backup_booked", false);
+            final boolean backupBooked = sharedPref.getBoolean("backup_booked", false);
             if (!backupBooked) {
-                BackupManager bm = new BackupManager(context);
+                final BackupManager bm = new BackupManager(context);
                 bm.requestRestore(new RestoreObserver() {
                 });
             }
@@ -51,23 +51,23 @@ public class BackupAgent extends BackupAgentHelper {
 
     @Override
     public void onCreate() {
-        FileBackupHelper helper = new FileBackupHelper(this, Store.DATABASE_NAME);
+        final FileBackupHelper helper = new FileBackupHelper(this, Store.DATABASE_NAME);
         addHelper("database", helper);
     }
 
     @Override
     public File getFilesDir() {
-        File path = getDatabasePath(Store.DATABASE_NAME);
+        final File path = getDatabasePath(Store.DATABASE_NAME);
         return path.getParentFile();
     }
 
     @Override
-    public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data, ParcelFileDescriptor newState) throws IOException {
+    public void onBackup(final ParcelFileDescriptor oldState, final BackupDataOutput data, final ParcelFileDescriptor newState) throws IOException {
         super.onBackup(oldState, data, newState);
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         if (sharedPref != null) {
-            SharedPreferences.Editor editor = sharedPref.edit();
+            final SharedPreferences.Editor editor = sharedPref.edit();
             if (editor != null) {
                 editor.putBoolean("backup_booked", false);
                 editor.apply();

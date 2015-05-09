@@ -36,7 +36,7 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
     private EditTextPreference editTextPreference = null;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
 
@@ -47,13 +47,13 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
     public void onResume() {
         super.onResume();
 
-        PreferenceScreen preferenceScreen = getPreferenceScreen();
+        final PreferenceScreen preferenceScreen = getPreferenceScreen();
         if (preferenceScreen != null) {
-            SharedPreferences sharedPreferences = preferenceScreen.getSharedPreferences();
+            final SharedPreferences sharedPreferences = preferenceScreen.getSharedPreferences();
             if (sharedPreferences != null) {
                 sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 
-                String interval = sharedPreferences.getString("sync_interval", "15");
+                final String interval = sharedPreferences.getString("sync_interval", "15");
                 editTextPreference.setSummary(interval);
             }
         }
@@ -63,9 +63,9 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
     public void onPause() {
         super.onPause();
 
-        PreferenceScreen preferenceScreen = getPreferenceScreen();
+        final PreferenceScreen preferenceScreen = getPreferenceScreen();
         if (preferenceScreen != null) {
-            SharedPreferences sharedPreferences = preferenceScreen.getSharedPreferences();
+            final SharedPreferences sharedPreferences = preferenceScreen.getSharedPreferences();
             if (sharedPreferences != null) {
                 sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
             }
@@ -73,10 +73,10 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+    public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String s) {
         AlarmReceiver.setAlarm(getActivity());
 
-        String interval = sharedPreferences.getString("sync_interval", "15");
+        final String interval = sharedPreferences.getString("sync_interval", "15");
         editTextPreference.setSummary(interval);
     }
 }

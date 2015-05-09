@@ -50,21 +50,20 @@ import me.acristoffers.tracker.adapters.PackageListAdapter;
 
 public class PackageListFragment extends Fragment implements Package.StatusReady {
     private RecyclerView recyclerView = null;
-    private int updating = 0;
     private SwipeRefreshLayout swipeRefreshLayout = null;
-    private Activity activity = null;
+    private int updating = 0;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         return getActivity().getLayoutInflater().inflate(R.layout.fragment_package_list, container, false);
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        activity = getActivity();
-        View view = getView();
+        final Activity activity = getActivity();
+        final View view = getView();
 
         if (view == null || activity == null) {
             return;
@@ -81,12 +80,11 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
             System.exit(0);
         }
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);
+        final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
 
-        final PackageListAdapter recyclerViewAdapter = new PackageListAdapter(activity);
+        final PackageListAdapter recyclerViewAdapter = new PackageListAdapter(activity, (PackageListActivity) activity);
         recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerViewAdapter.setListener((PackageListActivity) activity);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         if (swipeRefreshLayout == null) {
@@ -103,18 +101,18 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
             }
         });
 
-        Button button = (Button) view.findViewById(R.id.addButton);
+        final Button button = (Button) view.findViewById(R.id.addButton);
         if (button != null) {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     final View view = View.inflate(activity, R.layout.search_package, null);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                     builder.setTitle(R.string.search_for_package);
                     builder.setView(view);
 
-                    EditText code = (EditText) view.findViewById(R.id.code);
+                    final EditText code = (EditText) view.findViewById(R.id.code);
                     if (code != null) {
                         code.addTextChangedListener(new TrackCodeFormattingTextWatcher(code));
                     }
@@ -122,23 +120,23 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
                     builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            EditText code = (EditText) view.findViewById(R.id.code);
-                            EditText name = (EditText) view.findViewById(R.id.name);
+                            final EditText code = (EditText) view.findViewById(R.id.code);
+                            final EditText name = (EditText) view.findViewById(R.id.name);
 
-                            me.acristoffers.tracker.Package p = null;
+                            Package p = null;
 
                             if (code != null) {
                                 Editable editable = code.getText();
                                 if (editable != null) {
                                     String s = editable.toString();
-                                    p = new Package(s, activity);
+                                    p = new Package(s, getActivity(), null);
                                 }
                             }
 
                             if (name != null && p != null) {
-                                Editable editable = name.getText();
+                                final Editable editable = name.getText();
                                 if (editable != null) {
-                                    String s = editable.toString();
+                                    final String s = editable.toString();
                                     p.setName(s);
                                     p.setActive(true);
                                     p.save();
@@ -157,7 +155,7 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
                         }
                     });
 
-                    AlertDialog dialog = builder.create();
+                    final AlertDialog dialog = builder.create();
                     dialog.show();
                 }
             });
@@ -168,7 +166,7 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
     public void onStart() {
         super.onStart();
 
-        PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
+        final PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
         adapter.filterPackages();
     }
 
@@ -176,53 +174,52 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
     public void onResume() {
         super.onResume();
 
-        PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
+        final PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
         adapter.filterPackages();
     }
 
     public void checkForUpdates() {
         BackupAgent.restoreIfNotBackingUp(getActivity());
 
-        ArrayList<Package> packages = Package.allPackages(getActivity());
-        for (Package pkg : packages) {
+        final ArrayList<Package> packages = Package.allPackages(getActivity());
+        for (final Package pkg : packages) {
             if (!pkg.isActive()) {
                 continue;
             }
 
             updating++;
-            pkg.setListener(this);
-            pkg.checkForStatusUpdates();
+            new Package(pkg.getCod(), getActivity(), this).checkForStatusUpdates();
         }
 
         swipeRefreshLayout.setRefreshing(updating > 0);
     }
 
     @Override
-    public void statusUpdated(Package pkg) {
+    public void statusUpdated(final Package pkg) {
         pkg.save();
 
         updating--;
 
-        PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
+        final PackageListAdapter adapter = (PackageListAdapter) recyclerView.getAdapter();
         adapter.filterPackages();
 
         swipeRefreshLayout.setRefreshing(updating > 0);
     }
 
     public boolean isShowInactive() {
-        PackageListAdapter recyclerViewAdapter = (PackageListAdapter) recyclerView.getAdapter();
+        final PackageListAdapter recyclerViewAdapter = (PackageListAdapter) recyclerView.getAdapter();
         return recyclerViewAdapter.getShowInactive();
     }
 
     public boolean toggleShowInactive() {
-        PackageListAdapter recyclerViewAdapter = (PackageListAdapter) recyclerView.getAdapter();
+        final PackageListAdapter recyclerViewAdapter = (PackageListAdapter) recyclerView.getAdapter();
         recyclerViewAdapter.setShowInactive(!recyclerViewAdapter.getShowInactive());
 
         return recyclerViewAdapter.getShowInactive();
     }
 
     public void reloadData() {
-        PackageListAdapter recyclerViewAdapter = (PackageListAdapter) recyclerView.getAdapter();
+        final PackageListAdapter recyclerViewAdapter = (PackageListAdapter) recyclerView.getAdapter();
         recyclerViewAdapter.filterPackages();
     }
 }

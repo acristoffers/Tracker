@@ -65,24 +65,24 @@ public class TrackCodeFormattingTextWatcher implements TextWatcher {
     private final WeakReference<EditText> editText;
     private String lastValue;
 
-    public TrackCodeFormattingTextWatcher(EditText et) {
+    public TrackCodeFormattingTextWatcher(final EditText et) {
         editText = new WeakReference<>(et);
     }
 
     @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+    public void beforeTextChanged(final CharSequence charSequence, final int i, final int i2, final int i3) {
     }
 
     @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+    public void onTextChanged(final CharSequence charSequence, final int i, final int i2, final int i3) {
     }
 
     @Override
-    public void afterTextChanged(Editable editable) {
-        String regex = "[A-Z]{2}[0-9]{9}[A-Z]{2}";
+    public void afterTextChanged(final Editable editable) {
+        final String regex = "[A-Z]{2}[0-9]{9}[A-Z]{2}";
         String text = editable.toString().toUpperCase(Locale.US);
 
-        EditText editText = this.editText.get();
+        final EditText editText = this.editText.get();
 
         if (text.equals(lastValue)) {
             return;
@@ -98,8 +98,8 @@ public class TrackCodeFormattingTextWatcher implements TextWatcher {
 
         resetTextSpans(editable);
 
-        Pattern pattern = Pattern.compile("([A-Za-z]{2}[0-9]{9}[A-Za-z]{2})");
-        Matcher matcher = pattern.matcher(text);
+        final Pattern pattern = Pattern.compile("([A-Za-z]{2}[0-9]{9}[A-Za-z]{2})");
+        final Matcher matcher = pattern.matcher(text);
         if (matcher.find()) {
             text = matcher.group(1);
             editText.setText(text);
@@ -110,10 +110,10 @@ public class TrackCodeFormattingTextWatcher implements TextWatcher {
         // Up to this point, I matched whatever looks like a package code
         // from here on I'll match anything that does NOT look like complete package code
 
-        char[] string = text.toCharArray();
+        final char[] string = text.toCharArray();
         text = "";
         int pos = 0;
-        for (char c : string) {
+        for (final char c : string) {
             if ((pos < 2 || pos > 10)) {
                 if (c >= 'A' && c <= 'Z') {
                     text += c;
@@ -133,7 +133,7 @@ public class TrackCodeFormattingTextWatcher implements TextWatcher {
             pos++;
         }
 
-        int type = editText.getInputType();
+        final int type = editText.getInputType();
         if (pos > 1 && pos < 11) {
             if (type != InputType.TYPE_CLASS_NUMBER) {
                 SystemClock.sleep(500);
@@ -150,7 +150,7 @@ public class TrackCodeFormattingTextWatcher implements TextWatcher {
         editText.setSelection(pos);
     }
 
-    private void resetTextSpans(Editable editable) {
+    private void resetTextSpans(final Editable editable) {
         removeSpan(editable, AbsoluteSizeSpan.class);
         removeSpan(editable, AlignmentSpan.class);
         removeSpan(editable, BackgroundColorSpan.class);
@@ -181,9 +181,9 @@ public class TrackCodeFormattingTextWatcher implements TextWatcher {
     }
 
     @SuppressWarnings("unchecked")
-    private void removeSpan(Editable editable, Class spanClass) {
-        Object spans[] = editable.getSpans(0, editable.length(), spanClass);
-        for (Object span : spans) {
+    private void removeSpan(final Editable editable, final Class spanClass) {
+        final Object spans[] = editable.getSpans(0, editable.length(), spanClass);
+        for (final Object span : spans) {
             editable.removeSpan(span);
         }
     }

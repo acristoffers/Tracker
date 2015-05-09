@@ -35,6 +35,7 @@ import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -43,29 +44,27 @@ import me.acristoffers.tracker.activities.PackageDetailsActivity;
 public class AlarmReceiver extends BroadcastReceiver implements Package.StatusReady {
 
     private final HashMap<String, Integer> countSteps = new HashMap<>();
-    private Context context = null;
+    private WeakReference<Context> context;
 
-    public static void setAlarm(Context context) {
+    public static void setAlarm(final Context context) {
         try {
-            Intent intent = new Intent(context, AlarmReceiver.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            final Intent intent = new Intent(context, AlarmReceiver.class);
+            final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-            long fiveMinutes = 5 * 60 * 1000;
+            final long fiveMinutes = 5 * 60 * 1000;
+
+            final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+            final String minutes = sharedPref.getString("sync_interval", "15");
+
             long repeatMinutes;
-
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-            String minutes = sharedPref.getString("sync_interval", "15");
-
             try {
-                repeatMinutes = Long.parseLong(minutes);
+                repeatMinutes = Long.parseLong(minutes) * 60 * 1000;
             } catch (NumberFormatException e) {
-                repeatMinutes = 15;
+                repeatMinutes = 15 * 60 * 1000;
             }
 
-            repeatMinutes *= 60 * 1000;
-
-            boolean active = sharedPref.getBoolean("autosync", true);
+            final boolean active = sharedPref.getBoolean("autosync", true);
 
             if (active) {
                 alarmManager.cancel(pendingIntent);
@@ -78,52 +77,51 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, final Intent intent) {
         final String action = intent.getAction();
         if (action != null && action.equals("android.intent.action.BOOT_COMPLETED")) {
             setAlarm(context);
             return;
         }
 
-        this.context = context;
+        this.context = new WeakReference<>(context);
 
         BackupAgent.restoreIfNotBackingUp(context);
 
-        ArrayList<Package> packages = Package.allPackages(context);
-        for (Package pkg : packages) {
+        final ArrayList<Package> packages = Package.allPackages(context);
+        for (final Package pkg : packages) {
             if (!pkg.isActive()) {
                 continue;
             }
 
-            int count = pkg.getSteps().size();
-            String code = pkg.getCod();
+            final int count = pkg.getSteps().size();
+            final String code = pkg.getCod();
 
             countSteps.put(code, count);
 
-            pkg.setListener(this);
-            pkg.checkForStatusUpdates();
+            new Package(code, context, this).checkForStatusUpdates();
         }
     }
 
     @Override
-    public void statusUpdated(Package pkg) {
-        String code = pkg.getCod();
-        int count = pkg.getSteps().size();
+    public void statusUpdated(final Package pkg) {
+        final String code = pkg.getCod();
+        final int count = pkg.getSteps().size();
         pkg.save();
 
         if (countSteps.get(code) < count) {
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            final NotificationManager notificationManager = (NotificationManager) context.get().getSystemService(Context.NOTIFICATION_SERVICE);
             if (notificationManager != null) {
-                String title = context.getString(R.string.notification_package_updated_title, pkg.getName());
-                String message = context.getString(R.string.notification_package_updated_body, pkg.getName());
+                final String title = context.get().getString(R.string.notification_package_updated_title, pkg.getName());
+                final String message = context.get().getString(R.string.notification_package_updated_body, pkg.getName());
 
-                Intent intent = new Intent(context, PackageDetailsActivity.class);
+                final Intent intent = new Intent(context.get(), PackageDetailsActivity.class);
                 intent.putExtra(PackageDetailsActivity.PACKAGE_CODE, code);
-                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                final PendingIntent pendingIntent = PendingIntent.getActivity(context.get(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                Bitmap icon = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
+                final Bitmap icon = BitmapFactory.decodeResource(context.get().getResources(), R.mipmap.ic_launcher);
 
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+                final NotificationCompat.Builder builder = new NotificationCompat.Builder(context.get());
                 builder.setTicker(title)
                         .setContentTitle(title)
                         .setContentText(message)
@@ -134,9 +132,9 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
                         .setWhen(System.currentTimeMillis())
                         .setAutoCancel(true);
 
-                Notification notification = builder.build();
+                final Notification notification = builder.build();
 
-                NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                final NotificationManager nm = (NotificationManager) context.get().getSystemService(Context.NOTIFICATION_SERVICE);
                 nm.notify(pkg.getId(), notification);
             }
         }

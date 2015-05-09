@@ -32,7 +32,7 @@ public class PackageDetailsActivity extends AppCompatActivity {
     public static final String PACKAGE_CODE = "pkg_cod";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_package_details_phone);
     }

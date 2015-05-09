@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,33 +51,31 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
     public static boolean isSelecting = false;
     private static boolean showInactive = false;
     private final ArrayList<Package> packages = new ArrayList<>();
-    private Activity context = null;
-    private LayoutInflater layoutInflater = null;
-    private OnCardViewClickedListener listener = null;
+    private final WeakReference<Activity> context;
+    private final WeakReference<OnCardViewClickedListener> listener;
 
-    public PackageListAdapter(Activity context) {
-        this.context = context;
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public PackageListAdapter(final Activity context, final OnCardViewClickedListener listener) {
+        this.context = new WeakReference<>(context);
+        this.listener = new WeakReference<>(listener);
         filterPackages();
-
-
     }
 
     @Override
     @SuppressLint("InflateParams")
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.package_item, parent, false);
+    public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        final LayoutInflater layoutInflater = (LayoutInflater) context.get().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = layoutInflater.inflate(R.layout.package_item, parent, false);
 
-        CardView cardView = (CardView) view;
+        final CardView cardView = (CardView) view;
         cardView.setMaxCardElevation(view.getResources().getDimension(R.dimen.card_elevation_selected));
 
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         final View view = holder.itemView;
-        ViewHolder viewHolder = (ViewHolder) holder;
+        final ViewHolder viewHolder = (ViewHolder) holder;
 
         if (!isSelecting) {
             selection.clear();
@@ -84,16 +83,16 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
 
         final Package pkg = packages.get(position);
 
-        String name = pkg.getName();
-        String code = pkg.getCod();
+        final String name = pkg.getName();
+        final String code = pkg.getCod();
         String title;
         String date = "";
         String local = "";
 
-        List<Correios.Step> steps = pkg.getSteps();
+        final List<Correios.Step> steps = pkg.getSteps();
         if (steps.size() > 0) {
-            Correios.Step step = steps.get(steps.size() - 1);
-            DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
+            final Correios.Step step = steps.get(steps.size() - 1);
+            final DateFormat sdf = SimpleDateFormat.getDateTimeInstance();
             title = step.title;
             local = step.local;
             date = sdf.format(step.date);
@@ -101,7 +100,7 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
             title = view.getResources().getString(R.string.empty_steps);
         }
 
-        View v = viewHolder.getInactiveIcon();
+        final View v = viewHolder.getInactiveIcon();
         if (v != null) {
             v.setVisibility(pkg.isActive() ? View.GONE : View.VISIBLE);
         }
@@ -131,15 +130,15 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
             textView.setText(local);
         }
 
-        View layout = viewHolder.getLayout();
+        final View layout = viewHolder.getLayout();
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (listener != null) {
+                if (listener.get() != null) {
                     if (isSelecting) {
                         if (selection.contains(pkg)) {
-                            List<Package> removeList = new ArrayList<>();
-                            for (Package p : selection) {
+                            final List<Package> removeList = new ArrayList<>();
+                            for (final Package p : selection) {
                                 if (p.equals(pkg)) {
                                     removeList.add(p);
                                 }
@@ -152,7 +151,7 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
                         notifyDataSetChanged();
                     }
 
-                    listener.onCardViewClicked(pkg);
+                    listener.get().onCardViewClicked(pkg);
                 }
             }
         });
@@ -160,8 +159,8 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
         layout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (listener != null && !isSelecting) {
-                    listener.onCardViewLongClicked(pkg);
+                if (listener.get() != null && !isSelecting) {
+                    listener.get().onCardViewLongClicked(pkg);
                     isSelecting = true;
                     selection.add(pkg);
                     notifyDataSetChanged();
@@ -171,10 +170,10 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
             }
         });
 
-        CardView cardView = (CardView) view;
+        final CardView cardView = (CardView) view;
 
         if (selection.contains(pkg)) {
-            Resources resources = view.getResources();
+            final Resources resources = view.getResources();
             cardView.setCardElevation(resources.getDimension(R.dimen.card_elevation_selected));
             cardView.setCardBackgroundColor(resources.getColor(R.color.primary_light));
         } else {
@@ -197,7 +196,7 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
         return showInactive;
     }
 
-    public void setShowInactive(boolean showInactive) {
+    public void setShowInactive(final boolean showInactive) {
         if (showInactive != PackageListAdapter.showInactive) {
             PackageListAdapter.showInactive = showInactive;
             filterPackages();
@@ -207,8 +206,8 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
     public void filterPackages() {
         packages.clear();
 
-        List<Package> allPackages = Package.allPackages(context);
-        for (Package pkg : allPackages) {
+        final List<Package> allPackages = Package.allPackages(context.get());
+        for (final Package pkg : allPackages) {
             if (pkg.getName().isEmpty()) {
                 pkg.remove();
                 continue;
@@ -218,14 +217,13 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
                 continue;
             }
 
-            pkg.setListener(this);
-            packages.add(pkg);
+            packages.add(new Package(pkg.getCod(), context.get(), this));
         }
 
         notifyDataSetChanged();
     }
 
-    public void filterPackages(String query) {
+    public void filterPackages(final String query) {
         if (query == null) {
             filterPackages();
             return;
@@ -233,36 +231,31 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
 
         packages.clear();
 
-        List<Package> allPackages = Package.allPackages(context);
-        for (Package pkg : allPackages) {
+        final List<Package> allPackages = Package.allPackages(context.get());
+        for (final Package pkg : allPackages) {
             if (pkg.getName().isEmpty()) {
                 pkg.remove();
                 continue;
             }
 
-            Locale locale = Locale.getDefault();
-            String queryUpperCase = query.toUpperCase(locale);
-            String pkgNameUpperCase = pkg.getName().toUpperCase(locale);
-            String pkgCodeUpperCase = pkg.getCod().toUpperCase(locale);
+            final Locale locale = Locale.getDefault();
+            final String queryUpperCase = query.toUpperCase(locale);
+            final String pkgNameUpperCase = pkg.getName().toUpperCase(locale);
+            final String pkgCodeUpperCase = pkg.getCod().toUpperCase(locale);
             if (!pkgNameUpperCase.contains(queryUpperCase) && !pkgCodeUpperCase.contains(queryUpperCase)) {
                 continue;
             }
 
-            pkg.setListener(this);
-            packages.add(pkg);
+            packages.add(new Package(pkg.getCod(), context.get(), this));
         }
 
         notifyDataSetChanged();
     }
 
-    public void setListener(OnCardViewClickedListener listener) {
-        this.listener = listener;
-    }
-
     public interface OnCardViewClickedListener {
-        void onCardViewClicked(Package pkg);
+        void onCardViewClicked(final Package pkg);
 
-        void onCardViewLongClicked(Package pkg);
+        void onCardViewLongClicked(final Package pkg);
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
@@ -270,7 +263,7 @@ public class PackageListAdapter extends RecyclerView.Adapter implements Package.
         private final View layout;
         private final View inactiveIcon;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
 
             name = (TextView) itemView.findViewById(R.id.name);

@@ -41,19 +41,19 @@ import java.util.TimeZone;
 
 public class Correios {
 
+    private final String code;
+    private final SyncDone listener;
+    private final Thread thread;
     private final ArrayList<Step> steps = new ArrayList<>();
-    private final String pack;
-    private SyncDone listener = null;
-    private Thread thread = null;
 
-    public Correios(String cod, SyncDone listener) {
-        this.pack = cod.toUpperCase(Locale.US);
+    public Correios(final String cod, final SyncDone listener) {
+        this.code = cod.toUpperCase(Locale.US);
         this.listener = listener;
 
-        Runnable run = new Runnable() {
+        final Runnable run = new Runnable() {
             @Override
             public void run() {
-                String body = fetchAPIbody();
+                String body = fetchAPIBody();
                 boolean r = processAPIbody(body);
                 Correios.this.notifyOnMainThread(r);
             }
@@ -66,7 +66,7 @@ public class Correios {
         thread.start();
     }
 
-    private String fetchAPIbody() {
+    private String fetchAPIBody() {
         String body = null;
 
         if (getCod() == null || getCod().isEmpty()) {
@@ -74,11 +74,11 @@ public class Correios {
         }
 
         try {
-            URL url = new URL("http://developers.agenciaideias.com.br/correios/rastreamento/json/" + getCod());
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            final URL url = new URL("http://developers.agenciaideias.com.br/correios/rastreamento/json/" + getCod());
+            final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-            InputStream is = connection.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            final InputStream is = connection.getInputStream();
+            final BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 
             connection.connect();
 
@@ -97,21 +97,21 @@ public class Correios {
         return body;
     }
 
-    private synchronized boolean processAPIbody(String body) {
+    private synchronized boolean processAPIbody(final String body) {
         steps.clear();
 
         if (body == null || body.isEmpty()) {
             return false;
         }
 
-        StringReader stringReader = new StringReader(body);
-        JsonReader jsonReader = new JsonReader(stringReader);
+        final StringReader stringReader = new StringReader(body);
+        final JsonReader jsonReader = new JsonReader(stringReader);
 
         try {
             jsonReader.beginArray();
 
             while (jsonReader.hasNext()) {
-                Step step = new Step();
+                final Step step = new Step();
 
                 jsonReader.beginObject();
 
@@ -123,21 +123,21 @@ public class Correios {
                             step.title = jsonReader.nextString();
                             break;
                         case "data":
-                            String dateString = jsonReader.nextString();
-                            String[] dateAndTime = dateString.split(" ");
-                            String[] dateParts = dateAndTime[0].split("/");
-                            String[] timeParts = dateAndTime[1].split(":");
+                            final String dateString = jsonReader.nextString();
+                            final String[] dateAndTime = dateString.split(" ");
+                            final String[] dateParts = dateAndTime[0].split("/");
+                            final String[] timeParts = dateAndTime[1].split(":");
 
-                            int year = Integer.parseInt(dateParts[2]);
-                            int month = Integer.parseInt(dateParts[1]) - 1;
-                            int day = Integer.parseInt(dateParts[0]);
+                            final int year = Integer.parseInt(dateParts[2]);
+                            final int month = Integer.parseInt(dateParts[1]) - 1;
+                            final int day = Integer.parseInt(dateParts[0]);
 
-                            int hour = Integer.parseInt(timeParts[0]);
-                            int minute = Integer.parseInt(timeParts[1]);
-                            int second = 0;
+                            final int hour = Integer.parseInt(timeParts[0]);
+                            final int minute = Integer.parseInt(timeParts[1]);
+                            final int second = 0;
 
-                            TimeZone timeZone = TimeZone.getTimeZone("GMT-03:00");
-                            Calendar calendar = Calendar.getInstance(timeZone);
+                            final TimeZone timeZone = TimeZone.getTimeZone("GMT-03:00");
+                            final Calendar calendar = Calendar.getInstance(timeZone);
 
                             calendar.set(year, month, day, hour, minute, second);
 
@@ -166,20 +166,20 @@ public class Correios {
     }
 
     private void notifyOnMainThread(final boolean b) {
-        Handler mainHandler = new Handler(Looper.getMainLooper());
-
-        Runnable myRunnable = new Runnable() {
+        final Handler mainHandler = new Handler(Looper.getMainLooper());
+        final Runnable myRunnable = new Runnable() {
             @Override
             public void run() {
-                listener.finishedSyncing(b);
+                if (listener != null) {
+                    listener.finishedSyncing(b);
+                }
             }
         };
-
         mainHandler.post(myRunnable);
     }
 
     public synchronized String getCod() {
-        return pack;
+        return code;
     }
 
     public synchronized ArrayList<Step> getSteps() {
@@ -187,7 +187,7 @@ public class Correios {
     }
 
     public interface SyncDone {
-        void finishedSyncing(boolean success);
+        void finishedSyncing(final boolean success);
     }
 
     public static class Step {

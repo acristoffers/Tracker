@@ -24,16 +24,16 @@ package me.acristoffers.tracker;
 
 import android.content.Context;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
 public class Package implements Correios.SyncDone {
 
-    private Correios correios = null;
-    private Store store = null;
-    private StatusReady listener = null;
-
+    private final WeakReference<Context> context;
+    private final WeakReference<StatusReady> listener;
+    private final String code;
     private int id = -1;
     private String name = "";
     private boolean active = false;
@@ -41,11 +41,15 @@ public class Package implements Correios.SyncDone {
     private Date timeCreated = new Date();
     private Date timeUpdated = new Date();
 
-    public Package(String cod, Context context) {
-        store = new Store(context);
+    public Package(final String cod, final Context context, final StatusReady listener) {
+        this.context = new WeakReference<>(context);
+        this.listener = new WeakReference<>(listener);
+        this.code = cod;
+
+        final Store store = new Store(context);
         steps = store.getSteps(cod);
 
-        HashMap<String, Object> pkg = store.getPackage(cod);
+        final HashMap<String, Object> pkg = store.getPackage(cod);
 
         if (pkg.containsKey(Store.KEY_NAME)) {
             name = (String) pkg.get(Store.KEY_NAME);
@@ -66,17 +70,15 @@ public class Package implements Correios.SyncDone {
         if (pkg.containsKey(Store.KEY_TIME_UPDATED)) {
             timeUpdated = (Date) pkg.get(Store.KEY_TIME_UPDATED);
         }
-
-        correios = new Correios(cod, this);
     }
 
-    public static ArrayList<Package> allPackages(Context context) {
-        ArrayList<Package> packages = new ArrayList<>();
-        Store store = new Store(context);
+    public static ArrayList<Package> allPackages(final Context context) {
+        final ArrayList<Package> packages = new ArrayList<>();
+        final Store store = new Store(context);
 
-        ArrayList<String> codes = store.allCodes();
-        for (String code : codes) {
-            Package pkg = new Package(code, context);
+        final ArrayList<String> codes = store.allCodes();
+        for (final String code : codes) {
+            Package pkg = new Package(code, context, null);
             packages.add(pkg);
         }
 
@@ -92,26 +94,31 @@ public class Package implements Correios.SyncDone {
     }
 
     public void checkForStatusUpdates() {
+        final Correios correios = new Correios(code, this);
         correios.sync();
     }
 
     public void remove() {
+        final Store store = new Store(context.get());
         store.removePackage(this);
     }
 
     @Override
-    public void finishedSyncing(boolean success) {
-        ArrayList<Correios.Step> steps = correios.getSteps();
+    public void finishedSyncing(final boolean success) {
+        final Correios correios = new Correios(code, this);
+
+        final ArrayList<Correios.Step> steps = correios.getSteps();
         if (success && steps != null) {
             this.steps = steps;
         }
 
-        if (listener != null) {
-            listener.statusUpdated(this);
+        if (listener.get() != null) {
+            listener.get().statusUpdated(this);
         }
     }
 
     public void save() {
+        final Store store = new Store(context.get());
         store.updatePackage(this);
     }
 
@@ -119,11 +126,12 @@ public class Package implements Correios.SyncDone {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(final boolean active) {
         this.active = active;
     }
 
     public String getCod() {
+        final Correios correios = new Correios(code, this);
         return correios.getCod();
     }
 
@@ -143,16 +151,11 @@ public class Package implements Correios.SyncDone {
         this.name = name;
     }
 
-    public void setListener(StatusReady listener) {
-        this.listener = listener;
-    }
-
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         try {
-            Package pkg = (Package) o;
-            String code = pkg.getCod();
-
+            final Package pkg = (Package) o;
+            final String code = pkg.getCod();
             return getCod().equalsIgnoreCase(code);
         } catch (Exception e) {
             return false;

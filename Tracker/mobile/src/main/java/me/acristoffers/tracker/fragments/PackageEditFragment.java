@@ -45,22 +45,21 @@ public class PackageEditFragment extends Fragment {
 
     private Package pkg = null;
     private View view = null;
-    private Activity activity = null;
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setupUI();
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(final Activity activity) {
         super.onAttach(activity);
         setupUI();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
@@ -78,7 +77,7 @@ public class PackageEditFragment extends Fragment {
     }
 
     private void setupUI() {
-        activity = getActivity();
+        final Activity activity = getActivity();
         view = getView();
 
         if (activity == null || view == null) {
@@ -87,13 +86,13 @@ public class PackageEditFragment extends Fragment {
 
         String code = null;
 
-        Bundle arguments = getArguments();
+        final Bundle arguments = getArguments();
         if (arguments != null) {
             code = arguments.getString(PackageDetailsActivity.PACKAGE_CODE);
         }
 
         if (code == null || code.isEmpty()) {
-            Intent intent = activity.getIntent();
+            final Intent intent = activity.getIntent();
             if (intent != null) {
                 code = intent.getStringExtra(PackageDetailsActivity.PACKAGE_CODE);
             }
@@ -103,46 +102,46 @@ public class PackageEditFragment extends Fragment {
             return;
         }
 
-        pkg = new Package(code, activity);
+        pkg = new Package(code, activity, null);
 
-        EditText editText = (EditText) view.findViewById(R.id.name);
+        final EditText editText = (EditText) view.findViewById(R.id.name);
         if (editText != null) {
             editText.setText(pkg.getName());
         }
 
-        SwitchCompat switchCompat = (SwitchCompat) view.findViewById(R.id.active);
+        final SwitchCompat switchCompat = (SwitchCompat) view.findViewById(R.id.active);
         if (switchCompat != null) {
             switchCompat.setChecked(pkg.isActive());
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         return getActivity().getLayoutInflater().inflate(R.layout.fragment_package_edit, container, false);
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         inflater.inflate(R.menu.menu_package_edit, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        final int id = item.getItemId();
 
         if (id == R.id.save) {
             String name = "";
             boolean active = true;
 
-            EditText editText = (EditText) view.findViewById(R.id.name);
+            final EditText editText = (EditText) view.findViewById(R.id.name);
             if (editText != null) {
-                Editable editable = editText.getText();
+                final Editable editable = editText.getText();
                 if (editable != null) {
                     name = editable.toString();
                 }
             }
 
-            SwitchCompat switchCompat = (SwitchCompat) view.findViewById(R.id.active);
+            final SwitchCompat switchCompat = (SwitchCompat) view.findViewById(R.id.active);
             if (switchCompat != null) {
                 active = switchCompat.isChecked();
             }
@@ -152,10 +151,10 @@ public class PackageEditFragment extends Fragment {
             pkg.save();
 
             if (PackageListActivity.isTablet()) {
-                PackageListActivity listActivity = (PackageListActivity) activity;
+                final PackageListActivity listActivity = (PackageListActivity) getActivity();
                 listActivity.onCardViewClicked(pkg);
             } else {
-                activity.finish();
+                getActivity().finish();
             }
 
             return true;
