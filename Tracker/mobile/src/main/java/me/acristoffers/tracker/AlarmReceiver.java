@@ -67,9 +67,9 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
             final boolean active = sharedPref.getBoolean("autosync", true);
 
             if (active) {
-                alarmManager.cancel(pendingIntent);
-            } else {
                 alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, fiveMinutes, repeatMinutes, pendingIntent);
+            } else {
+                alarmManager.cancel(pendingIntent);
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
