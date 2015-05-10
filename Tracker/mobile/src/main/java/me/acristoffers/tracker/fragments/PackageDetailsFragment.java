@@ -63,6 +63,13 @@ public class PackageDetailsFragment extends Fragment {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        pkg = null;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return getActivity().getLayoutInflater().inflate(R.layout.fragment_package_details, container, false);
     }

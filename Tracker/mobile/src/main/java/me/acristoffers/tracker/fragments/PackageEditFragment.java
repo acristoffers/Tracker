@@ -47,6 +47,14 @@ public class PackageEditFragment extends Fragment {
     private View view = null;
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        pkg = null;
+        view = null;
+    }
+
+    @Override
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setupUI();

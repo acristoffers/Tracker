@@ -245,7 +245,7 @@ public class PackageListActivity extends AppCompatActivity implements PackageLis
         String versionName = "";
 
         try {
-            PackageInfo info = manager.getPackageInfo(packageName, 0);
+            final PackageInfo info = manager.getPackageInfo(packageName, 0);
             versionCode = info.versionCode;
             versionName = info.versionName;
         } catch (PackageManager.NameNotFoundException e) {

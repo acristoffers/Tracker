@@ -171,6 +171,14 @@ public class PackageListFragment extends Fragment implements Package.StatusReady
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        recyclerView = null;
+        swipeRefreshLayout = null;
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 

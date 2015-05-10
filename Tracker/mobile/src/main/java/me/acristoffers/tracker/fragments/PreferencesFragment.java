@@ -36,6 +36,13 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
     private EditTextPreference editTextPreference = null;
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        editTextPreference = null;
+    }
+
+    @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
