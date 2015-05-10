@@ -81,7 +81,6 @@ public class AlarmReceiver extends BroadcastReceiver implements Package.StatusRe
         final String action = intent.getAction();
         if (action != null && action.equals("android.intent.action.BOOT_COMPLETED")) {
             setAlarm(context);
-            return;
         }
 
         this.context = new WeakReference<>(context);
