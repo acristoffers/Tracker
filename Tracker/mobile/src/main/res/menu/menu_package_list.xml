@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools">
 
     <item
         android:id="@+id/search"
@@ -8,7 +9,8 @@
         android:title="@string/filter"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:queryHint="@string/filter"
-        app:showAsAction="collapseActionView|ifRoom"/>
+        app:showAsAction="collapseActionView|always"
+        tools:ignore="AlwaysShowAction"/>
 
     <item
         android:id="@+id/toggle_inactive"
